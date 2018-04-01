@@ -24,7 +24,7 @@ namespace PPOB.Controllers
             UserManager = userManager;
             SignInManager = signInManager;
         }
-
+        //dedi
         public ApplicationSignInManager SignInManager
         {
             get
