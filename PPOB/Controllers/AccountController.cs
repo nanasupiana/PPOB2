@@ -36,7 +36,7 @@ namespace PPOB.Controllers
                 _signInManager = value;
             }
         }
-
+        //ganti
         public ApplicationUserManager UserManager
         {
             get
