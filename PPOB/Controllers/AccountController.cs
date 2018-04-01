@@ -25,6 +25,7 @@ namespace PPOB.Controllers
             SignInManager = signInManager;
         }
 
+        //test
         public ApplicationSignInManager SignInManager
         {
             get
