@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>PPOB</title>
+    <title>ESTA DIGITAL NIAGA</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
     @Styles.Render("~/AdminLTE/plugins/font-awesome/css")
@@ -14,12 +14,12 @@
     @Styles.Render("~/AdminLTE/dist/css/skins")
 
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-yellow-light sidebar-mini">
     <div class="wrapper">
         <header class="main-header">
             <a href="@Url.Action("DashboardV1", "Home")" class="logo">
-                <span class="logo-mini"><b>BJA</b></span>
-                <span class="logo-lg"><b>PPOB</b></span>
+                <span class="logo-mini"><b>ESTA</b></span>
+                <span class="logo-lg fa fa-opencart"> <b>ESTA DIGITAL NIAGA</b></span>
             </a>
             <nav class="navbar navbar-static-top" role="navigation">
                 <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -52,27 +52,53 @@
                         </li>
                     <li id="left-sidebar-menu-charts" class="treeview">
                         <a href="#">
-                            <i class="fa fa-book"></i>
-                            <span>Master</span>
+                            <i class="fa fa-user"></i>
+                            <span>Member</span>
+                        </a>
+                    </li>
+                    <li id="left-sidebar-menu-charts" class="treeview">
+                        <a href="#">
+                            <i class="fa fa-users"></i>
+                            <span>User</span>
+                        </a>
+                    </li>
+                    <li id="left-sidebar-menu-charts" class="treeview">
+                        <a href="#">
+                            <i class="fa fa-opencart"></i>
+                            <span>Transaksi</span>
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                            <li id="left-sidebar-menu-charts-chartjs"><a href="@Url.Action("Action", "Master")"><i class="fa fa-play-circle-o"></i> Action</a></li>
-                            <li id="left-sidebar-menu-charts-chartjs"><a href="@Url.Action("Group", "Master")"><i class="fa fa-object-group"></i> Group</a></li>
-                            <li id="left-sidebar-menu-charts-chartjs"><a href="@Url.Action("Level", "Master")"><i class="fa fa-sitemap"></i> Level</a></li>
-                            <li id="left-sidebar-menu-charts-chartjs"><a href="@Url.Action("Process", "Master")"><i class="fa fa-gears"></i> Process</a></li>
-                            <li id="left-sidebar-menu-charts-chartjs"><a href="@Url.Action("User", "Master")"><i class="fa fa-users"></i> User</a></li>
+                            <li id="left-sidebar-menu-charts-chartjs"><a href="#"> Transaksi Pulsa</a></li>
+                            <li id="left-sidebar-menu-charts-chartjs"><a href="#"> Transaksi BPJS</a></li>
+                            <li id="left-sidebar-menu-charts-chartjs"><a href="#"> Transaksi PDAM</a></li>
+                            <li id="left-sidebar-menu-charts-chartjs"><a href="#"> Transaksi PLN</a></li>
                         </ul>
                     </li>
                     <li id="left-sidebar-menu-charts" class="treeview">
                         <a href="#">
-                            <i class="fa fa-recycle"></i>
-                            <span>Transaction</span>
+                            <i class="fa fa-photo"></i>
+                            <span>Slider</span>
+                        </a>
+                    </li>
+                    <li id="left-sidebar-menu-charts" class="treeview">
+                        <a href="#">
+                            <i class="fa fa-star"></i>
+                            <span>Master Promo</span>
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                            <li id="left-sidebar-menu-charts-chartjs"><a href="@Url.Action("FormRequest", "Transaction")"><i class="fa fa-newspaper-o"></i> Form Request</a></li>
+                            <li id="left-sidebar-menu-charts-chartjs"><a href="#"> Promo</a></li>
+                            <li id="left-sidebar-menu-charts-chartjs"><a href="#"> Setting Promo Registrasi</a></li>
+                            <li id="left-sidebar-menu-charts-chartjs"><a href="#"> Kode Akuntansi</a></li>
+                            <li id="left-sidebar-menu-charts-chartjs"><a href="#"> Promo Top Up Approval</a></li>
                         </ul>
+                    </li>
+                    <li id="left-sidebar-menu-charts" class="treeview">
+                        <a href="#">
+                            <i class="fa fa-dollar"></i>
+                            <span>Top Up Wallet</span>
+                        </a>
                     </li>
                 </ul>
             </section>

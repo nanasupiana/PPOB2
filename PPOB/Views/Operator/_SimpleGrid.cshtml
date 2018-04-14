@@ -1,0 +1,41 @@
+﻿
+@using PPOB.Models
+@{
+    List<MasterOperator> list = (List<MasterOperator>)ViewData["ListOperator"];
+    var i = 0;
+}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-primary">
+            <div class="box-body">
+                <button class="btn btn-primary" onclick="return AddPopUp()"><span class="fa fa-plus"></span> Create New</button>
+                <hr />
+                <table id="table" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width:10px; text-align:center;">No</th>
+                            <th>Name</th>
+                            <th style="width:40px; text-align:center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                        @foreach (var item in list)
+                        {
+                            i++;
+                            <tr>
+                                <td class="_i">@i</td>
+                                <td class="_name">@item.NamaOperator</td>
+                                <td style="text-align:center;">
+                                    <input class="hidden _id" value="@item.IdOperator" />
+                                    <button class="btn btn-xs btn-primary" title="Set Parameter" onclick="return  EditPopUp($(this))"><span class="fa fa-pencil"></span></button>
+                                    <button class="btn btn-xs btn-danger" title="Delete Parameter" onclick="return DeletePopUp($(this))"><span class="fa fa-trash"></span></button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
