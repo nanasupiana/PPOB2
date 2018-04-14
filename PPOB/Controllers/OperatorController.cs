@@ -11,16 +11,16 @@ namespace PPOB.Controllers
     public class OperatorController : Controller
     {
         // GET: Operator
-        public async Task<ActionResult> Operator()
+        public ActionResult Operator()
         {
-            await GetOperator();
+            //await GetOperator();
             return View();
         }
 
-        public async Task<ActionResult> GetOperator()
-        {
-            ViewData["ListOeraator"] = await OperatorRepository.GetOperator();
-            return PartialView("_SimpleGrid");
-        }
+        //public async Task<ActionResult> GetOperator()
+        //{
+        //    //ViewData["ListOeraator"] = await OperatorRepository.GetOperator();
+        //    return PartialView("_SimpleGrid");
+        //}
     }
 }
