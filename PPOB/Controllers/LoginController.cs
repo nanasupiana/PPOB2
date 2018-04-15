@@ -48,7 +48,7 @@ namespace PPOB.Controllers
             //}
             if (result)
             {
-                return RedirectToAction("DashboardV1", "Home");
+                return RedirectToLocal(returnUrl);
             }
             else
             {
