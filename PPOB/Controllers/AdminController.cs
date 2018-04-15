@@ -71,8 +71,13 @@ namespace PPOB.Controllers
                 {
                     ExpandedUserDTO objUserDTO = new ExpandedUserDTO();
 
-                    objUserDTO.UserName = item.UserName;
+                    objUserDTO.NameIdentifier = item.NameIdentifier;
                     objUserDTO.Email = item.Email;
+                    objUserDTO.PhoneNumber = item.PhoneNumber;
+                    List<UserRolesDTO> list = new List<UserRolesDTO>();
+                    list.Add(new UserRolesDTO() { RoleName = item.Roles.ToString() });
+                    objUserDTO.Roles = list.ToList<UserRolesDTO>();
+                    //objUserDTO.Roles.ToList().AddRange(new UserRolesDTO { RoleName = item.Roles.ToString() });
                     objUserDTO.LockoutEndDateUtc = item.LockoutEndDateUtc;
 
                     col_UserDTO.Add(objUserDTO);

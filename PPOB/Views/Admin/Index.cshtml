@@ -1,67 +1,83 @@
 ﻿@model PagedList.IPagedList<PPOB.Models.ExpandedUserDTO>
 @using PagedList.Mvc;
+@{
+    ViewBag.Title = "Users";
+    var no = 0;
+}
+
+@section Menu {
+    @Scripts.Render("~/Scripts/Tables/Data/menu")
+}
+@Styles.Render("~/AdminLTE/plugins/datatables/css")
+@Styles.Render("~/AdminLTE/plugins/select2/css")
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
-@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<br />
-<p>
-    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-default" })
-    @Html.ActionLink("Edit Roles", "ViewAllRoles", null, new { @class = "btn btn-default" })
-    @Html.ActionLink("Back to Home", "../", "Home", null, new { @class = "btn btn-default" })
-</p>
-<br />
-@using (Html.BeginForm("Index", "Admin", FormMethod.Get))
-{
-
-    <div class="form-group">
-        Search:&nbsp; @Html.TextBox("searchStringUserNameOrEmail", ViewBag.CurrentFilter as string)
-
-        <input type="submit" value="Search" />
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-warning">
+                        <div class="box-body">
+                            <a href="@Url.Action("Create","Admin")" class="btn btn-success"><span class="fa fa-plus"></span> Add User</a>
+                            <hr />
+                            <table id="table" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="width:10px; text-align:center;">No</th>
+                                        <th>Photo</th>
+                                        <th>Nama</th>
+                                        <th>Email</th>
+                                        <th>No Telpon</th>
+                                        <th>Role Grroup</th>
+                                        <th style="width:40px; text-align:center;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody">
+                                    @foreach (var item in Model)
+                                    {
+                                        no++;
+                                        <tr>
+                                            <td class="_i">@no</td>
+                                            <td class="_name">@item.NameIdentifier</td>
+                                            <td class="_name">@item.NameIdentifier</td>
+                                            <td class="_name">@item.Email</td>
+                                            <td class="_name">@item.PhoneNumber</td>
+                                            <td class="_name">@item.Roles</td>
+                                            <td style="text-align:center;">
+                                                <button class="btn btn-xs btn-success" title="Edit" onclick="return  EditPopUp($(this))"><span class="fa fa-pencil"></span></button>
+                                                <button class="btn btn-xs btn-danger" title="Delete" onclick="return DeletePopUp($(this))"><span class="fa fa-trash"></span></button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/AdminLTE/plugins/datatables/js")
+    @Scripts.Render("~/AdminLTE/plugins/select2/js")
+    <script>
+        $(document).ready(function () {
+            DataTable();
+        })
+
+        function DataTable() {
+            $('#table').DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false
+            });
+        }
+
+    </script>
 }
-<br />
-
-<table class="table">
-    <tr>
-        <th>
-            Email
-        </th>
-        <th>
-            Locked Out
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LockoutEndDateUtc)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "EditUser", new { UserName = item.UserName }) |
-                @if ((item.UserName.ToLower() != this.User.Identity.Name.ToLower()))
-                {
-                    @Html.ActionLink("Delete", "DeleteUser", new { UserName = item.UserName },
-                    new { onclick = "return confirm('Are you sure you wish to delete this user?');" })
-                }
-            </td>
-        </tr>
-    }
-
-
-</table>
-<br />
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-
-@Html.PagedListPager(Model,
-    page => Url.Action("Index",
-    new { page,
-        searchStringUserNameOrEmail = ViewBag.searchStringUserNameOrEmail,
-        currentFilter = ViewBag.CurrentFilter }))
-<hr />
