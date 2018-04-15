@@ -54,7 +54,7 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="mmt_Library">
-      <HintPath>C:\Users\HARIS\Downloads\mmt_Library.dll</HintPath>
+      <HintPath>C:\Users\Nana\Downloads\mmt_Library.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -175,6 +175,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OperatorController.cs" />
     <Compile Include="Extensions\ClaimsExtensions.cs" />
@@ -183,6 +184,8 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\LoginModels.cs" />
+    <Compile Include="Models\LoginRepository.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Operator\Operator.cs" />
     <Compile Include="Models\Operator\OperatorRepository.cs" />
