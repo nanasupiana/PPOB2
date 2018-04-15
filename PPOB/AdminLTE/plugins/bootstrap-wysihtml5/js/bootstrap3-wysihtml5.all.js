@@ -2555,7 +2555,7 @@ var wysihtml5 = {
                     // This is a character data node (text, comment, cdata). The working range is collapsed at the start of
                     // the node containing the text range's boundary, so we move the end of the working range to the
                     // boundary point and measure the length of its text to get the boundary's offset within the node.
-                    workingRange.setEndPoint(isStart ? "EndToStart" : "EndToEnd", textRange);
+                    workingRange.setEndPoint(isStart ? "EndToStart" : "PPOB", textRange);
 
                     var offset;
 
@@ -2726,7 +2726,7 @@ var wysihtml5 = {
                     var endRange = createBoundaryTextRange(new DomPosition(range.endContainer, range.endOffset), false);
                     var textRange = getBody( DomRange.getRangeDocument(range) ).createTextRange();
                     textRange.setEndPoint("StartToStart", startRange);
-                    textRange.setEndPoint("EndToEnd", endRange);
+                    textRange.setEndPoint("PPOB", endRange);
                     return textRange;
                 }
             };
@@ -9355,7 +9355,7 @@ wysihtml5.quirks.ensureProperClearing = (function() {
         } catch(e2) {}
       }
 
-      range.setEndPoint("EndToEnd", rangeEnd);
+      range.setEndPoint("PPOB", rangeEnd);
       range.select();
     },
 
@@ -9495,7 +9495,7 @@ wysihtml5.quirks.ensureProperClearing = (function() {
       return this.getSelection().toHtml();
     },
 
-    isEndToEndInNode: function(nodeNames) {
+    isPPOBInNode: function(nodeNames) {
       var range = this.getRange(),
           parentElement = range.commonAncestorContainer,
           startNode = range.startContainer,
@@ -11036,7 +11036,7 @@ wysihtml5.commands.formatCode = {
   wysihtml5.commands.insertBlockQuote = {
     exec: function(composer, command) {
       var state = this.state(composer, command),
-          endToEndParent = composer.selection.isEndToEndInNode(['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P']),
+          endToEndParent = composer.selection.isPPOBInNode(['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P']),
           prevNode, nextNode;
 
       composer.selection.executeAndRestore(function() {
