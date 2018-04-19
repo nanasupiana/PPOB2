@@ -1,4 +1,5 @@
-﻿@model PagedList.IPagedList<PPOB.Models.ExpandedUserDTO>
+﻿@*@model PagedList.IPagedList<PPOB.Models.ExpandedUserDTO>*@
+@model IEnumerable<PPOB.Models.ExpandedUserDTO>
 @using PagedList.Mvc;
 @{
     ViewBag.Title = "Users";
@@ -21,8 +22,8 @@
                         <div class="box-body">
                             <a href="@Url.Action("Create","Admin")" class="btn btn-success"><span class="fa fa-plus"></span> Add User</a>
                             <hr />
-                            <table id="table" class="table table-bordered table-striped">
-                                <thead>
+                            <table id="table" class="table table-bordered table-striped table-condensed">
+                                <thead style="color:blue">
                                     <tr>
                                         <th style="width:10px; text-align:center;">No</th>
                                         <th>Photo</th>
@@ -43,9 +44,8 @@
                                             <td class="_name">@item.Email</td>
                                             <td class="_name">@item.PhoneNumber</td>
                                             <td style="text-align:center;">
-                                                @Html.ActionLink("Edit", "EditUser","/", new { UserName = item.UserName }, new { @class = "btn btn-xs btn-success fa fa-pencil" })
-                                                <a href="@Url.Action("EditUser", "Admin",new { UserName = item.UserName })" class="btn btn-xs btn-success" title="Edit" onclick="return  EditPopUp($(this))"><span class="fa fa-pencil"></span></a>
-                                                <button class="btn btn-xs btn-danger" title="Delete" onclick="return DeletePopUp($(this))"><span class="fa fa-trash"></span></button>
+                                                @Html.ActionLink(" ", "EditUser", new { UserName = item.UserName },new { @class = "btn btn-xs btn-success fa fa-pencil" })
+                                                @Html.ActionLink(" ", "DeleteUser", new { UserName = item.UserName }, new { @class = "btn btn-xs btn-danger fa fa-trash", @onclick = "return confirm('Are you sure you wish to delete this user?');" })
                                             </td>
                                         </tr>
                                     }
@@ -72,7 +72,7 @@
                 "paging": true,
                 "lengthChange": true,
                 "searching": true,
-                "ordering": true,
+                "ordering": false,
                 "info": true,
                 "autoWidth": false
             });

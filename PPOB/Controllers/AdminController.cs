@@ -29,72 +29,65 @@ namespace PPOB.Controllers
         {
             try
             {
-                int intPage = 1;
-                int intPageSize = 5;
-                int intTotalPageCount = 0;
+                //int intPage = 1;
+                //int intPageSize = 10;
+                //int intTotalPageCount = 0;
 
-                if (searchStringUserNameOrEmail != null)
-                {
-                    intPage = 1;
-                }
-                else
-                {
-                    if (currentFilter != null)
-                    {
-                        searchStringUserNameOrEmail = currentFilter;
-                        intPage = page ?? 1;
-                    }
-                    else
-                    {
-                        searchStringUserNameOrEmail = "";
-                        intPage = page ?? 1;
-                    }
-                }
-
+                //if (searchStringUserNameOrEmail != null)
+                //{
+                //    intPage = 1;
+                //}
+                //else
+                //{
+                //    if (currentFilter != null)
+                //    {
+                //        searchStringUserNameOrEmail = currentFilter;
+                //        intPage = page ?? 1;
+                //    }
+                //    else
+                //    {
+                //        searchStringUserNameOrEmail = "";
+                //        intPage = page ?? 1;
+                //    }
+                //}
+                searchStringUserNameOrEmail = "";
                 ViewBag.CurrentFilter = searchStringUserNameOrEmail;
 
                 List<ExpandedUserDTO> col_UserDTO = new List<ExpandedUserDTO>();
-                int intSkip = (intPage - 1) * intPageSize;
+                //int intSkip = (intPage - 1) * intPageSize;
 
-                intTotalPageCount = UserManager.Users
-                    .Where(x => x.UserName.Contains(searchStringUserNameOrEmail))
-                    .Count();
+                //intTotalPageCount = UserManager.Users
+                //    .Where(x => x.UserName.Contains(searchStringUserNameOrEmail))
+                //    .Count();
 
                 var result = UserManager.Users
                     .Where(x => x.UserName.Contains(searchStringUserNameOrEmail))
                     .OrderBy(x => x.UserName)
-                    .Skip(intSkip)
-                    .Take(intPageSize)
+                    //.Skip(intSkip)
+                    //.Take(intPageSize)
                     .ToList();
 
                 foreach (var item in result)
                 {
                     ExpandedUserDTO objUserDTO = new ExpandedUserDTO();
 
+                    objUserDTO.UserName = item.UserName;
                     objUserDTO.NameIdentifier = item.NameIdentifier;
                     objUserDTO.Email = item.Email;
                     objUserDTO.PhoneNumber = item.PhoneNumber;
-                    //List<UserRolesDTO> list = new List<UserRolesDTO>();
-                    //list.Add(new UserRolesDTO() { RoleName = item.Roles.ToString() });
-                    ////for (int i = 0; i < list.Count-1; i++)
-                    //{
-                    //    objUserDTO.Roles = list[i].RoleName;
-                    //}
-                    //objUserDTO.Roles = list.ToList<UserRolesDTO>();
-                    //objUserDTO.Roles.ToList().AddRange(new UserRolesDTO { RoleName = item.Roles.ToString() });
                     objUserDTO.LockoutEndDateUtc = item.LockoutEndDateUtc;
 
                     col_UserDTO.Add(objUserDTO);
                 }
 
                 // Set the number of pages
-                var _UserDTOAsIPagedList =
-                    new StaticPagedList<ExpandedUserDTO>
-                    (
-                        col_UserDTO, intPage, intPageSize, intTotalPageCount
-                        );
+                //var _UserDTOAsIPagedList =
+                //    new StaticPagedList<ExpandedUserDTO>
+                //    (
+                //        col_UserDTO , intPage, intPageSize, intTotalPageCount
+                //        );
 
-                return View(_UserDTOAsIPagedList);
+                return View(col_UserDTO);
             }
             catch (Exception ex)
             {
@@ -137,6 +130,7 @@ namespace PPOB.Controllers
 
                 var NameIdentifier = paramExpandedUserDTO.NameIdentifier.Trim();
                 var Email = paramExpandedUserDTO.Email.Trim();
+                var PhoneNumber = paramExpandedUserDTO.PhoneNumber.Trim();
                 var UserName = paramExpandedUserDTO.Email.Trim();
                 var Password = paramExpandedUserDTO.Password.Trim();
 
@@ -159,7 +153,7 @@ namespace PPOB.Controllers
 
                 // Create user
 
-                var objNewAdminUser = new ApplicationUser { NameIdentifier = NameIdentifier , UserName = UserName, Email = Email };
+                var objNewAdminUser = new ApplicationUser { NameIdentifier = NameIdentifier , UserName = UserName, Email = Email, PhoneNumber = PhoneNumber };
                 var AdminUserCreateResult = UserManager.Create(objNewAdminUser, Password);
 
                 if (AdminUserCreateResult.Succeeded == true)
@@ -172,7 +166,7 @@ namespace PPOB.Controllers
                         UserManager.AddToRole(objNewAdminUser.Id, strNewRole);
                     }
 
-                    return Redirect("~/Admin");
+                    return Redirect("~/Admin/Index");
                 }
                 else
                 {
@@ -230,7 +224,7 @@ namespace PPOB.Controllers
                     return HttpNotFound();
                 }
 
-                return Redirect("~/Admin");
+                return Redirect("~/Admin/Index");
             }
             catch (Exception ex)
             {
@@ -271,7 +265,7 @@ namespace PPOB.Controllers
                     DeleteUser(objExpandedUserDTO);
                 }
 
-                return Redirect("~/Admin");
+                return Redirect("~/Admin/Index");
             }
             catch (Exception ex)
             {
@@ -634,6 +628,7 @@ namespace PPOB.Controllers
             if (result == null) throw new Exception("Could not find the User");
 
             objExpandedUserDTO.UserName = result.UserName;
+            objExpandedUserDTO.NameIdentifier = result.NameIdentifier;
             objExpandedUserDTO.Email = result.Email;
             objExpandedUserDTO.LockoutEndDateUtc = result.LockoutEndDateUtc;
             objExpandedUserDTO.AccessFailedCount = result.AccessFailedCount;
@@ -655,7 +650,9 @@ namespace PPOB.Controllers
                 throw new Exception("Could not find the User");
             }
 
+            result.NameIdentifier = paramExpandedUserDTO.NameIdentifier;
             result.Email = paramExpandedUserDTO.Email;
+            result.PhoneNumber = paramExpandedUserDTO.PhoneNumber;
 
             // Lets check if the account needs to be unlocked
             if (UserManager.IsLockedOut(result.Id))
