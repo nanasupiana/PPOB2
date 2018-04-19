@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web;
 
 namespace PPOB.Models
 {
@@ -16,6 +17,9 @@ namespace PPOB.Models
         public DateTime? LockoutEndDateUtc { get; set; }
         public int AccessFailedCount { get; set; }
         public string PhoneNumber { get; set; }
+        //[Required, Microsoft.Web.Mvc.FileExtensions(Extensions = "csv",
+        //     ErrorMessage = "Specify a CSV file. (Comma-separated values)")]
+        public string Photo { get; set; }
         public IEnumerable<UserRolesDTO> Roles { get; set; }
     }
 

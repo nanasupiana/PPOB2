@@ -1,67 +1,101 @@
 ﻿@model PPOB.Models.ExpandedUserDTO
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Users";
 }
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+@section Menu {
+    @Scripts.Render("~/Scripts/Tables/Data/menu")
+}
+@Styles.Render("~/AdminLTE/plugins/datatables/css")
+@Styles.Render("~/AdminLTE/plugins/select2/css")
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
-    <div class="form-horizontal">
-        <h4>Create User</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <h4>Create User</h4>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.NameIdentifier,
-           htmlAttributes: new { @class = "contr=]ol-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NameIdentifier,
-               new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NameIdentifier, "",
-               new { @class = "text-danger" })
-            </div>
-        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 col-md-4 control-label text-muted" style="text-align:left;">Photo</label>
+                            <label class="col-sm-1 col-md-1 control-label text-muted ">:</label>
+                            <div class="col-sm-8 col-md-7">
+                                <input type="file" class="form-control"/>
+                                @*@Html.EditorFor(model => model.NameIdentifier,
+                                        new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.NameIdentifier, "",
+                                        new { @class = "text-danger" })*@
+                            </div>
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email,
-           htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email,
-               new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "",
-               new { @class = "text-danger" })
-            </div>
-        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 col-md-4 control-label text-muted" style="text-align:left;">Nama</label>
+                            <label class="col-sm-1 col-md-1 control-label text-muted ">:</label>
+                            <div class="col-sm-8 col-md-7">
+                                @Html.EditorFor(model => model.NameIdentifier,
+                                        new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.NameIdentifier, "",
+                                        new { @class = "text-danger" })
+                            </div>
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Password,
-           htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.PasswordFor(model => model.Password,
-               new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Password,
-               "",
-               new { @class = "text-danger" })
-            </div>
-        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 col-md-4 control-label text-muted" style="text-align:left;">Email</label>
+                            <label class="col-sm-1 col-md-1 control-label text-muted ">:</label>
+                            <div class="col-sm-8 col-md-7">
+                                @Html.EditorFor(model => model.Email,
+                                        new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Email, "",
+                                        new { @class = "text-danger" })
+                            </div>
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Roles,
-           htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Roles")
-            </div>
-        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 col-md-4 control-label text-muted" style="text-align:left;">Password</label>
+                            <label class="col-sm-1 col-md-1 control-label text-muted ">:</label>
+                            <div class="col-sm-8 col-md-7">
+                                @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Password,
+                                        "",
+                                        new { @class = "text-danger" })
+                            </div>
+                        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-                @Html.ActionLink("Back to List",
-               "Index",
-               null,
-               new { @class = "btn btn-default" })
-            </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 col-md-4 control-label text-muted" style="text-align:left;">Role</label>
+                            <label class="col-sm-1 col-md-1 control-label text-muted ">:</label>
+                            <div class="col-sm-8 col-md-7">
+                                @Html.DropDownList("Roles", null, new { @class = "form-control" } )
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            <div class="col-sm-offset-4 col-sm-8 col-md-offset-5 col-md-7">
+                                <input type="submit" value="Save" class="btn btn-warning" />
+                                @Html.ActionLink("Back to List",
+                                        "Index",
+                                        null,
+                                        new { @class = "btn btn-default" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/AdminLTE/plugins/datatables/js")
+    @Scripts.Render("~/AdminLTE/plugins/select2/js")
 }
+
+
+

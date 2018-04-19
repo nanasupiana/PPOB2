@@ -29,7 +29,6 @@
                                         <th>Nama</th>
                                         <th>Email</th>
                                         <th>No Telpon</th>
-                                        <th>Role Grroup</th>
                                         <th style="width:40px; text-align:center;">Action</th>
                                     </tr>
                                 </thead>
@@ -43,9 +42,9 @@
                                             <td class="_name">@item.NameIdentifier</td>
                                             <td class="_name">@item.Email</td>
                                             <td class="_name">@item.PhoneNumber</td>
-                                            <td class="_name">@item.Roles</td>
                                             <td style="text-align:center;">
-                                                <button class="btn btn-xs btn-success" title="Edit" onclick="return  EditPopUp($(this))"><span class="fa fa-pencil"></span></button>
+                                                @Html.ActionLink("Edit", "EditUser","/", new { UserName = item.UserName }, new { @class = "btn btn-xs btn-success fa fa-pencil" })
+                                                <a href="@Url.Action("EditUser", "Admin",new { UserName = item.UserName })" class="btn btn-xs btn-success" title="Edit" onclick="return  EditPopUp($(this))"><span class="fa fa-pencil"></span></a>
                                                 <button class="btn btn-xs btn-danger" title="Delete" onclick="return DeletePopUp($(this))"><span class="fa fa-trash"></span></button>
                                             </td>
                                         </tr>
