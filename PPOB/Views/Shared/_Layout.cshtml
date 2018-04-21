@@ -51,7 +51,7 @@
                         </a>
                         </li>
                     <li id="left-sidebar-menu-charts" class="treeview">
-                        <a href="#">
+                        <a href="@Url.Action("Index","Member")">
                             <i class="fa fa-user"></i>
                             <span>Member</span>
                         </a>
@@ -59,7 +59,7 @@
                     @if (User.IsInRole("Administrator"))
                     {
                         <li id="left-sidebar-menu-charts" class="treeview">
-                            <a href="#">
+                            <a href="@Url.Action("Index","Admin")">
                                 <i class="fa fa-users"></i>
                                 <span>User</span>
                             </a>
@@ -102,6 +102,19 @@
                             <i class="fa fa-dollar"></i>
                             <span>Top Up Wallet</span>
                         </a>
+                    </li>
+                    <li id="left-sidebar-menu-charts" class="treeview">
+                        <a href="#">
+                            <i class="fa fa-tasks"></i>
+                            <span>Master Produk</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li id="left-sidebar-menu-charts-chartjs"><a href="#">Pulsa</a></li>
+                            <li id="left-sidebar-menu-charts-chartjs"><a href="#">BPJS</a></li>
+                            <li id="left-sidebar-menu-charts-chartjs"><a href="#">PDAM</a></li>
+                            <li id="left-sidebar-menu-charts-chartjs"><a href="#">PLN</a></li>
+                        </ul>
                     </li>
                 </ul>
             </section>
