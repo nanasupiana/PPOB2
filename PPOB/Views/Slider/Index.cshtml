@@ -1,0 +1,230 @@
+﻿@*@model PPOB.Models.MasterOperator*@
+@{
+    ViewBag.Title = "Slider";
+}
+
+@section Menu {
+    @Scripts.Render("~/Scripts/Tables/Data/menu")
+}
+@Styles.Render("~/AdminLTE/plugins/datatables/css")
+@Styles.Render("~/AdminLTE/plugins/select2/css")
+<link href="~/Content/toastr.min.css" rel="stylesheet" />
+
+<div id="MainForm">
+    <div id="tablegrid">
+        @Html.Partial("_SimpleGrid")
+    </div>
+</div>
+
+<div id="DetailForm" class="hidden">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-warning">
+                <div class="box-body">
+                    <h3 id="title_form"></h3>
+                    <hr />
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <input id="form_id_slider" class="hidden" />
+                            <label class="col-md-2 control-label text-muted" style="text-align:left;">Photo</label>
+                            <label class="col-md-1 control-label text-muted ">:</label>
+                            <div class="col-md-5">
+                                <img id="image" alt="image" class="img-circle" style="width:90px;"/>
+                                <input id="form_photo" class="form-control" type="file" onclick="return Preview(this)"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label text-muted" style="text-align:left;">Judul</label>
+                            <label class="col-md-1 control-label text-muted ">:</label>
+                            <div class="col-md-5">
+                                <input id="form_judul" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label text-muted" style="text-align:left;">Deskripsi Singkat</label>
+                            <label class="col-md-1 control-label text-muted ">:</label>
+                            <div class="col-md-5">
+                                <input id="form_des_singkat" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label text-muted" style="text-align:left;">Deskripsi Panjang</label>
+                            <label class="col-md-1 control-label text-muted ">:</label>
+                            <div class="col-md-5">
+                                <input id="form_des_panjang" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-md-5">
+                                <button id="btnSave" type="button" class="btn btn-warning" onclick="return Save()"><span class="bold fa fa-save">&nbsp;&nbsp;Save</span></button>&nbsp;
+                                <button type="button" class="btn btn-default" onclick="return InitialConditions()"><span class="bold fa fa-angle-left">&nbsp;&nbsp;Back To List</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="DeletePopUp" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content  panel panel-warning">
+            <div class="panel-heading">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h2 class="modal-title">Delete Slider</h2>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <input id="popup_id_slider" />
+                        <label class="col-md-3 control-label text-muted" style="text-align:left;">ID</label>
+                        <label class="col-md-1 control-label text-muted ">:</label>
+                        <label id="popup_id_slider" class="col-md-8 control-label text-muted " style="text-align:left;"></label>
+                    </div>
+                    <div class="form-group">
+                        <input id="popup_judul" />
+                        <label class="col-md-3 control-label text-muted" style="text-align:left;">Judul</label>
+                        <label class="col-md-1 control-label text-muted ">:</label>
+                        <label id="popup_judul" class="col-md-8 control-label text-muted " style="text-align:left;"></label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" onclick="return Delete()"><span class="bold fa fa-times-circle">&nbsp;&nbsp;Delete</span></button>&nbsp;
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="bold fa fa-times">&nbsp;&nbsp;Cancel</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/AdminLTE/plugins/datatables/js")
+    @Scripts.Render("~/AdminLTE/plugins/select2/js")
+    <script src="~/Scripts/toastr.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            DataTable();
+        })
+
+        toastr.options = {
+            "positionClass": "toast-bottom-right",
+            "timeOut": "3000"
+        }
+
+        function Preview(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#image').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+                //$("#profile_avatar").addClass("hidden");
+            }
+        }
+
+        function DataTable() {
+            $('#table').DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": false,
+                "info": true,
+                "autoWidth": false
+            });
+        }
+
+        function InitialConditions() {
+            $("#MainForm").removeClass("hidden");
+            $("#DetailForm").addClass("hidden");
+        }
+
+        function FormAdd() {
+            $("#form_id_slider").val("");
+            $("#form_photo").removeAttr("disabled", "disabled");
+            $("#form_photo").val("");
+            $("#form_judul").removeAttr("disabled", "disabled");
+            $("#form_judul").val("");
+            $("#form_des_singkat").removeAttr("disabled", "disabled");
+            $("#form_des_singkat").val("");
+            $("#form_des_panjang").removeAttr("disabled", "disabled");
+            $("#form_des_panjang").val("");
+            $("#title_form").html("Add Slider");
+            $("#MainForm").addClass("hidden");
+            $("#DetailForm").removeClass("hidden");
+        }
+
+        function FormEdit(data) {
+            var Id = data.closest("tr").find("#grid_id_slider").val();
+            var Photo = data.closest("tr").find("#grid_Photo").text();
+            var Judul = data.closest("tr").find("#grid_Judul").text();
+            var DesSingkat = data.closest("tr").find("#grid_DesSingkat").text();
+            var DesPanjang = data.closest("tr").find("#grid_DesPanjang").text();
+            $("#form_id_slider").val(Id);
+            $("#form_photo").removeAttr("disabled", "disabled");
+            $("#form_photo").val(Photo);
+            $("#form_judul").removeAttr("disabled", "disabled");
+            $("#form_judul").val(Judul);
+            $("#form_des_singkat").removeAttr("disabled", "disabled");
+            $("#form_des_singkat").val(DesSingkat);
+            $("#form_des_panjang").removeAttr("disabled", "disabled");
+            $("#form_des_panjang").val(DesPanjang);
+            $("#title_form").html("Edit Slider");
+            $("#MainForm").addClass("hidden");
+            $("#DetailForm").removeClass("hidden");
+        }
+
+        function DeletePopUp(data) {
+            $("#DeletePopUp").modal({ backdrop: 'static' });
+            var Id = data.closest("tr").find("#grid_id_slider").val();
+            var Judul = data.closest("tr").find("#grid_Judul").text();
+            $("#popup_id_slider").val(Id)
+            $("#popup_judul").val(Judul);
+        }
+
+        function Save() {
+            var Id = $("#form_id_slider").val();            
+            var Photo = $("#form_photo").val();
+            var Judul = $("#form_judul").val();
+            var DesSingkat = $("#form_des_singkat").val();
+            var DesPanjang = $("#form_des_panjang").val();
+            if (Id == "") {
+                var url = "@Url.Action("Create","Slider")";
+            }
+            else {
+                var url = "@Url.Action("Edit","Slider")";
+            }
+            var model = { ID: Id, Photo: Photo, Judul: Judul, DesSingkat: DesSingkat, DesPanjang: DesPanjang };
+            $.post(url, model, function (result) {
+                if (result == "" || result == false) {
+                    toastr.warning("Data Error.")
+                }
+                else {
+                    $("#tablegrid").html(result);
+                    toastr.success("Save data successfully.")
+                    InitialConditions();
+                    return DataTable();
+                }
+            });
+        }
+
+        function Delete() {
+            var Id = $("#popup_id_slider").val();
+            var Judul = $("#form_Judul").val();
+            var url = "@Url.Action("Delete","Slider")";
+            var model = { ID: Id };
+            $.post(url, model, function (result) {
+                if (result == "" || result == false) {
+                    toastr.warning("Data Error.")
+                }
+                else {
+                    $("#tablegrid").html(result);
+                    InitialConditions();
+                    toastr.warning("Data Error.")
+                    $("#DeletePopUp").modal('hide');
+                    return DataTable();
+                }
+            });
+        }
+
+    </script>
+}
