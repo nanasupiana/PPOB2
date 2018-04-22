@@ -29,8 +29,8 @@
                             <label class="col-md-2 control-label text-muted" style="text-align:left;">Photo</label>
                             <label class="col-md-1 control-label text-muted ">:</label>
                             <div class="col-md-5">
-                                <img id="image" alt="image" class="img-circle" style="width:90px;"/>
-                                <input id="form_photo" class="form-control" type="file" onclick="return Preview(this)"/>
+                                <img id="image" alt="image" class="img-thumbnail" style="width:200px;"/>
+                                <input id="form_photo" class="form-control" type="file" onblur="return Preview(this)"/>                               
                             </div>
                         </div>
                         <div class="form-group">
@@ -51,7 +51,7 @@
                             <label class="col-md-2 control-label text-muted" style="text-align:left;">Deskripsi Panjang</label>
                             <label class="col-md-1 control-label text-muted ">:</label>
                             <div class="col-md-5">
-                                <input id="form_des_panjang" class="form-control" />
+                                <textarea id="form_des_panjang" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -118,8 +118,13 @@
                     $('#image').attr('src', e.target.result);
                 }
                 reader.readAsDataURL(input.files[0]);
-                //$("#profile_avatar").addClass("hidden");
+                $("#profile_avatar").addClass("hidden");
             }
+        }
+
+        function getFilePath() {
+            alert('test');            
+                console.log(this.form_photo[0].mozFullPath);
         }
 
         function DataTable() {
@@ -183,7 +188,7 @@
 
         function Save() {
             var Id = $("#form_id_slider").val();            
-            var Photo = $("#form_photo").val();
+            var Photo = $("#image").get(0).src;
             var Judul = $("#form_judul").val();
             var DesSingkat = $("#form_des_singkat").val();
             var DesPanjang = $("#form_des_panjang").val();
