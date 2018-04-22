@@ -32,13 +32,11 @@ namespace PPOB.Controllers
         public async Task<ActionResult> Create(MasterSlider model)
         {
             try
-            {
-                System.IO.FileStream FS = new System.IO.FileStream(model.Photo, FileMode.Open, FileAccess.Read);
-                byte[] img = new byte[FS.Length];
-                FS.Read(img, 0, Convert.ToInt32(FS.Length));                          
+            {                
+                //byte[] bytes = System.Convert.FromBase64String(model.Photo);                
 
                 SliderRepository Repository = new SliderRepository();
-                var result = await Repository.CreateSlider(img, model.Judul,model.DesSingkat,model.DesPanjang);
+                var result = await Repository.CreateSlider(model.Photo, model.Judul,model.DesSingkat,model.DesPanjang,User.Identity.Name);
                 if (result == true)
                 {
                     return await GetList();

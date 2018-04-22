@@ -47,15 +47,16 @@ namespace PPOB.Models.Slider
             }
         }
 
-        public async Task<Boolean> CreateSlider(byte[] Photo, string Judul, string DesSingkat, string DesPanjang)
+        public async Task<Boolean> CreateSlider(string Photo, string Judul, string DesSingkat, string DesPanjang,string User)
         {
             Boolean Result = false;
             try
-            {               
+            {                
+
                 string Query = "CreateSlider";
                 dbAccess.strConn = conn;
-                SqlParameter[] pParam = new SqlParameter[4];
-                pParam[0] = new SqlParameter("@Photo", SqlDbType.Binary);
+                SqlParameter[] pParam = new SqlParameter[5];
+                pParam[0] = new SqlParameter("@Photo", SqlDbType.VarChar);
                 pParam[0].Value = Photo;
                 pParam[1] = new SqlParameter("@Judul", SqlDbType.VarChar);
                 pParam[1].Value = Judul;
@@ -63,6 +64,8 @@ namespace PPOB.Models.Slider
                 pParam[2].Value = DesSingkat;
                 pParam[3] = new SqlParameter("@DesPanjang", SqlDbType.VarChar);
                 pParam[3].Value = DesPanjang;
+                pParam[4] = new SqlParameter("@User", SqlDbType.VarChar);
+                pParam[4].Value = User;
 
                 int res = await dbAccess.ExecQueryByCommand(Query, pParam);
                 if (res == -1)
