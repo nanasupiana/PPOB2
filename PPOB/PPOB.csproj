@@ -55,7 +55,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="mmt_Library, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Dedi\dll\mmt_Library\mmt_Library\bin\Debug\mmt_Library.dll</HintPath>
+      <HintPath>..\mmt_Library.dll</HintPath>
     </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
@@ -69,6 +69,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -188,6 +189,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OperatorController.cs" />
+    <Compile Include="Controllers\SliderController.cs" />
     <Compile Include="Extensions\ClaimsExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -199,6 +201,8 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Operator\Operator.cs" />
     <Compile Include="Models\Operator\OperatorRepository.cs" />
+    <Compile Include="Models\Slider\MasterSlider.cs" />
+    <Compile Include="Models\Slider\SliderRepository.cs" />
     <Compile Include="Models\Standart.cs" />
     <Compile Include="Models\UserRolesDTO.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
@@ -525,6 +529,8 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\ViewAllRoles.cshtml" />
     <Content Include="Views\Operator\Index.cshtml" />
+    <Content Include="Views\Slider\_SimpleGrid.cshtml" />
+    <Content Include="Views\Slider\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
