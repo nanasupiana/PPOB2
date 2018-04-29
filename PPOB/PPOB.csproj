@@ -189,6 +189,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\OperatorController.cs" />
+    <Compile Include="Controllers\SliderController.cs" />
     <Compile Include="Extensions\ClaimsExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -198,8 +199,12 @@
     <Compile Include="Models\LoginModels.cs" />
     <Compile Include="Models\LoginRepository.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Member\Member.cs" />
+    <Compile Include="Models\Member\MemberRepository.cs" />
     <Compile Include="Models\Operator\Operator.cs" />
     <Compile Include="Models\Operator\OperatorRepository.cs" />
+    <Compile Include="Models\Slider\MasterSlider.cs" />
+    <Compile Include="Models\Slider\SliderRepository.cs" />
     <Compile Include="Models\Standart.cs" />
     <Compile Include="Models\UserRolesDTO.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
@@ -528,6 +533,8 @@
     <Content Include="Views\Operator\Index.cshtml" />
     <Content Include="Views\Member\_SimpleGrid.cshtml" />
     <Content Include="Views\Member\Index.cshtml" />
+    <Content Include="Views\Slider\Index.cshtml" />
+    <Content Include="Views\Slider\_SimpleGrid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

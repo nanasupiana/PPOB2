@@ -1,7 +1,7 @@
-﻿@*@using PPOB.Models;*@
+﻿@using PPOB.Models;
 @{
-//List<MasterOperator> List = (List<MasterOperator>)ViewData["ListOperator"];
-//var no = 0;
+    List<MasterMember> List = (List<MasterMember>)ViewData["ListMember"];
+    var no = 0;
 }
 <div class="row">
     <div class="col-md-12">
@@ -10,7 +10,7 @@
                 <div class="col-xs-12">
                     <div class="box box-warning">
                         <div class="box-body">
-                            <button class="btn btn-success" onclick="return FormAdd()"><span class="fa fa-plus"></span> Add Operator</button>
+                            <button class="btn btn-success" onclick="return FormAdd()"><span class="fa fa-plus"></span> Add Member</button>
                             <hr />
                             <table id="table" class="table table-bordered table-striped table-condensed">
                                 <thead style="color:blue">
@@ -19,40 +19,36 @@
                                         <th>Photo</th>
                                         <th>Nama</th>
                                         <th>Email</th>
-                                        <th>No telponr</th>
+                                        <th>No telpon</th>
                                         <th>Kode referall</th>
+                                        <th>Type Member</th>
                                         <th>Bergabung pada</th>
-                                        <th style="width:40px; text-align:center;" >Action</th>
+                                        <th style="width:60px; text-align:center;" >Action</th>
                                     </tr>
                                 </thead>
-                                <tbody id="tbody">
+                                <tbody id="tbody">@foreach (var item in List)
+                                {
+                                    no++;
                                     <tr>
-                                        <td>1</td>
-                                        <td id="grid_photo">No photo</td>
-                                        <td id="grid_nama">Nana Supiana</td>
-                                        <td id="grid_email">nana@gmail.com</td>
-                                        <td id="grid_no_telpon">021040894922</td>
-                                        <td id="grid_no_referall">9829398</td>
-                                        <td id="grid_create_date">01-01-2000</td>
+                                        <td>@no</td>
+                                        <td >
+                                            <img id="image" alt="image" class="img-circle" style="width:50px;" src="@item.Photo" />
+                                        </td>
+                                        <td id="grid_nama">@item.NamaMember</td>
+                                        <td id="grid_email">@item.Email</td>
+                                        <td id="grid_no_telpon">@item.NoTepon</td>
+                                        <td id="grid_kode_referall">@item.KodeReverall</td>
+                                        <td id="grid_type_member">@item.TypeMember</td>
+                                        <td id="grid_tanggal_bergabung">@item.TanggalGabung</td>
                                         <td>
-                                            <input id="grid_id_member" class="hidden" />
+                                            <input id="grid_id_member" class="hidden" value="@item.MemberId" />
+                                            <input id="grid_photo" class="hidden" value="@item.Photo" />
+                                            <button class="btn btn-xs btn-primary" title="Detail" onclick="return FormDetail($(this))"><span class="fa fa-eye"></span></button>
                                             <button class="btn btn-xs btn-success" title="Edit" onclick="return FormEdit($(this))"><span class="fa fa-pencil"></span></button>
                                             <button class="btn btn-xs btn-danger" title="Delete" onclick="return DeletePopUp($(this))"><span class="fa fa-trash"></span></button>
                                         </td>
                                     </tr>
-                                    @*@foreach (var item in List)
-                                    {
-                                        no++;
-                                        <tr>
-                                            <td>@no</td>
-                                            <td id="grid_nama_operator">@item.NamaOperator</td>
-                                            <td style="text-align:center;">
-                                                <input id="grid_id_operaror" class="hidden " value="@item.IdOperator"/>
-                                                <button class="btn btn-xs btn-success" title="Edit" onclick="return FormEdit($(this))"><span class="fa fa-pencil"></span></button>
-                                                <button class="btn btn-xs btn-danger" title="Delete" onclick="return DeletePopUp($(this))"><span class="fa fa-trash"></span></button>
-                                            </td>
-                                        </tr>
-                                    }*@
+                                }
                                 </tbody>
                             </table>
                         </div>
