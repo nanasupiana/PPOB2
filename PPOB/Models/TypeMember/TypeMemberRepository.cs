@@ -59,7 +59,7 @@ namespace PPOB.Models.TypeMember
                 pParam[2] = new SqlParameter("@User", SqlDbType.VarChar);
                 pParam[2].Value = User;
                 int res = await dbAccess.ExecQueryByCommand(Query, pParam);
-                if (res == -1)
+                if (res == 1)
                 {
                     Result = true;
                 }
@@ -94,7 +94,7 @@ namespace PPOB.Models.TypeMember
                 pParam[2] = new SqlParameter("@User", SqlDbType.VarChar);
                 pParam[2].Value = User;
                 int res = await dbAccess.ExecQueryByCommand(Query, pParam);
-                if (res == -1)
+                if (res == 1)
                 {
                     Result = true;
                 }
@@ -125,7 +125,7 @@ namespace PPOB.Models.TypeMember
                 pParam[0] = new SqlParameter("@TypeMember", SqlDbType.VarChar);
                 pParam[0].Value = TypeMember;
                 int res = await dbAccess.ExecQueryByCommand(Query, pParam);
-                if (res == -1)
+                if (res == 1)
                 {
                     Result = true;
                 }

@@ -68,7 +68,7 @@ namespace PPOB.Models.Slider
                 pParam[4].Value = User;
 
                 int res = await dbAccess.ExecQueryByCommand(Query, pParam);
-                if (res == -1)
+                if (res == 1)
                 {
                     Result = true;
                 }
@@ -104,7 +104,7 @@ namespace PPOB.Models.Slider
                 pParam[4] = new SqlParameter("@DesPanjang", SqlDbType.VarChar);
                 pParam[4].Value = DesPanjang;
                 int res = await dbAccess.ExecQueryByCommand(Query, pParam);
-                if (res == -1)
+                if (res == 1)
                 {
                     Result = true;
                 }
@@ -133,7 +133,7 @@ namespace PPOB.Models.Slider
                 pParam[0] = new SqlParameter("@Id", SqlDbType.VarChar);
                 pParam[0].Value = ID;
                 int res = await dbAccess.ExecQueryByCommand(Query, pParam);
-                if (res == -1)
+                if (res == 1)
                 {
                     Result = true;
                 }

@@ -40,7 +40,8 @@
                                             <td id="grid_DesSingkat">@item.DesSingkat</td>
                                             <td id="grid_DesPanjang">@item.DesPanjang</td>
                                             <td style="text-align:center;">
-                                                <input id="grid_id_slider" class="hidden " value="@item.ID"/>
+                                                <input id="grid_id_slider" class="hidden " value="@item.ID" />
+                                                <input id="grid_image" class="hidden " value="@item.Photo" />
                                                 <button class="btn btn-xs btn-success" title="Edit" onclick="return FormEdit($(this))"><span class="fa fa-pencil"></span></button>
                                                 <button class="btn btn-xs btn-danger" title="Delete" onclick="return DeletePopUp($(this))"><span class="fa fa-trash"></span></button>
                                             </td>

@@ -59,7 +59,7 @@ namespace PPOB.Models.Pulsa
                 pParam[2] = new SqlParameter("@User", SqlDbType.VarChar);
                 pParam[2].Value = User;
                 int res = await dbAccess.ExecQueryByCommand(Query, pParam);
-                if (res == -1)
+                if (res == 1)
                 {
                     Result = true;
                 }
@@ -94,7 +94,7 @@ namespace PPOB.Models.Pulsa
                 pParam[2] = new SqlParameter("@User", SqlDbType.VarChar);
                 pParam[2].Value = User;
                 int res = await dbAccess.ExecQueryByCommand(Query, pParam);
-                if (res == -1)
+                if (res == 1)
                 {
                     Result = true;
                 }
@@ -124,7 +124,7 @@ namespace PPOB.Models.Pulsa
                 pParam[0] = new SqlParameter("@PulsaId", SqlDbType.VarChar);
                 pParam[0].Value = PulsaId;
                 int res = await dbAccess.ExecQueryByCommand(Query, pParam);
-                if (res == -1)
+                if (res == 1)
                 {
                     Result = true;
                 }
