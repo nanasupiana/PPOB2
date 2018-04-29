@@ -19,7 +19,7 @@
         <header class="main-header">
             <a href="@Url.Action("DashboardV1", "Home")" class="logo">
                 <span class="logo-mini"><b>ESTA</b></span>
-                <span class="logo-lg fa fa-opencart"> <b>ESTA DIGITAL NIAGA</b></span>
+                <span class="logo-lg"><img src="~/Content/ESTA.png" class="img-circle" alt="User Image"></span>
             </a>
             <nav class="navbar navbar-static-top" role="navigation">
                 <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -114,6 +114,17 @@
                             <li id="left-sidebar-menu-charts-chartjs"><a href="#">BPJS</a></li>
                             <li id="left-sidebar-menu-charts-chartjs"><a href="#">PDAM</a></li>
                             <li id="left-sidebar-menu-charts-chartjs"><a href="#">PLN</a></li>
+                        </ul>
+                    </li>
+                    <li id="left-sidebar-menu-charts" class="treeview">
+                        <a href="#">
+                            <i class="fa fa-tasks"></i>
+                            <span>Customization</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li id="left-sidebar-menu-charts-chartjs"><a href="@Url.Action("Index", "Pulsa")">Type Pulsa</a></li>                            
+                            <li id="left-sidebar-menu-charts-chartjs"><a href="@Url.Action("Index", "TypeMember")">Type Member</a></li>                            
                         </ul>
                     </li>
                 </ul>
