@@ -1,5 +1,4 @@
-﻿@*@model PPOB.Models.MasterOperator*@
-@{
+﻿@{
     ViewBag.Title = "Slider";
 }
 
@@ -29,7 +28,7 @@
                             <label class="col-md-2 control-label text-muted" style="text-align:left;">Photo</label>
                             <label class="col-md-1 control-label text-muted ">:</label>
                             <div class="col-md-5">
-                                <img id="image" alt="image" class="img-thumbnail" style="width:200px;"/>
+                                <img id="form_image" alt="image" class="img-thumbnail" style="width:200px;"/>
                                 <input id="form_photo" class="form-control" type="file" onblur="return Preview(this)"/>                               
                             </div>
                         </div>
@@ -160,13 +159,12 @@
 
         function FormEdit(data) {
             var Id = data.closest("tr").find("#grid_id_slider").val();
-            var Photo = data.closest("tr").find("#grid_Photo").text();
+            var Photo = data.closest("tr").find("#grid_image").val();
             var Judul = data.closest("tr").find("#grid_Judul").text();
             var DesSingkat = data.closest("tr").find("#grid_DesSingkat").text();
             var DesPanjang = data.closest("tr").find("#grid_DesPanjang").text();
             $("#form_id_slider").val(Id);
-            $("#form_photo").removeAttr("disabled", "disabled");
-            $("#form_photo").val(Photo);
+            document.getElementById("form_image").src = Photo;            
             $("#form_judul").removeAttr("disabled", "disabled");
             $("#form_judul").val(Judul);
             $("#form_des_singkat").removeAttr("disabled", "disabled");

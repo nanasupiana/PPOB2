@@ -7,22 +7,21 @@ using System.Configuration;
 using System.Data;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
-using PPOB.Models;
-using System.Web.Mvc;
+using PPOB.Models.TypeMember;
 
-namespace PPOB.Models.Slider
+namespace PPOB.Models.TypeMember
 {
-    public class SliderRepository
+    public class TypeMemberRepository
     {
         dbAccess dbAccess = new dbAccess();
         string conn = ConfigurationManager.ConnectionStrings["GetConn"].ConnectionString;
 
-        public async Task<List<MasterSlider>> GetSlider()
+        public async Task<List<MasterTypeMember>> GetTypeMember()
         {
-            List<MasterSlider> Result = new List<MasterSlider>();
+            List<MasterTypeMember> Result = new List<MasterTypeMember>();
             try
             {
-                string Query = "GetSlider";
+                string Query = "GetTypemember";
                 DataTable dt = new DataTable();
                 dbAccess.strConn = conn;
                 dt = await dbAccess.GetDataTable(Query);
@@ -30,13 +29,10 @@ namespace PPOB.Models.Slider
                 foreach (DataRow dr in dt.Rows)
                 {
                     Result.Add(
-                        new MasterSlider
+                        new MasterTypeMember
                         {
-                            ID = Convert.ToString(dr["Id"]),
-                            Photo = Convert.ToString(dr["Photo"]),
-                            Judul = Convert.ToString(dr["Judul"]),
-                            DesSingkat = Convert.ToString(dr["DesSingkat"]),
-                            DesPanjang = Convert.ToString(dr["DesPanjang"])
+                            TypeMember = Convert.ToString(dr["TypeMember"]),
+                            Deskripsi = Convert.ToString(dr["Deskripsi"]),
                         });
                 }
                 return Result;
@@ -47,26 +43,21 @@ namespace PPOB.Models.Slider
             }
         }
 
-        public async Task<Boolean> CreateSlider(string Photo, string Judul, string DesSingkat, string DesPanjang,string User)
+        public async Task<Boolean> CreateTypeMember(string TypeMember,string Deskripsi,string User)
         {
             Boolean Result = false;
             try
-            {                
+            {
+                string Query = "CreateTypeMember";
 
-                string Query = "CreateSlider";
                 dbAccess.strConn = conn;
-                SqlParameter[] pParam = new SqlParameter[5];
-                pParam[0] = new SqlParameter("@Photo", SqlDbType.VarChar);
-                pParam[0].Value = Photo;
-                pParam[1] = new SqlParameter("@Judul", SqlDbType.VarChar);
-                pParam[1].Value = Judul;
-                pParam[2] = new SqlParameter("@DesSingkat", SqlDbType.VarChar);
-                pParam[2].Value = DesSingkat;
-                pParam[3] = new SqlParameter("@DesPanjang", SqlDbType.VarChar);
-                pParam[3].Value = DesPanjang;
-                pParam[4] = new SqlParameter("@User", SqlDbType.VarChar);
-                pParam[4].Value = User;
-
+                SqlParameter[] pParam = new SqlParameter[3];
+                pParam[0] = new SqlParameter("@TypeMember", SqlDbType.VarChar);
+                pParam[0].Value = TypeMember;
+                pParam[1] = new SqlParameter("@Deskripsi", SqlDbType.VarChar);
+                pParam[1].Value = Deskripsi;
+                pParam[2] = new SqlParameter("@User", SqlDbType.VarChar);
+                pParam[2].Value = User;
                 int res = await dbAccess.ExecQueryByCommand(Query, pParam);
                 if (res == 1)
                 {
@@ -80,29 +71,28 @@ namespace PPOB.Models.Slider
             catch (Exception ex)
             {
                 Result = false;
+
                 throw;
             }
             return Result;
+
         }
 
-        public async Task<Boolean> EditSlider(string ID, byte[] Photo, string Judul, string DesSingkat, string DesPanjang)
+        public async Task<Boolean> EditTypeMember(string TypeMember, string Deskripsi,string User)
         {
             Boolean Result = false;
             try
             {
-                string Query = "EditSlider";
+                string Query = "EditTypeMember";
+
                 dbAccess.strConn = conn;
-                SqlParameter[] pParam = new SqlParameter[5];
-                pParam[0] = new SqlParameter("@Id", SqlDbType.VarChar);
-                pParam[0].Value = ID;
-                pParam[1] = new SqlParameter("@Judul", SqlDbType.VarChar);
-                pParam[1].Value = Judul;
-                pParam[2] = new SqlParameter("@Photo", SqlDbType.VarChar);
-                pParam[2].Value = Photo;
-                pParam[3] = new SqlParameter("@DesSingkat", SqlDbType.VarChar);
-                pParam[3].Value = DesSingkat;
-                pParam[4] = new SqlParameter("@DesPanjang", SqlDbType.VarChar);
-                pParam[4].Value = DesPanjang;
+                SqlParameter[] pParam = new SqlParameter[3];
+                pParam[0] = new SqlParameter("@TypeMember", SqlDbType.VarChar);
+                pParam[0].Value = TypeMember;
+                pParam[1] = new SqlParameter("@Deskripsi", SqlDbType.VarChar);
+                pParam[1].Value = Deskripsi;
+                pParam[2] = new SqlParameter("@User", SqlDbType.VarChar);
+                pParam[2].Value = User;
                 int res = await dbAccess.ExecQueryByCommand(Query, pParam);
                 if (res == 1)
                 {
@@ -116,22 +106,24 @@ namespace PPOB.Models.Slider
             catch (Exception ex)
             {
                 Result = false;
+
                 throw;
             }
             return Result;
+
         }
 
-        public async Task<Boolean> DeleteSlider(string ID)
+        public async Task<Boolean> DeleteTypeMember(string TypeMember)
         {
             Boolean Result = false;
             try
             {
-                string Query = "DeleteSlider";
+                string Query = "DeleteTypeMember";
 
                 dbAccess.strConn = conn;
                 SqlParameter[] pParam = new SqlParameter[1];
-                pParam[0] = new SqlParameter("@Id", SqlDbType.VarChar);
-                pParam[0].Value = ID;
+                pParam[0] = new SqlParameter("@TypeMember", SqlDbType.VarChar);
+                pParam[0].Value = TypeMember;
                 int res = await dbAccess.ExecQueryByCommand(Query, pParam);
                 if (res == 1)
                 {
@@ -148,7 +140,8 @@ namespace PPOB.Models.Slider
                 throw;
             }
             return Result;
+
         }
-        
+
     }
 }
