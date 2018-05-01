@@ -160,5 +160,38 @@ namespace PPOB.Models.MasterMenu
 
         }
 
+        public async Task<List<StandartComboBox>> GetParent()
+        {
+            List<StandartComboBox> Result = new List<StandartComboBox>();
+            try
+            {
+                string Query = "GetMenuParent";
+                DataTable dt = new DataTable();
+                dbAccess.strConn = conn;
+                dt = await dbAccess.GetDataTable(Query);
+                Result.Add(
+                new StandartComboBox
+                {
+                    Text = "Select",
+                    Value = "0"
+                });
+                foreach (DataRow dr in dt.Rows)
+                {
+                    Result.Add(
+                        new StandartComboBox
+                        {
+                            Value = Convert.ToString(dr["Value"]),
+                            Text = Convert.ToString(dr["Text"])
+                        });
+                }
+                return Result;
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+
+        }
+
     }
 }

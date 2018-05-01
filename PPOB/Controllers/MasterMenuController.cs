@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using System.Web;
+using PPOB.Models;
 
 namespace PPOB.Controllers
 {
@@ -14,6 +15,8 @@ namespace PPOB.Controllers
         public async Task<ActionResult> Index()
         {
             await GetListMasterMenu();
+            MasterMenuRepository Repository = new MasterMenuRepository();
+            ViewData["ListParent"] = await Repository.GetParent();
             return View();
         }
 
@@ -23,9 +26,9 @@ namespace PPOB.Controllers
             ViewData["ListMasterMenu"] = await Repository.GetMasterMenu();
             return PartialView("_SimpleGrid");
         }
-        
+
         [HttpPost]
-        public async Task<ActionResult> CreateMasterMenu(MasterMenu model)
+        public async Task<ActionResult> Create(MasterMenu model)
         {
             try
             {
@@ -48,7 +51,7 @@ namespace PPOB.Controllers
         }
         
         [HttpPost]
-        public async Task<ActionResult> EditMasterMenu(MasterMenu model)
+        public async Task<ActionResult> Edit(MasterMenu model)
         {
             try
             {
@@ -70,7 +73,7 @@ namespace PPOB.Controllers
         }
         
         [HttpPost]
-        public async Task<ActionResult> DeleteMasterMenu(MasterMenu model)
+        public async Task<ActionResult> Delete(MasterMenu model)
         {
             try
             {

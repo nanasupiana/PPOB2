@@ -1,5 +1,7 @@
-﻿@{
-    ViewBag.Title = "Type BPJS";
+﻿@using PPOB.Models;
+@{
+    ViewBag.Title = "Master Menu";
+    List<StandartComboBox> Parent = (List<StandartComboBox>)ViewData["ListParent"];
 }
 
 @section Menu {
@@ -48,7 +50,12 @@
                             <label class="col-md-2 control-label text-muted" style="text-align:left;">Menu Parent</label>
                             <label class="col-md-1 control-label text-muted ">:</label>
                             <div class="col-md-5">
-                                <input id="form_menu_parent_id" class="form-control" />
+                                <select id="form_menu_parent_id" class="form-control" aria-readonly="false">
+                                    @foreach (var item in Parent)
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -129,50 +136,58 @@
             }
 
             function FormAdd() {
-                $("#form_bpjs_id").val("");
-                $("#form_deskripsi").removeAttr("disabled", "disabled");
-                $("#form_deskripsi").val("");
-                $("#form_action").removeAttr("disabled", "disabled");
+                $("#form_menu_id").val("");
+                $("#form_menu_name").val("");
+                $("#form_menu_url").val("");
+                $("#form_menu_icon").val("");
+                $("#form_menu_parent_id").val("");
                 $("#form_action").val("Add");
-                $("#title_form").html("Add BPJS Type");
+                $("#title_form").html("Add Menu");
                 $("#MainForm").addClass("hidden");
                 $("#DetailForm").removeClass("hidden");
             }
 
             function FormEdit(data) {
-                var Id = data.closest("tr").find("#grid_bpjs_id").text();
-                var Nama = data.closest("tr").find("#grid_deskripsi").text();                
-                $("#form_bpjs_id").removeAttr("disabled", "disabled");
-                $("#form_bpjs_id").val(Id);
-                $("#form_deskripsi").removeAttr("disabled", "disabled");
-                $("#form_deskripsi").val(Nama);
-                $("#form_action").removeAttr("disabled", "disabled");
+                var Id = data.closest("tr").find("#grid_menu_id").val();
+                var Nama = data.closest("tr").find("#grid_menu_name").text();
+                var URL = data.closest("tr").find("#grid_menu_url").text();
+                var Icon = data.closest("tr").find("#grid_menu_icon").val();
+                var Parent = data.closest("tr").find("#grid_menu_parent_id").val();
+                $("#form_menu_id").val(Id);
+                $("#form_menu_name").val(Nama);
+                $("#form_menu_url").val(URL);
+                $("#form_menu_icon").val(Icon);
+                $("#form_menu_parent_id").val(Parent);
                 $("#form_action").val("Edit");
-                $("#title_form").html("Edit BPJS Type");
+                $("#title_form").html("Edit Menu");
                 $("#MainForm").addClass("hidden");
                 $("#DetailForm").removeClass("hidden");
             }
 
             function DeletePopUp(data) {
                 $("#DeletePopUp").modal({ backdrop: 'static' });
-                var Id = data.closest("tr").find("#grid_bpjs_id").text();
-                var Nama = data.closest("tr").find("#grid_deskripsi").text();
-                $("#popup_bpjs_id").text(Id)
-                $("#popup_deskripsi").text(Nama);
+                var Id = data.closest("tr").find("#grid_menu_id").val();
+                var Nama = data.closest("tr").find("#grid_menu_name").text();
+                var URL = data.closest("tr").find("#grid_menu_url").text();
+                $("#popup_menu_id").text(Id)
+                $("#popup_menu_name").text(Nama);
+                $("#popup_menu_url").text(URL);
             }
            
 
             function Save() {
-                var Id = $("#form_bpjs_id").val();
-                var Nama = $("#form_deskripsi").val();                
-                var url = "@Url.Action("Create","TypeBPJS")";
-                var model = { BPJSId: Id, Deskripsi: Nama };
+                var Id = $("#form_menu_id").val();
+                var Nama = $("#form_menu_name").val();
+                var MenuURL = $("#form_menu_url").val();
+                var Icon = $("#form_menu_icon").val();
+                var Parent = $("#form_menu_parent_id").val();
+                var model = { MenuId: Id, MenuName: Nama, MenuURL: MenuURL, MenuIcon: Icon, MenuParentId: Parent };
                 var Action = $("#form_action").val();
                 if (Action == "Edit") {
-                    var url = "@Url.Action("Edit", "TypeBPJS")";
+                    var url = "@Url.Action("Edit", "MasterMenu")";
                 }
                 else {
-                    var url = "@Url.Action("Create", "TypeBPJS")";
+                    var url = "@Url.Action("Create", "MasterMenu")";
                 }
                 $.post(url, model, function (result) {
                     if (result == "" || result == false) {
@@ -188,9 +203,13 @@
             }            
 
             function Delete() {
-                var Id = $("#popup_bpjd_id").text();
-                var Nama = $("#form_deskripsi").val();
-                var url = "@Url.Action("Delete", "TypeBPJS")";
+                var Id = $("#form_menu_id").val();
+                var Nama = "";
+                var MenuURL = "";
+                var Icon = "";
+                var Parent = "";
+                var model = { MenuId: Id, MenuName: Nama, MenuURL: MenuURL, MenuIcon: Icon, MenuParentId: Parent };
+                var url = "@Url.Action("Delete", "MasterMenu")";
                 var model = { BPJSId: Id, Deskripsi: Nama };
                 $.post(url, model, function (result) {
                     if (result == "" || result == false) {

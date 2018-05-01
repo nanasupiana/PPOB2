@@ -28,10 +28,11 @@
                                 <td>@no</td>
                                 <td id="grid_menu_name">@item.MenuName</td>
                                 <td id="grid_menu_url">@item.MenuURL</td>
-                                <td id="grid_menu_icon">@item.MenuIcon</td>
+                                <td ><span class="@item.MenuIcon"></span></td>
                                 <td id="grid_menu_parent">@item.MenuParent</td>
                                 <td style="text-align:center;">
                                     <input id="grid_menu_id" class="hidden " value="@item.MenuId" />
+                                    <input id="grid_menu_icon" class="hidden " value="@item.MenuIcon" />
                                     <input id="grid_menu_parent_id" class="hidden " value="@item.MenuParentId" />
                                     <button class="btn btn-xs btn-success" title="Edit" onclick="return FormEdit($(this))"><span class="fa fa-pencil"></span></button>
                                     <button class="btn btn-xs btn-danger" title="Delete" onclick="return DeletePopUp($(this))"><span class="fa fa-trash"></span></button>
