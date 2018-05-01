@@ -193,6 +193,7 @@
     <Compile Include="Controllers\PDAMController.cs" />
     <Compile Include="Controllers\PulsaController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\RoleMenuController.cs" />
     <Compile Include="Controllers\SliderController.cs" />
     <Compile Include="Controllers\TypeMemberController.cs" />
     <Compile Include="Extensions\ClaimsExtensions.cs" />
@@ -478,6 +479,9 @@
     <Content Include="bin\System.Web.WebPages.Razor.xml" />
     <Content Include="bin\System.Web.WebPages.xml" />
     <Content Include="bin\WebGrease.dll" />
+    <Content Include="Content\bg_login.png" />
+    <Content Include="Content\ic_logo_header.png" />
+    <Content Include="Content\ic_logo_login.png" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
@@ -567,6 +571,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="Views\RoleMenu\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
