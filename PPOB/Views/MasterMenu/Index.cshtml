@@ -1,0 +1,210 @@
+﻿@{
+    ViewBag.Title = "Type BPJS";
+}
+
+@section Menu {
+    @Scripts.Render("~/Scripts/Tables/Data/menu")
+}
+@Styles.Render("~/AdminLTE/plugins/datatables/css")
+@Styles.Render("~/AdminLTE/plugins/select2/css")
+<link href="~/Content/toastr.min.css" rel="stylesheet" />
+
+<div id="MainForm">
+    <div id="tablegrid">
+        @Html.Partial("_SimpleGrid")
+    </div>
+</div>
+    
+<div id="DetailForm" class="hidden">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-warning">
+                <div class="box-body">
+                    <h3 id="title_form"></h3>
+                    <hr />
+                    <div class="form-horizontal">
+                        <div class="form-group">                            
+                            <label class="col-md-2 control-label text-muted" style="text-align:left;">Menu Name</label>
+                            <label class="col-md-1 control-label text-muted ">:</label>
+                            <div class="col-md-5">
+                                <input id="form_menu_name" class="form-control"/>
+                            </div>
+                         </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label text-muted" style="text-align:left;">Menu URL</label>
+                            <label class="col-md-1 control-label text-muted ">:</label>
+                            <div class="col-md-5">
+                                <input id="form_menu_url" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label text-muted" style="text-align:left;">Menu Icon</label>
+                            <label class="col-md-1 control-label text-muted ">:</label>
+                            <div class="col-md-5">
+                                <input id="form_menu_icon" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label text-muted" style="text-align:left;">Menu Parent</label>
+                            <label class="col-md-1 control-label text-muted ">:</label>
+                            <div class="col-md-5">
+                                <input id="form_menu_parent_id" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input id="form_menu_id" class="hidden" />
+                            <input id="form_action" class="hidden" />
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-md-5">
+                                <button id="btnSave" type="button" class="btn btn-warning" onclick="return Save()"><span class="bold fa fa-save">&nbsp;&nbsp;Save</span></button>&nbsp;
+                                <button type="button" class="btn btn-default" onclick="return InitialConditions()"><span class="bold fa fa-angle-left">&nbsp;&nbsp;Back To List</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="DeletePopUp" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content  panel panel-warning">
+            <div class="panel-heading">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h2 class="modal-title">Delete Menu</h2>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                         <div class="form-group">   
+                            <input id="popup_menu_id" class="hidden" />                        
+                            <label class="col-md-3 control-label text-muted" style="text-align:left;">Menu Name</label>
+                            <label class="col-md-1 control-label text-muted ">:</label>
+                            <label id="popup_menu_name" class="col-md-8 control-label text-muted " style="text-align:left;"></label>
+                        </div>
+                        <div class="form-group">                            
+                            <label class="col-md-3 control-label text-muted" style="text-align:left;">Menu URL</label>
+                            <label class="col-md-1 control-label text-muted ">:</label>
+                            <label id="popup_menu_url" class="col-md-8 control-label text-muted " style="text-align:left;"></label>
+                        </div>
+                    </div>
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="return Delete()"><span class="bold fa fa-times-circle">&nbsp;&nbsp;Delete</span></button>&nbsp;
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="bold fa fa-times">&nbsp;&nbsp;Cancel</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+    @section Scripts {
+        @Scripts.Render("~/AdminLTE/plugins/datatables/js")
+        @Scripts.Render("~/AdminLTE/plugins/select2/js")
+        <script src="~/Scripts/toastr.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                DataTable();
+            })
+
+            toastr.options = {
+                "positionClass": "toast-bottom-right",
+                "timeOut": "3000"
+            }
+
+            function DataTable() {
+                $('#table').DataTable({
+                    "paging": true,
+                    "lengthChange": true,
+                    "searching": true,
+                    "ordering": false,
+                    "info": true,
+                    "autoWidth": false
+                });
+            }
+
+            function InitialConditions() {
+                $("#MainForm").removeClass("hidden");
+                $("#DetailForm").addClass("hidden");
+            }
+
+            function FormAdd() {
+                $("#form_bpjs_id").val("");
+                $("#form_deskripsi").removeAttr("disabled", "disabled");
+                $("#form_deskripsi").val("");
+                $("#form_action").removeAttr("disabled", "disabled");
+                $("#form_action").val("Add");
+                $("#title_form").html("Add BPJS Type");
+                $("#MainForm").addClass("hidden");
+                $("#DetailForm").removeClass("hidden");
+            }
+
+            function FormEdit(data) {
+                var Id = data.closest("tr").find("#grid_bpjs_id").text();
+                var Nama = data.closest("tr").find("#grid_deskripsi").text();                
+                $("#form_bpjs_id").removeAttr("disabled", "disabled");
+                $("#form_bpjs_id").val(Id);
+                $("#form_deskripsi").removeAttr("disabled", "disabled");
+                $("#form_deskripsi").val(Nama);
+                $("#form_action").removeAttr("disabled", "disabled");
+                $("#form_action").val("Edit");
+                $("#title_form").html("Edit BPJS Type");
+                $("#MainForm").addClass("hidden");
+                $("#DetailForm").removeClass("hidden");
+            }
+
+            function DeletePopUp(data) {
+                $("#DeletePopUp").modal({ backdrop: 'static' });
+                var Id = data.closest("tr").find("#grid_bpjs_id").text();
+                var Nama = data.closest("tr").find("#grid_deskripsi").text();
+                $("#popup_bpjs_id").text(Id)
+                $("#popup_deskripsi").text(Nama);
+            }
+           
+
+            function Save() {
+                var Id = $("#form_bpjs_id").val();
+                var Nama = $("#form_deskripsi").val();                
+                var url = "@Url.Action("Create","TypeBPJS")";
+                var model = { BPJSId: Id, Deskripsi: Nama };
+                var Action = $("#form_action").val();
+                if (Action == "Edit") {
+                    var url = "@Url.Action("Edit", "TypeBPJS")";
+                }
+                else {
+                    var url = "@Url.Action("Create", "TypeBPJS")";
+                }
+                $.post(url, model, function (result) {
+                    if (result == "" || result == false) {
+                        toastr.warning("Data Error.")
+                    }
+                    else {
+                        $("#tablegrid").html(result);
+                        toastr.success("Save data successfully.")
+                        InitialConditions();
+                        return DataTable();
+                    }
+                });
+            }            
+
+            function Delete() {
+                var Id = $("#popup_bpjd_id").text();
+                var Nama = $("#form_deskripsi").val();
+                var url = "@Url.Action("Delete", "TypeBPJS")";
+                var model = { BPJSId: Id, Deskripsi: Nama };
+                $.post(url, model, function (result) {
+                    if (result == "" || result == false) {
+                        toastr.warning("Data Error.")
+                    }
+                    else {
+                        $("#tablegrid").html(result);
+                        InitialConditions();
+                        toastr.success("Delete data successfully.")
+                        $("#DeletePopUp").modal('hide');
+                        return DataTable();
+                    }
+                });
+            }
+
+        </script>
+    }

@@ -8,6 +8,9 @@ namespace PPOB.Models
     public class CustomIdentityUser : IdentityUser
     {
         public string NameIdentifier { get; set; }
+        public string Photo { get; set; }
+        public int RoleId { get; set; }
+        
     }
     public class ApplicationUser : CustomIdentityUser
     {

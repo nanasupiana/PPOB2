@@ -137,7 +137,7 @@ namespace PPOB.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, NameIdentifier = model.NameIdentifier };
+                var user = new ApplicationUser { Photo = model.Photo, UserName = model.Email, Email = model.Email, NameIdentifier = model.NameIdentifier, RoleId = model.RoleId };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
