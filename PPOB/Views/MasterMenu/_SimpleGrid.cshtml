@@ -1,0 +1,49 @@
+﻿@using PPOB.Models.MasterMenu;
+@{
+    List<MasterMenu> List = (List<MasterMenu>)ViewData["ListMasterMenu"];
+    var no = 0;
+}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-warning">
+            <div class="box-body">
+                <button class="btn btn-success" onclick="return FormAdd()"><span class="fa fa-plus"></span>Add Menu</button>
+                <hr />
+                <table id="table" class="table table-bordered table-striped table-condensed">
+                    <thead style="color:blue">
+                        <tr>
+                            <th style="width:10px; text-align:center;" class="sorting_disabled">No</th>
+                            <th>Menu Name</th>
+                            <th>Menu URl</th>
+                            <th>Menu Icon</th>
+                            <th>Menu Parent</th>                                        
+                            <th style="width:40px; text-align:center;" class="sorting_disabled">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                        @foreach (var item in List)
+                        {
+                            no++;
+                            <tr>
+                                <td>@no</td>
+                                <td id="grid_menu_name">@item.MenuName</td>
+                                <td id="grid_menu_url">@item.MenuURL</td>
+                                <td id="grid_menu_icon">@item.MenuIcon</td>
+                                <td id="grid_menu_parent">@item.MenuParent</td>
+                                <td style="text-align:center;">
+                                    <input id="grid_menu_id" class="hidden " value="@item.MenuId" />
+                                    <input id="grid_menu_parent_id" class="hidden " value="@item.MenuParentId" />
+                                    <button class="btn btn-xs btn-success" title="Edit" onclick="return FormEdit($(this))"><span class="fa fa-pencil"></span></button>
+                                    <button class="btn btn-xs btn-danger" title="Delete" onclick="return DeletePopUp($(this))"><span class="fa fa-trash"></span></button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

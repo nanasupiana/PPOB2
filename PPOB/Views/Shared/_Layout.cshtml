@@ -56,15 +56,12 @@
                             <span>Member</span>
                         </a>
                     </li>
-                    @if (User.IsInRole("Administrator"))
-                    {
-                        <li id="left-sidebar-menu-charts" class="treeview">
-                            <a href="@Url.Action("Index","Admin")">
-                                <i class="fa fa-users"></i>
-                                <span>User</span>
-                            </a>
-                        </li>
-                    }
+                    <li id="left-sidebar-menu-charts" class="treeview">
+                        <a href="@Url.Action("Index","Admin")">
+                            <i class="fa fa-users"></i>
+                            <span>User</span>
+                        </a>
+                    </li>
                     <li id="left-sidebar-menu-charts" class="treeview">
                         <a href="#">
                             <i class="fa fa-opencart"></i>

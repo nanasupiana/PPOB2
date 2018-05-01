@@ -188,8 +188,10 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MasterMenuController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\PulsaController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\SliderController.cs" />
     <Compile Include="Controllers\TypeMemberController.cs" />
     <Compile Include="Extensions\ClaimsExtensions.cs" />
@@ -201,6 +203,8 @@
     <Compile Include="Models\LoginModels.cs" />
     <Compile Include="Models\LoginRepository.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MasterMenu\MasterMenu.cs" />
+    <Compile Include="Models\MasterMenu\MasterMenuRepository.cs" />
     <Compile Include="Models\Member\Member.cs" />
     <Compile Include="Models\Member\MemberRepository.cs" />
     <Compile Include="Models\Menu\Menu.cs" />
@@ -548,10 +552,13 @@
     <Content Include="Views\TypeMember\Index.cshtml" />
     <Content Include="Views\TypeMember\_SimpleGrid.cshtml" />
     <Content Include="Views\Pulsa\_SimpleGridOperator.cshtml" />
+    <Content Include="Views\MasterMenu\_SimpleGrid.cshtml" />
+    <Content Include="Views\MasterMenu\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="Views\Role\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

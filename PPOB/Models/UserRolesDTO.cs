@@ -20,6 +20,7 @@ namespace PPOB.Models
         //[Required, Microsoft.Web.Mvc.FileExtensions(Extensions = "csv",
         //     ErrorMessage = "Specify a CSV file. (Comma-separated values)")]
         public string Photo { get; set; }
+        public int RoleId { get; set; }
         public IEnumerable<UserRolesDTO> Roles { get; set; }
     }
 
