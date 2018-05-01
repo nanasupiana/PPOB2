@@ -64,10 +64,16 @@
                                 <span>User</span>
                             </a>
                         </li>
+                        <li id="left-sidebar-menu-charts" class="treeview">
+                            <a href="@Url.Action("Index","Admin")">
+                                <i class="fa fa-address-book-o"></i>
+                                <span>User Role</span>
+                            </a>
+                        </li>
                     }
                     <li id="left-sidebar-menu-charts" class="treeview">
                         <a href="#">
-                            <i class="fa fa-opencart"></i>
+                            <i class="fa fa-shopping-cart"></i>
                             <span>Transaksi</span>
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
@@ -86,7 +92,7 @@
                     </li>
                     <li id="left-sidebar-menu-charts" class="treeview">
                         <a href="#">
-                            <i class="fa fa-star"></i>
+                            <i class="fa fa-cogs"></i>
                             <span>Master Promo</span>
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
@@ -99,10 +105,10 @@
                     </li>
                     <li id="left-sidebar-menu-charts" class="treeview">
                         <a href="#">
-                            <i class="fa fa-dollar"></i>
+                            <i class="fa fa-money"></i>
                             <span>Top Up Wallet</span>
                         </a>
-                    </li>
+                    </li>               
                     <li id="left-sidebar-menu-charts" class="treeview">
                         <a href="#">
                             <i class="fa fa-tasks"></i>
@@ -110,22 +116,38 @@
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                            <li id="left-sidebar-menu-charts-chartjs"><a href="#">Pulsa</a></li>
-                            <li id="left-sidebar-menu-charts-chartjs"><a href="#">BPJS</a></li>
-                            <li id="left-sidebar-menu-charts-chartjs"><a href="#">PDAM</a></li>
-                            <li id="left-sidebar-menu-charts-chartjs"><a href="#">PLN</a></li>
+                            <li id="left-sidebar-menu-charts-chartjs"><a href="@Url.Action("Index", "Pulsa")">Pulsa</a></li>                            
+                            <li id="left-sidebar-menu-charts-chartjs"><a href="@Url.Action("Index", "PLN")">PLN</a></li>                            
+                            <li id="left-sidebar-menu-charts-chartjs"><a href="@Url.Action("Index", "PDAM")">PDAM</a></li>                                                        
+                            <li id="left-sidebar-menu-charts-chartjs"><a href="@Url.Action("Index", "TypeBPJS")">BPJS</a></li>                            
                         </ul>
                     </li>
                     <li id="left-sidebar-menu-charts" class="treeview">
                         <a href="#">
-                            <i class="fa fa-tasks"></i>
-                            <span>Customization</span>
+                            <i class="fa fa-book"></i>
+                            <span>Report</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">                            
+                        </ul>
+                    </li>
+                    <li id="left-sidebar-menu-charts" class="treeview">
+                        <a href="#">
+                            <i class="fa fa-share-square-o"></i>
+                            <span>Tarik Dana</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">                            
+                        </ul>
+                    </li>
+                    <li id="left-sidebar-menu-charts" class="treeview">
+                        <a href="#">
+                            <i class="fa fa-cog"></i>
+                            <span>Setting</span>
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                            <li id="left-sidebar-menu-charts-chartjs"><a href="@Url.Action("Index", "TypeBPJS")">Type BPJS</a></li>                            
-                            <li id="left-sidebar-menu-charts-chartjs"><a href="@Url.Action("Index", "Pulsa")">Type Pulsa</a></li>                            
-                            <li id="left-sidebar-menu-charts-chartjs"><a href="@Url.Action("Index", "TypeMember")">Type Member</a></li>                            
+                            <li id="left-sidebar-menu-charts-chartjs"><a href="@Url.Action("Index", "TypeMember")">BPJS</a></li>
                         </ul>
                     </li>
                 </ul>

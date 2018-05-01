@@ -189,6 +189,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="Controllers\PDAMController.cs" />
     <Compile Include="Controllers\PulsaController.cs" />
     <Compile Include="Controllers\SliderController.cs" />
     <Compile Include="Controllers\TypeMemberController.cs" />
@@ -205,6 +206,8 @@
     <Compile Include="Models\Member\MemberRepository.cs" />
     <Compile Include="Models\Menu\Menu.cs" />
     <Compile Include="Models\Menu\MenuData.cs" />
+    <Compile Include="Models\PDAM\MasterPDAM.cs" />
+    <Compile Include="Models\PDAM\PDAMRepository.cs" />
     <Compile Include="Models\Pulsa\MasterPulsa.cs" />
     <Compile Include="Models\Pulsa\PulsaRepository.cs" />
     <Compile Include="Models\Slider\MasterSlider.cs" />
@@ -548,10 +551,13 @@
     <Content Include="Views\TypeMember\Index.cshtml" />
     <Content Include="Views\TypeMember\_SimpleGrid.cshtml" />
     <Content Include="Views\Pulsa\_SimpleGridOperator.cshtml" />
+    <Content Include="Views\PDAM\_SimpleGrid.cshtml" />
+    <Content Include="Views\PDAM\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="Views\BPJSType\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
