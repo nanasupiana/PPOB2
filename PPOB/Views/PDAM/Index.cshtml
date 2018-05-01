@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Type BPJS";
+    ViewBag.Title = "PDAM";
 }
 
 @section Menu {
@@ -15,32 +15,29 @@
     </div>
 </div>
     
-<div id="DetailForm" class="hidden">
+<div id="EditForm" class="hidden">
     <div class="row">
         <div class="col-xs-12">
             <div class="box box-warning">
                 <div class="box-body">
                     <h3 id="title_form"></h3>
                     <hr />
-                    <div class="form-horizontal">
-                        <div class="form-group">                            
-                            <label class="col-md-2 control-label text-muted" style="text-align:left;">BPJS ID</label>
+                    <div class="form-horizontal">                     
+                        <div class="form-group">
+                            <label class="col-md-2 control-label text-muted" style="text-align:left;">PDAM ID</label>
                             <label class="col-md-1 control-label text-muted ">:</label>
                             <div class="col-md-5">
-                                <input id="form_bpjs_id" class="form-control"/>
+                                <input id="form_pdam_id" class="form-control"/>
                             </div>
-                         </div>
+                        </div>
                         <div class="form-group">
                             <label class="col-md-2 control-label text-muted" style="text-align:left;">Deskripsi</label>
                             <label class="col-md-1 control-label text-muted ">:</label>
                             <div class="col-md-5">
                                 <input id="form_deskripsi" class="form-control"/>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <input id="form_action" class="hidden" />
-                        </div>
-
+                        </div>                        
+                        <input id="form_action" class="hidden" />   
                         <div class="form-group">
                             <div class="col-md-offset-3 col-md-5">
                                 <button id="btnSave" type="button" class="btn btn-warning" onclick="return Save()"><span class="bold fa fa-save">&nbsp;&nbsp;Save</span></button>&nbsp;
@@ -59,22 +56,23 @@
         <div class="modal-content  panel panel-warning">
             <div class="panel-heading">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h2 class="modal-title">Delete BPJS</h2>
+                <h2 class="modal-title">Delete PDAM</h2>
             </div>
             <div class="modal-body">
-                <div class="form-horizontal">
-                         <div class="form-group">                            
-                            <label class="col-md-3 control-label text-muted" style="text-align:left;">BPJS ID</label>
-                            <label class="col-md-1 control-label text-muted ">:</label>
-                            <label id="popup_bpjs_id" class="col-md-8 control-label text-muted " style="text-align:left;"></label>
-                        </div>
-                        <div class="form-group">                            
-                            <label class="col-md-3 control-label text-muted" style="text-align:left;">Deskripsi</label>
-                            <label class="col-md-1 control-label text-muted ">:</label>
-                            <label id="popup_deskripsi" class="col-md-8 control-label text-muted " style="text-align:left;"></label>
-                        </div>
+                <div class="form-horizontal">                   >
+                    <div class="form-group">
+                        <label class="col-md-3 control-label text-muted" style="text-align:left;">PDAM Id</label>
+                        <label class="col-md-1 control-label text-muted ">:</label>
+                        <label id="popup_pdam_id" class="col-md-8 control-label text-muted " style="text-align:left;"></label>
                     </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label text-muted" style="text-align:left;">Deskripsi</label>
+                        <label class="col-md-1 control-label text-muted ">:</label>
+                        <label id="popup_deskripsi" class="col-md-8 control-label text-muted " style="text-align:left;"></label>
+                    </div>
+
                 </div>
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" onclick="return Delete()"><span class="bold fa fa-times-circle">&nbsp;&nbsp;Delete</span></button>&nbsp;
                 <button type="button" class="btn btn-default" data-dismiss="modal"><span class="bold fa fa-times">&nbsp;&nbsp;Cancel</span></button>
@@ -89,6 +87,7 @@
         <script>
             $(document).ready(function () {
                 DataTable();
+
             })
 
             toastr.options = {
@@ -109,73 +108,68 @@
 
             function InitialConditions() {
                 $("#MainForm").removeClass("hidden");
+                $("#EditForm").addClass("hidden");
                 $("#DetailForm").addClass("hidden");
             }
 
             function FormAdd() {
-                $("#form_bpjs_id").val("");
-                $("#form_deskripsi").removeAttr("disabled", "disabled");
+                $("#form_pdam_id").val("");
                 $("#form_deskripsi").val("");
-                $("#form_action").removeAttr("disabled", "disabled");
-                $("#form_action").val("Add");
-                $("#title_form").html("Add BPJS Type");
+                $("#form_action").val("Save");
+                $("#title_form").html("Add PDAM");
                 $("#MainForm").addClass("hidden");
-                $("#DetailForm").removeClass("hidden");
+                $("#EditForm").removeClass("hidden");
+                $("#DetailForm").addClass("hidden");
             }
 
             function FormEdit(data) {
-                var Id = data.closest("tr").find("#grid_bpjs_id").text();
-                var Nama = data.closest("tr").find("#grid_deskripsi").text();                
-                $("#form_bpjs_id").removeAttr("disabled", "disabled");
-                $("#form_bpjs_id").val(Id);
-                $("#form_deskripsi").removeAttr("disabled", "disabled");
-                $("#form_deskripsi").val(Nama);
-                $("#form_action").removeAttr("disabled", "disabled");
+                var Id = data.closest("tr").find("#grid_pdam_id").text();
+                var Deskripsi = data.closest("tr").find("#grid_deskripsi").text();
+                $("#form_pdam_id").val(Id);
+                $("#form_deskripsi").val(Deskripsi);
                 $("#form_action").val("Edit");
-                $("#title_form").html("Edit BPJS Type");
+                $("#title_form").html("Edit PDAM");
                 $("#MainForm").addClass("hidden");
-                $("#DetailForm").removeClass("hidden");
-            }
+                $("#EditForm").removeClass("hidden");
+                $("#DetailForm").addClass("hidden");
+            }            
 
             function DeletePopUp(data) {
                 $("#DeletePopUp").modal({ backdrop: 'static' });
-                var Id = data.closest("tr").find("#grid_bpjs_id").text();
-                var Nama = data.closest("tr").find("#grid_deskripsi").text();
-                $("#popup_bpjs_id").text(Id)
-                $("#popup_deskripsi").text(Nama);
+                var Id = data.closest("tr").find("#grid_pdam_id").text();
+                var Deskripsi = data.closest("tr").find("#grid_deskripsi").text();
+                $("#popup_pdam_id").val(Id)
+                $("#popup_deskripsi").text(Deskripsi);
             }
-           
 
             function Save() {
-                var Id = $("#form_bpjs_id").val();
-                var Nama = $("#form_deskripsi").val();                
-                var url = "@Url.Action("Create","TypeBPJS")";
-                var model = { BPJSId: Id, Deskripsi: Nama };
+                var PDAMId = $("#form_pdam_id").val();
+                var Deskripsi = $("#form_deskripsi").val();
                 var Action = $("#form_action").val();
-                if (Action == "Edit") {
-                    var url = "@Url.Action("Edit", "TypeBPJS")";
-                }
-                else {
-                    var url = "@Url.Action("Create", "TypeBPJS")";
-                }
-                $.post(url, model, function (result) {
-                    if (result == "" || result == false) {
-                        toastr.warning("Data Error.")
+                    if (Action == "Save") {
+                        var url = "@Url.Action("Create","PDAM")";
                     }
                     else {
-                        $("#tablegrid").html(result);
-                        toastr.success("Save data successfully.")
-                        InitialConditions();
-                        return DataTable();
+                        var url = "@Url.Action("Edit", "PDAM")";
                     }
-                });
-            }            
+                    var model = { PDAMId: Id, NamaOperator: Nama };//Field disi sesuail model
+                    $.post(url, model, function (result) {
+                        if (result == "" || result == false) {
+                            toastr.warning("Data Error.")
+                        }
+                        else {
+                            $("#tablegrid").html(result);
+                            toastr.success("Save data successfully.")
+                            InitialConditions();
+                            return DataTable();
+                        }
+                    });
+            }
 
             function Delete() {
-                var Id = $("#popup_bpjs_id").text();
-                var Nama = $("#form_deskripsi").val();
-                var url = "@Url.Action("Delete", "TypeBPJS")";
-                var model = { BPJSId: Id};
+                var Id = $("#popup_id").val();
+                var url = "@Url.Action("Delete","Member")";
+                var model = { IdOperator: Id };//Field disi sesuail model
                 $.post(url, model, function (result) {
                     if (result == "" || result == false) {
                         toastr.warning("Data Error.")
@@ -183,7 +177,7 @@
                     else {
                         $("#tablegrid").html(result);
                         InitialConditions();
-                        toastr.success("Delete data successfully.")
+                        toastr.warning("Data Error.")
                         $("#DeletePopUp").modal('hide');
                         return DataTable();
                     }
