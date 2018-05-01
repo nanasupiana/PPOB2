@@ -6,54 +6,52 @@
     var no = 0;
 }
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-xs-12">
         <div class="box box-warning">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="box box-warning">
-                        <div class="box-body">
-                            <button class="btn btn-success" onclick="return FormAdd()"><span class="fa fa-plus"></span> Add Slider</button>
-                            <hr />
-                            <table id="table" class="table table-bordered table-striped table-condensed">
-                                <thead style="color:blue">
-                                    <tr>
-                                        <th style="width:10px; text-align:center;" class="sorting_disabled">No</th>                                             
-                                        <th style="width:40px; text-align:center;" class="sorting_disabled">Judul</th> 
-                                        <th style="width:10px; text-align:center;" class="sorting_disabled">Photo</th>                                                                                                                       
-                                        <th style="width:40px; text-align:center;" class="sorting_disabled">Deskripsi Singkat</th>                                        
-                                        <th style="width:40px; text-align:center;" class="sorting_disabled">Deskripsi Panjang</th>                                        
-                                        <th style="width:10px; text-align:center;" class="sorting_disabled">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbody">
-                                    @foreach (var item in List)
-                                    {
-                                        no++;
-                                        <tr>
-                                            <td>@no</td>                                            
-                                            <td id="grid_Judul">@item.Judul</td>
-                                            <td id="grid_Photo">
-                                                <img id="image" alt="image" class="img-circle" style="width:50px;" src="@item.Photo" />                                                
-                                            </td>                                            
-                                            <td id="grid_DesSingkat">@item.DesSingkat</td>
-                                            <td id="grid_DesPanjang">@item.DesPanjang</td>
-                                            <td style="text-align:center;">
-                                                <input id="grid_id_slider" class="hidden " value="@item.ID" />
-                                                <input id="grid_image" class="hidden " value="@item.Photo" />
-                                                <button class="btn btn-xs btn-success" title="Edit" onclick="return FormEdit($(this))"><span class="fa fa-pencil"></span></button>
-                                                <button class="btn btn-xs btn-danger" title="Delete" onclick="return DeletePopUp($(this))"><span class="fa fa-trash"></span></button>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+            <div class="box-body">
+                <button class="btn btn-success" onclick="return FormAdd()"><span class="fa fa-plus"></span> Add Slider</button>
+                <hr />
+                <table id="table" class="table table-bordered table-striped table-condensed">
+                    <thead style="color:blue">
+                        <tr>
+                            <th style="width:10px; text-align:center;" class="sorting_disabled">No</th>
+                            <th style="width:40px; text-align:center;" class="sorting_disabled">Judul</th>
+                            <th style="width:10px; text-align:center;" class="sorting_disabled">Photo</th>
+                            <th style="width:40px; text-align:center;" class="sorting_disabled">Deskripsi Singkat</th>
+                            <th style="width:40px; text-align:center;" class="sorting_disabled">Deskripsi Panjang</th>
+                            <th style="width:10px; text-align:center;" class="sorting_disabled">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                        @foreach (var item in List)
+                        {
+                            no++;
+                            <tr>
+                                <td>@no</td>
+                                <td id="grid_Judul">@item.Judul</td>
+                                <td id="grid_Photo">
+                                    <img id="image" alt="image" class="img-circle" style="width:50px;" src="@item.Photo" />
+                                </td>
+                                <td id="grid_DesSingkat">@item.DesSingkat</td>
+                                <td id="grid_DesPanjang">@item.DesPanjang</td>
+                                <td style="text-align:center;">
+                                    <input id="grid_id_slider" class="hidden " value="@item.ID" />
+                                    <input id="grid_image" class="hidden " value="@item.Photo" />
+                                    <button class="btn btn-xs btn-success" title="Edit" onclick="return FormEdit($(this))"><span class="fa fa-pencil"></span></button>
+                                    <button class="btn btn-xs btn-danger" title="Delete" onclick="return DeletePopUp($(this))"><span class="fa fa-trash"></span></button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
+
+
+
+
 
 
 
