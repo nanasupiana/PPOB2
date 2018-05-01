@@ -10,34 +10,38 @@ namespace PPOB.Controllers
 {
     public class PulsaController : Controller
     {
-
-        // GET: Slider
-        // GET: Operator
+        
         public async Task<ActionResult> Index()
         {
-            await GetList();
+            await GetListPulsa();
+            await GetListOperator("");
             return View();
         }
-
-        // GET: Operator
-        public async Task<ActionResult> GetList()
+        
+        public async Task<ActionResult> GetListPulsa()
         {
             PulsaRepository Repository = new PulsaRepository();
             ViewData["ListPulsa"] = await Repository.GetPulsa();
-            return PartialView("_SimpleGrid");
+            return PartialView("_SimpleGridPulsa");
         }
 
-        // POST: Slider/Create
+        public async Task<ActionResult> GetListOperator(string PulsaID)
+        {
+            PulsaRepository Repository = new PulsaRepository();
+            ViewData["ListOperator"] = await Repository.GetOperator(PulsaID);
+            return PartialView("_SimpleGridOperator");
+        }
+
         [HttpPost]
-        public async Task<ActionResult> Create(MasterPulsa model)
+        public async Task<ActionResult> CreatePulsa(MasterPulsa model)
         {
             try
-            {                            
+            {
                 PulsaRepository Repository = new PulsaRepository();
                 var result = await Repository.CreatePulsa(model.PulsaId, model.Deskripsi, User.Identity.Name);
                 if (result == true)
                 {
-                    return await GetList();
+                    return await GetListPulsa();
                 }
                 else
                 {
@@ -51,17 +55,39 @@ namespace PPOB.Controllers
             }
         }
 
-        // POST: Operator/Edit/5
         [HttpPost]
-        public async Task<ActionResult> Edit(MasterPulsa model)
+        public async Task<ActionResult> CreateOperator(MasterOperator model)
         {
             try
             {
                 PulsaRepository Repository = new PulsaRepository();
-                var result = await Repository.EditPulsa(model.PulsaId,model.Deskripsi, User.Identity.Name);
+                var result = await Repository.CreateOperator(model.OperatorId, model.PulsaId, model.NamaOperator, User.Identity.Name);
                 if (result == true)
                 {
-                    return await GetList();
+                    return await GetListOperator(model.PulsaId);
+                }
+                else
+                {
+                    return View(result);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+                return View(false);
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> EditPulsa(MasterPulsa model)
+        {
+            try
+            {
+                PulsaRepository Repository = new PulsaRepository();
+                var result = await Repository.EditPulsa(model.PulsaId, model.Deskripsi, User.Identity.Name);
+                if (result == true)
+                {
+                    return await GetListPulsa();
                 }
                 else
                 {
@@ -74,17 +100,58 @@ namespace PPOB.Controllers
             }
         }
 
-        // POST: Operator/Delete/5
         [HttpPost]
-        public async Task<ActionResult> Delete(MasterPulsa model)
+        public async Task<ActionResult> EditOperator(MasterOperator model)
         {
             try
             {
                 PulsaRepository Repository = new PulsaRepository();
-                var result = await Repository.DeletePulsa(model.PulsaId);
+                var result = await Repository.EditOperator(model.OperatorId, model.PulsaId, model.NamaOperator, User.Identity.Name);
                 if (result == true)
                 {
-                    return await GetList();
+                    return await GetListOperator(model.PulsaId);
+                }
+                else
+                {
+                    return View(result);
+                }
+            }
+            catch
+            {
+                return View(false);
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> DeletePulsa(MasterPulsa model)
+        {
+            try
+            {
+                PulsaRepository Repository = new PulsaRepository();
+                var result = await Repository.DeletePulsa(model.PulsaId, User.Identity.Name);
+                if (result == true)
+                {
+                    return await GetListPulsa();
+                }
+                else
+                {
+                    return View(result);
+                }
+            }
+            catch
+            {
+                return View(false);
+            }
+        }
+        public async Task<ActionResult> DeleteOperator(MasterOperator model)
+        {
+            try
+            {
+                PulsaRepository Repository = new PulsaRepository();
+                var result = await Repository.DeleteOperator(model.OperatorId, User.Identity.Name);
+                if (result == true)
+                {
+                    return await GetListOperator(model.PulsaId);
                 }
                 else
                 {

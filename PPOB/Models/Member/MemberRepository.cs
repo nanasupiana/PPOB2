@@ -9,19 +9,19 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using PPOB.Models;
 
-namespace PPOB.Models.Operator
+namespace PPOB.Models.Member
 {
-    public class OperatorRepository
+    public class MemberRepository
     {
         dbAccess dbAccess = new dbAccess();
         string conn = ConfigurationManager.ConnectionStrings["GetConn"].ConnectionString;
 
-        public async Task<List<MasterOperator>> GetOperator()
+        public async Task<List<MasterMember>> GetMember()
         {
-            List<MasterOperator> Result = new List<MasterOperator>();
+            List<MasterMember> Result = new List<MasterMember>();
             try
             {
-                string Query = "GetOperator";
+                string Query = "GetMember";
                 DataTable dt = new DataTable();
                 dbAccess.strConn = conn;
                 dt = await dbAccess.GetDataTable(Query);
@@ -29,10 +29,16 @@ namespace PPOB.Models.Operator
                 foreach (DataRow dr in dt.Rows)
                 {
                     Result.Add(
-                        new MasterOperator
+                        new MasterMember
                         {
-                            IdOperator = Convert.ToString(dr["Id"]),
-                            NamaOperator = Convert.ToString(dr["Nama"]),
+                            MemberId = Convert.ToString(dr["MemberId"]),
+                            Photo = Convert.ToString(dr["Photo"]),
+                            NamaMember = Convert.ToString(dr["Nama"]),
+                            Email = Convert.ToString(dr["Email"]),
+                            NoTepon = Convert.ToString(dr["NoTelpon"]),
+                            KodeReverall = Convert.ToString(dr["KodeReverall"]),
+                            TypeMember = Convert.ToString(dr["Deskripsi"]),
+                            TanggalGabung = Convert.ToString(dr["TglBergabung"]),
                         });
                 }
                 return Result;
@@ -43,17 +49,17 @@ namespace PPOB.Models.Operator
             }
         }
 
-        public async Task<Boolean> CreateOperator(string NamaOperator)
+        public async Task<Boolean> CreateMember(string NamaMember)
         {
             Boolean Result= false;
             try
             {
-                string Query = "CreateOperator";
+                string Query = "CreateMember";
 
                 dbAccess.strConn = conn;
                 SqlParameter[] pParam = new SqlParameter[1];
                 pParam[0] = new SqlParameter("@nama", SqlDbType.VarChar);
-                pParam[0].Value = NamaOperator;
+                pParam[0].Value = NamaMember;
                 int res = await dbAccess.ExecQueryByCommand(Query, pParam);
                 if(res == -1)
                 {
@@ -74,19 +80,19 @@ namespace PPOB.Models.Operator
 
         }
 
-        public async Task<Boolean> EditOperator(string IdOperator, string NamaOperator)
+        public async Task<Boolean> EditMember(string IdMember, string NamaMember)
         {
             Boolean Result = false;
             try
             {
-                string Query = "EditOperator";
+                string Query = "EditMember";
 
                 dbAccess.strConn = conn;
                 SqlParameter[] pParam = new SqlParameter[2];
                 pParam[0] = new SqlParameter("@Id", SqlDbType.VarChar);
-                pParam[0].Value = IdOperator;
+                pParam[0].Value = IdMember;
                 pParam[1] = new SqlParameter("@nama", SqlDbType.VarChar);
-                pParam[1].Value = NamaOperator;
+                pParam[1].Value = NamaMember;
                 int res = await dbAccess.ExecQueryByCommand(Query, pParam);
                 if (res == -1)
                 {
@@ -108,17 +114,17 @@ namespace PPOB.Models.Operator
         }
 
 
-        public async Task<Boolean> DeleteOperator(string IdOperator)
+        public async Task<Boolean> DeleteMember(string IdMember)
         {
             Boolean Result = false;
             try
             {
-                string Query = "DeleteOperator";
+                string Query = "DeleteMember";
 
                 dbAccess.strConn = conn;
                 SqlParameter[] pParam = new SqlParameter[1];
                 pParam[0] = new SqlParameter("@Id", SqlDbType.VarChar);
-                pParam[0].Value = IdOperator;
+                pParam[0].Value = IdMember;
                 int res = await dbAccess.ExecQueryByCommand(Query, pParam);
                 if (res == -1)
                 {

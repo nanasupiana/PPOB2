@@ -15,7 +15,7 @@
     </div>
 </div>
     
-<div id="DetailForm" class="hidden">
+<div id="EditForm" class="hidden">
     <div class="row">
         <div class="col-xs-12">
             <div class="box box-warning">
@@ -79,6 +79,65 @@
     </div>
 </div>
 
+<div id="DetailForm" class="hidden">
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="box box-warning">
+                <div class="box-body">
+                    <h4>Profile Member</h4>
+                    <hr />
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <img id="detail_image" alt="image" class="img-circle" style="width:200px;" />
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label text-muted" style="text-align:left;">Nama</label>
+                            <label class="col-md-1 control-label text-muted ">:</label>
+                            <label id="detail_nama" class="col-md-6 control-label text-muted" style="text-align:left;"></label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label text-muted" style="text-align:left;">Email</label>
+                            <label class="col-md-1 control-label text-muted ">:</label>
+                            <label id="detail_email" class="col-md-6 control-label text-muted" style="text-align:left;"></label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label text-muted" style="text-align:left;">No. Telpon</label>
+                            <label class="col-md-1 control-label text-muted ">:</label>
+                            <label id="detail_no_telpon" class="col-md-6 control-label text-muted" style="text-align:left;"></label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label text-muted" style="text-align:left;">Kode Referall</label>
+                            <label class="col-md-1 control-label text-muted ">:</label>
+                            <label id="detail_kode_referall" class="col-md-6 control-label text-muted" style="text-align:left;"></label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label text-muted" style="text-align:left;">Type Member</label>
+                            <label class="col-md-1 control-label text-muted ">:</label>
+                            <label id="detail_type_member" class="col-md-6 control-label text-muted" style="text-align:left;"></label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label text-muted" style="text-align:left;">Tanggal bergabung</label>
+                            <label class="col-md-1 control-label text-muted ">:</label>
+                            <label id="detail_tanggal_bergabung" class="col-md-6 control-label text-muted" style="text-align:left;"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="box box-warning">
+                <div class="box-body">
+                    <h4 >History Transaksi</h4>
+                    <hr />
+                    <div class="form-horizontal">
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="DeletePopUp" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content  panel panel-warning">
@@ -120,6 +179,7 @@
         <script>
             $(document).ready(function () {
                 DataTable();
+
             })
 
             toastr.options = {
@@ -140,6 +200,7 @@
 
             function InitialConditions() {
                 $("#MainForm").removeClass("hidden");
+                $("#EditForm").addClass("hidden");
                 $("#DetailForm").addClass("hidden");
             }
 
@@ -154,7 +215,8 @@
                 $("#form_operator_name").val("");
                 $("#title_form").html("Add Operator");
                 $("#MainForm").addClass("hidden");
-                $("#DetailForm").removeClass("hidden");
+                $("#EditForm").removeClass("hidden");
+                $("#DetailForm").addClass("hidden");
             }
 
             function FormEdit(data) {
@@ -171,6 +233,28 @@
                 $("#form_re_type_password").val("");
                 $("#title_form").html("Edit Operator");
                 $("#MainForm").addClass("hidden");
+                $("#EditForm").removeClass("hidden");
+                $("#DetailForm").addClass("hidden");
+            }
+
+            function FormDetail(data) {
+                var Photo = data.closest("tr").find("#grid_photo").val();
+                var Nama = data.closest("tr").find("#grid_nama").text();
+                var Email = data.closest("tr").find("#grid_email").text();
+                var NoTelpon = data.closest("tr").find("#grid_no_telpon").text();
+                var KodeReferall = data.closest("tr").find("#grid_kode_referall").text();
+                var TypeMember = data.closest("tr").find("#grid_type_member").text();
+                var TanggalBergabung = data.closest("tr").find("#grid_tanggal_bergabung").text()
+                //$('#detail_image').attr('src', Photo);
+                document.getElementById("detail_image").src = Photo;
+                $("#detail_nama").text(Nama);
+                $("#detail_email").text(Email);
+                $("#detail_no_telpon").text(NoTelpon);
+                $("#detail_kode_referall").text(KodeReferall);
+                $("#detail_type_member").text(TypeMember);
+                $("#detail_tanggal_bergabung").text(TanggalBergabung);
+                $("#MainForm").addClass("hidden");
+                $("#EditForm").addClass("hidden");
                 $("#DetailForm").removeClass("hidden");
             }
 

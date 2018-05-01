@@ -9,18 +9,24 @@
 @Styles.Render("~/AdminLTE/plugins/select2/css")
 <link href="~/Content/toastr.min.css" rel="stylesheet" />
 
-<div id="MainForm">
-    <div id="tablegrid">
-        @Html.Partial("_SimpleGrid")
+<div id="MainFormPulsa">
+    <div id="tablegridpulsa">
+        @Html.Partial("_SimpleGridPulsa")
     </div>
 </div>
 
-<div id="DetailForm" class="hidden">
+<div id="MainFormOperator">
+    <div id="tablegridoperator">
+        @Html.Partial("_SimpleGridOperator")
+    </div>
+</div>
+
+<div id="DetailFormPulsa" class="hidden">
     <div class="row">
         <div class="col-xs-12">
             <div class="box box-warning">
                 <div class="box-body">
-                    <h3 id="title_form"></h3>
+                    <h3 id="title_form_pulsa"></h3>
                     <hr />
                     <div class="form-horizontal">
                         <div class="form-group">
@@ -34,17 +40,17 @@
                             <label class="col-md-2 control-label text-muted" style="text-align:left;">Deskripsi</label>
                             <label class="col-md-1 control-label text-muted ">:</label>
                             <div class="col-md-5">
-                                <input id="form_deskripsi" class="form-control" />
+                                <input id="form_pulsa_deskripsi" class="form-control" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <input id="form_action" class="hidden" />
+                            <input id="form_action_pulsa" class="hidden" />
                         </div>
 
                         <div class="form-group">
                             <div class="col-md-offset-3 col-md-5">
-                                <button id="btnSave" type="button" class="btn btn-warning" onclick="return Save()"><span class="bold fa fa-save">&nbsp;&nbsp;Save</span></button>&nbsp;
-                                <button type="button" class="btn btn-default" onclick="return InitialConditions()"><span class="bold fa fa-angle-left">&nbsp;&nbsp;Back To List</span></button>
+                                <button type="button" class="btn btn-warning" onclick="return SavePulsa()"><span class="bold fa fa-save">&nbsp;&nbsp;Save</span></button>&nbsp;
+                                <button type="button" class="btn btn-default" onclick="return BackTolistPulsa()"><span class="bold fa fa-angle-left">&nbsp;&nbsp;Back To List</span></button>
                             </div>
                         </div>
                     </div>
@@ -54,7 +60,47 @@
     </div>
 </div>
 
-<div class="modal fade" id="DeletePopUp" role="dialog">
+<div id="DetailFormOperator" class="hidden">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-warning">
+                <div class="box-body">
+                    <h3 id="title_form_operator"></h3>
+                    <hr />
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label text-muted" style="text-align:left;">Operator ID</label>
+                            <label class="col-md-1 control-label text-muted ">:</label>
+                            <div class="col-md-5">
+                                <input id="form_operatorid" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label text-muted" style="text-align:left;">Deskripsi</label>
+                            <label class="col-md-1 control-label text-muted ">:</label>
+                            <div class="col-md-5">
+                                <input id="form_operator_deskripsi" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input id="pulsa_id" class="hidden" />
+                            <input id="form_action_operator" class="hidden" />
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-md-5">
+                                <button type="button" class="btn btn-warning" onclick="return SaveOperator()"><span class="bold fa fa-save">&nbsp;&nbsp;Save</span></button>&nbsp;
+                                <button type="button" class="btn btn-default" onclick="return BackTolistOperator()"><span class="bold fa fa-angle-left">&nbsp;&nbsp;Back To List</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="DeletePopUpPulsa" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content  panel panel-warning">
             <div class="panel-heading">
@@ -71,124 +117,269 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label text-muted" style="text-align:left;">Deskripsi</label>
                         <label class="col-md-1 control-label text-muted ">:</label>
-                        <label id="popup_deskripsi" class="col-md-8 control-label text-muted " style="text-align:left;"></label>
+                        <label id="popup_pulsa_deskripsi" class="col-md-8 control-label text-muted " style="text-align:left;"></label>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" onclick="return Delete()"><span class="bold fa fa-times-circle">&nbsp;&nbsp;Delete</span></button>&nbsp;
+                <button type="button" class="btn btn-danger" onclick="return DeletePulsa()"><span class="bold fa fa-times-circle">&nbsp;&nbsp;Delete</span></button>&nbsp;
                 <button type="button" class="btn btn-default" data-dismiss="modal"><span class="bold fa fa-times">&nbsp;&nbsp;Cancel</span></button>
             </div>
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="DeletePopUpOperator" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content  panel panel-warning">
+            <div class="panel-heading">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h2 class="modal-title">Delete Operator</h2>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label text-muted" style="text-align:left;">Operator ID</label>
+                        <label class="col-md-1 control-label text-muted ">:</label>
+                        <label id="popup_operatorid" class="col-md-8 control-label text-muted " style="text-align:left;"></label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label text-muted" style="text-align:left;">Deskripsi</label>
+                        <label class="col-md-1 control-label text-muted ">:</label>
+                        <label id="popup_operator_deskripsi" class="col-md-8 control-label text-muted " style="text-align:left;"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="return DeleteOperator()"><span class="bold fa fa-times-circle">&nbsp;&nbsp;Delete</span></button>&nbsp;
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="bold fa fa-times">&nbsp;&nbsp;Cancel</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     @Scripts.Render("~/AdminLTE/plugins/datatables/js")
     @Scripts.Render("~/AdminLTE/plugins/select2/js")
     <script src="~/Scripts/toastr.min.js"></script>
     <script>
-            $(document).ready(function () {
-                DataTable();
-            })
+        $(document).ready(function () {
+            return IndexPulsa();
+        })
 
-            toastr.options = {
-                "positionClass": "toast-bottom-right",
-                "timeOut": "3000"
-            }
+        toastr.options = {
+            "positionClass": "toast-bottom-right",
+            "timeOut": "3000"
+        }
 
-            function DataTable() {
-                $('#table').DataTable({
-                    "paging": true,
-                    "lengthChange": true,
-                    "searching": true,
-                    "ordering": false,
-                    "info": true,
-                    "autoWidth": false
-                });
-            }
+        function BackTolistPulsa() {
+            $("#MainFormPulsa").removeClass("hidden");
+            $("#DetailFormPulsa").addClass("hidden");
+            $("#MainFormOperator").addClass("hidden");
+            $("#DetailFormOperator").addClass("hidden");
+        }
 
-            function InitialConditions() {
-                $("#MainForm").removeClass("hidden");
-                $("#DetailForm").addClass("hidden");
-            }
+        function BackTolistOperator() {
+            $("#MainFormPulsa").addClass("hidden");
+            $("#DetailFormPulsa").addClass("hidden");
+            $("#MainFormOperator").removeClass("hidden");
+            $("#DetailFormOperator").addClass("hidden");
+        }
 
-            function FormAdd() {
-                $("#form_pulsaid").val("");
-                $("#form_deskripsi").removeAttr("disabled", "disabled");
-                $("#form_deskripsi").val("");
-                $("#form_action").removeAttr("disabled", "disabled");
-                $("#form_action").val("Add");
-                $("#title_form").html("Add Pulsa");
-                $("#MainForm").addClass("hidden");
-                $("#DetailForm").removeClass("hidden");
-            }
+        function IndexPulsa() {
+            $('#table_pulsa').DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": false,
+                "info": true,
+                "autoWidth": false
+            });
+            return BackTolistPulsa();
+        }
 
-            function FormEdit(data) {
-                var Id = data.closest("tr").find("#grid_pulsaid").text();
-                var Nama = data.closest("tr").find("#grid_deskripsi").text();
-                $("#form_pulsaid").removeAttr("disabled", "disabled");
-                $("#form_pulsaid").val(Id);
-                $("#form_deskripsi").removeAttr("disabled", "disabled");
-                $("#form_deskripsi").val(Nama);
-                $("#form_action").removeAttr("disabled", "disabled");
-                $("#form_action").val("Edit");
-                $("#title_form").html("Edit Pulsa");
-                $("#MainForm").addClass("hidden");
-                $("#DetailForm").removeClass("hidden");
-            }
+        function IndexOperator() {
+            $('#table_operator').DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": false,
+                "info": true,
+                "autoWidth": false
+            });
+            return BackTolistOperator();
+        }
 
-            function DeletePopUp(data) {
-                $("#DeletePopUp").modal({ backdrop: 'static' });
-                var Id = data.closest("tr").find("#grid_pulsaid").text();
-                var Nama = data.closest("tr").find("#grid_deskripsi").text();
-                $("#popup_pulsaid").text(Id)
-                $("#popup_deskripsi").text(Nama);
-            }
+        function FormAddPulsa() {
+            $("#form_pulsaid").val("");
+            $("#form_pulsaid").removeAttr("disabled", "disabled");
+            $("#form_pulsa_deskripsi").val("");
+            $("#form_pulsa_deskripsi").removeAttr("disabled", "disabled");
+            $("#form_action_pulsa").val("Add");
+            $("#title_form_pulsa").html("Add Pulsa");
+            $("#MainFormPulsa").addClass("hidden");
+            $("#DetailFormPulsa").removeClass("hidden");
+        }
 
+        function FormAddOperator() {
+            $("#form_operatorid").val("");
+            $("#form_operatorid").removeAttr("disabled", "disabled");
+            $("#form_operator_deskripsi").val("");
+            $("#form_operator_deskripsi").removeAttr("disabled", "disabled");
+            $("#form_action_operator").val("Add");
+            $("#title_form_operator").html("Add Operator");
+            $("#MainFormOperator").addClass("hidden");
+            $("#DetailFormOperator").removeClass("hidden");
+        }
 
-            function Save() {
-                var Id = $("#form_pulsaid").val();
-                var Nama = $("#form_deskripsi").val();
-                var url = "@Url.Action("Create","Pulsa")";
-                var model = { PulsaID: Id, Deskripsi: Nama };
-                var Action = $("#form_action").val();
-                if (Action == "Edit") {
-                    var url = "@Url.Action("Edit", "Pulsa")";
+        function FormEditPulsa(data) {
+            var Id = data.closest("tr").find("#grid_pulsaid").text();
+            var Nama = data.closest("tr").find("#grid_pulsa_deskripsi").text();
+            $("#form_pulsaid").attr("disabled", "disabled");
+            $("#form_pulsaid").val(Id);
+            $("#form_pulsa_deskripsi").removeAttr("disabled", "disabled");
+            $("#form_pulsa_deskripsi").val(Nama);
+            $("#form_action_pulsa").removeAttr("disabled", "disabled");
+            $("#form_action_pulsa").val("Edit");
+            $("#title_form_pulsa").html("Edit Pulsa");
+            $("#MainFormPulsa").addClass("hidden");
+            $("#DetailFormPulsa").removeClass("hidden");
+        }
+
+        function FormEditOperator(data) {
+            var Id = data.closest("tr").find("#grid_operatorid").text();
+            var Nama = data.closest("tr").find("#grid_operator_deskripsi").text();
+            $("#form_operatorid").attr("disabled", "disabled");
+            $("#form_operatorid").val(Id);
+            $("#form_operator_deskripsi").removeAttr("disabled", "disabled");
+            $("#form_operator_deskripsi").val(Nama);
+            $("#form_action_operator").removeAttr("disabled", "disabled");
+            $("#form_action_operator").val("Edit");
+            $("#title_form_operator").html("Edit Operator");
+            $("#MainFormOperator").addClass("hidden");
+            $("#DetailFormOperator").removeClass("hidden");
+        }
+
+        function DeletePopUpPulsa(data) {
+            $("#DeletePopUpPulsa").modal({ backdrop: 'static' });
+            var Id = data.closest("tr").find("#grid_pulsaid").text();
+            var Nama = data.closest("tr").find("#grid_pulsa_deskripsi").text();
+            $("#popup_pulsaid").text(Id);
+            $("#popup_pulsa_deskripsi").text(Nama);
+        }
+
+        function DeletePopUpOperator(data) {
+            $("#DeletePopUpOperator").modal({ backdrop: 'static' });
+            var Id = data.closest("tr").find("#grid_operatorid").text();
+            var Nama = data.closest("tr").find("#grid_operator_deskripsi").text();
+            $("#popup_operatorid").text(Id);
+            $("#popup_operator_deskripsi").text(Nama);
+        }
+
+        function DetailPlusa(data) {
+            var Id = data.closest("tr").find("#grid_pulsaid").text();
+            $("#pulsa_id").val(Id);
+            var url = "@Url.Action("GetListOperator", "Pulsa")";
+            var data = { PulsaID: Id };
+            $.post(url, data, function (result) {
+                if (result == "" || result == false) {
+                    toastr.warning("Data Error.")
                 }
                 else {
-                    var url = "@Url.Action("Create", "Pulsa")";
+                    $("#tablegridoperator").html(result);
+                    return IndexOperator();
+                    // return DataTable();
                 }
-                $.post(url, model, function (result) {
-                    if (result == "" || result == false) {
-                        toastr.warning("Data Error.")
-                    }
-                    else {
-                        $("#tablegrid").html(result);
-                        toastr.success("Save data successfully.")
-                        InitialConditions();
-                        return DataTable();
-                    }
-                });
-            }
+            });
+        }
 
-            function Delete() {
-                var Id = $("#popup_pulsaid").text();
-                var Nama = $("#form_deskripsi").val();
-                var url = "@Url.Action("Delete","Pulsa")";
-                var model = { PulsaID: Id, Deskripsi: Nama };
-                $.post(url, model, function (result) {
-                    if (result == "" || result == false) {
-                        toastr.warning("Data Error.")
-                    }
-                    else {
-                        $("#tablegrid").html(result);
-                        InitialConditions();
-                        toastr.success("Delete data successfully.")
-                        $("#DeletePopUp").modal('hide');
-                        return DataTable();
-                    }
-                });
+        function SavePulsa() {
+            var Id = $("#form_pulsaid").val();
+            var Nama = $("#form_pulsa_deskripsi").val();
+            var model = { PulsaID: Id, Deskripsi: Nama };
+            var Action = $("#form_action_pulsa").val();
+            if (Action == "Edit") {
+                var url = "@Url.Action("EditPulsa", "Pulsa")";
             }
+            else {
+                var url = "@Url.Action("CreatePulsa", "Pulsa")";
+            }
+            $.post(url, model, function (result) {
+                if (result == "" || result == false) {
+                    toastr.warning("Data Error.")
+                }
+                else {
+                    $("#tablegridpulsa").html(result);
+                    toastr.success("Save data successfully.")
+                    IndexPulsa();
+                    // return DataTable();
+                }
+            });
+        }
+
+        function SaveOperator() {
+            var Id = $("#form_operatorid").val();
+            var PulsaId = $("#pulsa_id").val();
+            var Nama = $("#form_operator_deskripsi").val();
+            var model = { OperatorId: Id, PulsaId : PulsaId, NamaOperator: Nama };
+            var Action = $("#form_action_operator").val();
+            if (Action == "Edit") {
+                var url = "@Url.Action("EditOperator", "Pulsa")";
+            }
+            else {
+                var url = "@Url.Action("CreateOperator", "Pulsa")";
+            }
+            $.post(url, model, function (result) {
+                if (result == "" || result == false) {
+                    toastr.warning("Data Error.")
+                }
+                else {
+                    $("#tablegridoperator").html(result);
+                    toastr.success("Save data successfully.")
+                    IndexOperator();
+                    // return DataTable();
+                }
+            });
+        }
+
+        function DeletePulsa() {
+            var Id = $("#popup_pulsaid").text();
+            var Nama = $("#form_pulsa_deskripsi").val();
+            var url = "@Url.Action("DeletePulsa","Pulsa")";
+            var model = { PulsaID: Id, Deskripsi: Nama };
+            $.post(url, model, function (result) {
+                if (result == "" || result == false) {
+                    toastr.warning("Data Error.")
+                }
+                else {
+                    $("#tablegridpulsa").html(result);
+                    IndexPulsa();
+                    toastr.success("Delete data successfully.")
+                    $("#DeletePopUpPulsa").modal('hide');
+                    // return DataTable();
+                }
+            });
+        }
+
+        function DeleteOperator() {
+            var Id = $("#popup_operatorid").text();
+            var PulsaId = $("#pulsa_id").val();
+            var Nama = $("#form_operator_deskripsi").val();
+            var url = "@Url.Action("DeleteOperator", "Pulsa")";
+            var model = { OperatorId: Id, PulsaId: PulsaId, NamaOperator: Nama };
+            $.post(url, model, function (result) {
+                if (result == "" || result == false) {
+                    toastr.warning("Data Error.")
+                }
+                else {
+                    $("#tablegridoperator").html(result);
+                    IndexOperator();
+                    toastr.success("Delete data successfully.")
+                    $("#DeletePopUpOperator").modal('hide');
+                    // return DataTable();
+                }
+            });
+        }
 
     </script>
 }

@@ -189,7 +189,6 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
-    <Compile Include="Controllers\OperatorController.cs" />
     <Compile Include="Controllers\PulsaController.cs" />
     <Compile Include="Controllers\SliderController.cs" />
     <Compile Include="Controllers\TypeMemberController.cs" />
@@ -202,10 +201,10 @@
     <Compile Include="Models\LoginModels.cs" />
     <Compile Include="Models\LoginRepository.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Member\Member.cs" />
+    <Compile Include="Models\Member\MemberRepository.cs" />
     <Compile Include="Models\Menu\Menu.cs" />
     <Compile Include="Models\Menu\MenuData.cs" />
-    <Compile Include="Models\Operator\Operator.cs" />
-    <Compile Include="Models\Operator\OperatorRepository.cs" />
     <Compile Include="Models\Pulsa\MasterPulsa.cs" />
     <Compile Include="Models\Pulsa\PulsaRepository.cs" />
     <Compile Include="Models\Slider\MasterSlider.cs" />
@@ -532,29 +531,27 @@
     <Content Include="obj\Debug\BJA_WF.csprojResolveAssemblyReference.cache" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <Content Include="obj\Debug\ReportManagement.csprojResolveAssemblyReference.cache" />
-    <Content Include="Views\Operator\_SimpleGrid.cshtml" />
     <Content Include="Views\Admin\AddRole.cshtml" />
     <Content Include="Views\Admin\Create.cshtml" />
     <Content Include="Views\Admin\EditRoles.cshtml" />
     <Content Include="Views\Admin\EditUser.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\ViewAllRoles.cshtml" />
-    <Content Include="Views\Operator\Index.cshtml" />
     <Content Include="Views\Member\_SimpleGrid.cshtml" />
     <Content Include="Views\Member\Index.cshtml" />
     <Content Include="Views\Slider\Index.cshtml" />
     <Content Include="Views\Slider\_SimpleGrid.cshtml" />
-    <Content Include="Views\Pulsa\_SimpleGrid.cshtml" />
     <Content Include="Views\Pulsa\Index.cshtml" />
-    <Content Include="Views\TypeMember\_SimpleGrid.cshtml" />
-    <Content Include="Views\TypeMember\Index.cshtml" />
-    <Content Include="Views\TypeBPJS\_SimpleGrid.cshtml" />
+    <Content Include="Views\Pulsa\_SimpleGridPulsa.cshtml" />
     <Content Include="Views\TypeBPJS\Index.cshtml" />
+    <Content Include="Views\TypeBPJS\_SimpleGrid.cshtml" />
+    <Content Include="Views\TypeMember\Index.cshtml" />
+    <Content Include="Views\TypeMember\_SimpleGrid.cshtml" />
+    <Content Include="Views\Pulsa\_SimpleGridOperator.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="obj\Debug\TempPE\" />
-    <Folder Include="Views\BPJSType\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -594,7 +591,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>18459</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

@@ -1,0 +1,43 @@
+﻿@using PPOB.Models.Pulsa;
+@{
+    List<MasterPulsa> List = (List<MasterPulsa>)ViewData["ListPulsa"];
+    var no = 0;
+}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-warning">
+            <div class="box-body">
+                <button class="btn btn-success" onclick="return FormAddPulsa()"><span class="fa fa-plus"></span> Add Pulsa</button>
+                <hr />
+                <table id="table_pulsa" class="table table-bordered table-striped table-condensed">
+                    <thead style="color:blue">
+                        <tr>
+                            <th style="width:10px; text-align:center;" class="sorting_disabled">No</th>
+                            <th>PulsaID</th>
+                            <th>Deskripsi</th>
+                            <th style="width:80px; text-align:center;" class="sorting_disabled">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        @foreach (var item in List)
+                        {
+                            no++;
+                            <tr>
+                                <td>@no</td>
+                                <td id="grid_pulsaid">@item.PulsaId</td>
+                                <td id="grid_pulsa_deskripsi">@item.Deskripsi</td>
+                                <td style="text-align:center;">
+                                    <button class="btn btn-xs btn-primary" title="Edit" onclick="return DetailPlusa($(this))"><span class="fa fa-eye"></span></button>
+                                    <button class="btn btn-xs btn-success" title="Edit" onclick="return FormEditPulsa($(this))"><span class="fa fa-pencil"></span></button>
+                                    <button class="btn btn-xs btn-danger" title="Delete" onclick="return DeletePopUpPulsa($(this))"><span class="fa fa-trash"></span></button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+

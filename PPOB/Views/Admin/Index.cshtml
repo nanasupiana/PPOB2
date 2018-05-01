@@ -14,46 +14,40 @@
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-xs-12">
         <div class="box box-warning">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="box box-warning">
-                        <div class="box-body">
-                            <a href="@Url.Action("Create","Admin")" class="btn btn-success"><span class="fa fa-plus"></span> Add User</a>
-                            <hr />
-                            <table id="table" class="table table-bordered table-striped table-condensed">
-                                <thead style="color:blue">
-                                    <tr>
-                                        <th style="width:10px; text-align:center;">No</th>
-                                        <th>Photo</th>
-                                        <th>Nama</th>
-                                        <th>Email</th>
-                                        <th>No Telpon</th>
-                                        <th style="width:40px; text-align:center;">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbody">
-                                    @foreach (var item in Model)
-                                    {
-                                        no++;
-                                        <tr>
-                                            <td class="_i">@no</td>
-                                            <td class="_name">@item.NameIdentifier</td>
-                                            <td class="_name">@item.NameIdentifier</td>
-                                            <td class="_name">@item.Email</td>
-                                            <td class="_name">@item.PhoneNumber</td>
-                                            <td style="text-align:center;">
-                                                @Html.ActionLink(" ", "EditUser", new { UserName = item.UserName },new { @class = "btn btn-xs btn-success fa fa-pencil" })
-                                                @Html.ActionLink(" ", "DeleteUser", new { UserName = item.UserName }, new { @class = "btn btn-xs btn-danger fa fa-trash", @onclick = "return confirm('Are you sure you wish to delete this user?');" })
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+            <div class="box-body">
+                <a href="@Url.Action("Create","Admin")" class="btn btn-success"><span class="fa fa-plus"></span> Add User</a>
+                <hr />
+                <table id="table" class="table table-bordered table-striped table-condensed">
+                    <thead style="color:blue">
+                        <tr>
+                            <th style="width:10px; text-align:center;">No</th>
+                            <th>Photo</th>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>No Telpon</th>
+                            <th style="width:40px; text-align:center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                        @foreach (var item in Model)
+                        {
+                            no++;
+                            <tr>
+                                <td class="_i">@no</td>
+                                <td class="_name">@item.NameIdentifier</td>
+                                <td class="_name">@item.NameIdentifier</td>
+                                <td class="_name">@item.Email</td>
+                                <td class="_name">@item.PhoneNumber</td>
+                                <td style="text-align:center;">
+                                    @Html.ActionLink(" ", "EditUser", new { UserName = item.UserName },new { @class = "btn btn-xs btn-success fa fa-pencil" })
+                                    @Html.ActionLink(" ", "DeleteUser", new { UserName = item.UserName }, new { @class = "btn btn-xs btn-danger fa fa-trash", @onclick = "return confirm('Are you sure you wish to delete this user?');" })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
