@@ -1,0 +1,52 @@
+﻿@using PPOB.Models.Pulsa;
+@{
+    List<MasterOperator> List = (List<MasterOperator>)ViewData["ListOperator"];
+    var no = 0;
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-warning">
+                        <div class="box-body">
+                            <button class="btn btn-default" onclick="return BackTolistPulsa()"><span class="fa fa-angle-left"></span> Back to list pulsa</button>
+                            <button class="btn btn-success" onclick="return FormAddOperator()"><span class="fa fa-plus"></span> Add Operator</button>
+                            <hr />
+                            <table id="table_operator" class="table table-bordered table-striped table-condensed">
+                                <thead style="color:blue">
+                                    <tr>
+                                        <th style="width:10px; text-align:center;" class="sorting_disabled">No</th>
+                                        <th>OperatorID</th>
+                                        <th>Deskripsi</th>
+                                        <th style="width:80px; text-align:center;" class="sorting_disabled">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                    @foreach (var item in List)
+                                    {
+                                        no++;
+                                        <tr>
+                                            <td>@no</td>
+                                            <td id="grid_operatorid">@item.OperatorId</td>
+                                            <td id="grid_operator_deskripsi">@item.NamaOperator</td>
+                                            <td style="text-align:center;">
+                                                <input id="grid_operator_pulsaid" value="@item.PulsaId"  class="hidden"/>
+                                                <button class="btn btn-xs btn-primary" title="Edit" onclick="return FormDetailOperator($(this))"><span class="fa fa-eye"></span></button>
+                                                <button class="btn btn-xs btn-success" title="Edit" onclick="return FormEditOperator($(this))"><span class="fa fa-pencil"></span></button>
+                                                <button class="btn btn-xs btn-danger" title="Delete" onclick="return DeletePopUpOperator($(this))"><span class="fa fa-trash"></span></button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

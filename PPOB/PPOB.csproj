@@ -184,12 +184,14 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BPJSTypeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
-    <Compile Include="Controllers\OperatorController.cs" />
+    <Compile Include="Controllers\PulsaController.cs" />
     <Compile Include="Controllers\SliderController.cs" />
+    <Compile Include="Controllers\TypeMemberController.cs" />
     <Compile Include="Extensions\ClaimsExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -201,11 +203,17 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Member\Member.cs" />
     <Compile Include="Models\Member\MemberRepository.cs" />
-    <Compile Include="Models\Operator\Operator.cs" />
-    <Compile Include="Models\Operator\OperatorRepository.cs" />
+    <Compile Include="Models\Menu\Menu.cs" />
+    <Compile Include="Models\Menu\MenuData.cs" />
+    <Compile Include="Models\Pulsa\MasterPulsa.cs" />
+    <Compile Include="Models\Pulsa\PulsaRepository.cs" />
     <Compile Include="Models\Slider\MasterSlider.cs" />
     <Compile Include="Models\Slider\SliderRepository.cs" />
     <Compile Include="Models\Standart.cs" />
+    <Compile Include="Models\TypeBPJS\MasterTypeBPJS.cs" />
+    <Compile Include="Models\TypeBPJS\TypeBPJSRepository.cs" />
+    <Compile Include="Models\TypeMember\MasterTypeMember.cs" />
+    <Compile Include="Models\TypeMember\TypeMemberRepository.cs" />
     <Compile Include="Models\UserRolesDTO.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
@@ -523,18 +531,23 @@
     <Content Include="obj\Debug\BJA_WF.csprojResolveAssemblyReference.cache" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <Content Include="obj\Debug\ReportManagement.csprojResolveAssemblyReference.cache" />
-    <Content Include="Views\Operator\_SimpleGrid.cshtml" />
     <Content Include="Views\Admin\AddRole.cshtml" />
     <Content Include="Views\Admin\Create.cshtml" />
     <Content Include="Views\Admin\EditRoles.cshtml" />
     <Content Include="Views\Admin\EditUser.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\ViewAllRoles.cshtml" />
-    <Content Include="Views\Operator\Index.cshtml" />
     <Content Include="Views\Member\_SimpleGrid.cshtml" />
     <Content Include="Views\Member\Index.cshtml" />
     <Content Include="Views\Slider\Index.cshtml" />
     <Content Include="Views\Slider\_SimpleGrid.cshtml" />
+    <Content Include="Views\Pulsa\Index.cshtml" />
+    <Content Include="Views\Pulsa\_SimpleGridPulsa.cshtml" />
+    <Content Include="Views\TypeBPJS\Index.cshtml" />
+    <Content Include="Views\TypeBPJS\_SimpleGrid.cshtml" />
+    <Content Include="Views\TypeMember\Index.cshtml" />
+    <Content Include="Views\TypeMember\_SimpleGrid.cshtml" />
+    <Content Include="Views\Pulsa\_SimpleGridOperator.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
