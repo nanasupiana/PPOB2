@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "PDAM";
+    ViewBag.Title = "Type Role";
 }
 
 @section Menu {
@@ -15,29 +15,28 @@
     </div>
 </div>
     
-<div id="EditForm" class="hidden">
+<div id="DetailForm" class="hidden">
     <div class="row">
         <div class="col-xs-12">
             <div class="box box-warning">
                 <div class="box-body">
                     <h3 id="title_form"></h3>
                     <hr />
-                    <div class="form-horizontal">                     
+                    <div class="form-horizontal">
+                        <div class="form-group">     
+                            <input id="form_role_id" class="hidden" />                       
+                         </div>
                         <div class="form-group">
-                            <label class="col-md-2 control-label text-muted" style="text-align:left;">PDAM ID</label>
+                            <label class="col-md-2 control-label text-muted" style="text-align:left;">Nama</label>
                             <label class="col-md-1 control-label text-muted ">:</label>
                             <div class="col-md-5">
-                                <input id="form_pdam_id" class="form-control"/>
+                                <input id="form_nama" class="form-control"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-2 control-label text-muted" style="text-align:left;">Deskripsi</label>
-                            <label class="col-md-1 control-label text-muted ">:</label>
-                            <div class="col-md-5">
-                                <input id="form_deskripsi" class="form-control"/>
-                            </div>
-                        </div>                        
-                        <input id="form_action" class="hidden" />   
+                            <input id="form_action" class="hidden" />
+                        </div>
+
                         <div class="form-group">
                             <div class="col-md-offset-3 col-md-5">
                                 <button id="btnSave" type="button" class="btn btn-warning" onclick="return Save()"><span class="bold fa fa-save">&nbsp;&nbsp;Save</span></button>&nbsp;
@@ -56,23 +55,22 @@
         <div class="modal-content  panel panel-warning">
             <div class="panel-heading">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h2 class="modal-title">Delete PDAM</h2>
+                <h2 class="modal-title">Delete Role</h2>
             </div>
             <div class="modal-body">
-                <div class="form-horizontal">                   >
-                    <div class="form-group">
-                        <label class="col-md-3 control-label text-muted" style="text-align:left;">PDAM Id</label>
-                        <label class="col-md-1 control-label text-muted ">:</label>
-                        <label id="popup_pdam_id" class="col-md-8 control-label text-muted " style="text-align:left;"></label>
+                <div class="form-horizontal">
+                         <div class="form-group">                            
+                            <label class="col-md-3 control-label text-muted" style="text-align:left;">Role ID</label>
+                            <label class="col-md-1 control-label text-muted ">:</label>
+                            <label id="popup_role_id" class="col-md-8 control-label text-muted " style="text-align:left;"></label>
+                        </div>
+                        <div class="form-group">                            
+                            <label class="col-md-3 control-label text-muted" style="text-align:left;">Nama</label>
+                            <label class="col-md-1 control-label text-muted ">:</label>
+                            <label id="popup_nama" class="col-md-8 control-label text-muted " style="text-align:left;"></label>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label text-muted" style="text-align:left;">Deskripsi</label>
-                        <label class="col-md-1 control-label text-muted ">:</label>
-                        <label id="popup_deskripsi" class="col-md-8 control-label text-muted " style="text-align:left;"></label>
-                    </div>
-
                 </div>
-            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" onclick="return Delete()"><span class="bold fa fa-times-circle">&nbsp;&nbsp;Delete</span></button>&nbsp;
                 <button type="button" class="btn btn-default" data-dismiss="modal"><span class="bold fa fa-times">&nbsp;&nbsp;Cancel</span></button>
@@ -87,7 +85,6 @@
         <script>
             $(document).ready(function () {
                 DataTable();
-
             })
 
             toastr.options = {
@@ -108,68 +105,70 @@
 
             function InitialConditions() {
                 $("#MainForm").removeClass("hidden");
-                $("#EditForm").addClass("hidden");
                 $("#DetailForm").addClass("hidden");
             }
 
-            function FormAdd() {
-                $("#form_pdam_id").val("");
-                $("#form_deskripsi").val("");
-                $("#form_action").val("Save");
-                $("#title_form").html("Add PDAM");
+            function FormAdd() {                
+                $("#form_nama").removeAttr("disabled", "disabled");
+                $("#form_nama").val("");
+                $("#form_action").val("Add");
+                $("#title_form").html("Add Role");
                 $("#MainForm").addClass("hidden");
-                $("#EditForm").removeClass("hidden");
-                $("#DetailForm").addClass("hidden");
+                $("#DetailForm").removeClass("hidden");
             }
 
             function FormEdit(data) {
-                var Id = data.closest("tr").find("#grid_pdam_id").text();
-                var Deskripsi = data.closest("tr").find("#grid_deskripsi").text();
-                $("#form_pdam_id").val(Id);
-                $("#form_deskripsi").val(Deskripsi);
+                var Id = data.closest("tr").find("#grid_role_id").text();
+                var Nama = data.closest("tr").find("#grid_nama").text();                
+                $("#form_role_id").removeAttr("disabled", "disabled");
+                $("#form_role_id").val(Id);
+                $("#form_nama").removeAttr("disabled", "disabled");
+                $("#form_nama").val(Nama);
+                $("#form_action").removeAttr("disabled", "disabled");
                 $("#form_action").val("Edit");
-                $("#title_form").html("Edit PDAM");
+                $("#title_form").html("Edit Role");
                 $("#MainForm").addClass("hidden");
-                $("#EditForm").removeClass("hidden");
-                $("#DetailForm").addClass("hidden");
-            }            
+                $("#DetailForm").removeClass("hidden");
+            }
 
             function DeletePopUp(data) {
                 $("#DeletePopUp").modal({ backdrop: 'static' });
-                var Id = data.closest("tr").find("#grid_pdam_id").text();
-                var Deskripsi = data.closest("tr").find("#grid_deskripsi").text();
-                $("#popup_pdam_id").val(Id)
-                $("#popup_deskripsi").text(Deskripsi);
+                var Id = data.closest("tr").find("#grid_role_id").text();
+                var Nama = data.closest("tr").find("#grid_nama").text();
+                $("#popup_role_id").text(Id)
+                $("#popup_nama").text(Nama);
             }
+           
 
             function Save() {
-                var PDAMId = $("#form_pdam_id").val();
-                var Deskripsi = $("#form_deskripsi").val();
+                var Id = $("#form_role_id").val();
+                var Nama = $("#form_nama").val();                                
+                var model = { RoleId:Id, Name: Nama };
                 var Action = $("#form_action").val();
-                    if (Action == "Save") {
-                        var url = "@Url.Action("Create","PDAM")";
+                if (Id == "") {
+                    var url = "@Url.Action("Create", "Role")";
+                }
+                else {
+                    var url = "@Url.Action("Edit", "Role")";
+                }
+                $.post(url, model, function (result) {
+                    if (result == "" || result == false) {
+                        toastr.warning("Data Error.")
                     }
                     else {
-                        var url = "@Url.Action("Edit", "PDAM")";
+                        $("#tablegrid").html(result);
+                        toastr.success("Save data successfully.")
+                        InitialConditions();
+                        return DataTable();
                     }
-                    var model = { PDAMId: Id, NamaOperator: Nama };//Field disi sesuail model
-                    $.post(url, model, function (result) {
-                        if (result == "" || result == false) {
-                            toastr.warning("Data Error.")
-                        }
-                        else {
-                            $("#tablegrid").html(result);
-                            toastr.success("Save data successfully.")
-                            InitialConditions();
-                            return DataTable();
-                        }
-                    });
-            }
+                });
+            }            
 
             function Delete() {
-                var Id = $("#popup_id").val();
-                var url = "@Url.Action("Delete","Member")";
-                var model = { IdOperator: Id };//Field disi sesuail model
+                var Id = $("#popup_role_id").text();
+                var Nama = $("#form_nama").val();
+                var url = "@Url.Action("Delete", "Role")";
+                var model = { RoleId: Id};
                 $.post(url, model, function (result) {
                     if (result == "" || result == false) {
                         toastr.warning("Data Error.")
@@ -177,12 +176,11 @@
                     else {
                         $("#tablegrid").html(result);
                         InitialConditions();
-                        toastr.warning("Data Error.")
+                        toastr.success("Delete data successfully.")
                         $("#DeletePopUp").modal('hide');
                         return DataTable();
                     }
                 });
             }
-
         </script>
     }

@@ -1,20 +1,20 @@
-﻿@using PPOB.Models.PDAM;
+﻿@using PPOB.Models.RoleMaster;
 @{
-    List<MasterPDAM> List = (List<MasterPDAM>)ViewData["ListPDAM"];
+    List<MasterRole> List = (List<MasterRole>)ViewData["ListRoleMaster"];
     var no = 0;
 }
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-warning">
             <div class="box-body">
-                <button class="btn btn-success" onclick="return FormAdd()"><span class="fa fa-plus"></span> Add PDAM</button>
+                <button class="btn btn-success" onclick="return FormAdd()"><span class="fa fa-plus"></span> Add Role</button>
                 <hr />
                 <table id="table" class="table table-bordered table-striped table-condensed">
                     <thead style="color:blue">
                         <tr>
                             <th style="width:10px; text-align:center;" >No</th>
-                            <th>PDAM Id</th>
-                            <th>Deskripsi</th>
+                            <th>RoleID</th>
+                            <th>Nama</th>
                             <th style="width:60px; text-align:center;" >Action</th>
                         </tr>
                     </thead>
@@ -23,10 +23,11 @@
                         no++;
                         <tr>
                             <td>@no</td>                            
-                            <td id="grid_pdam_id">@item.PDAMId</td>
-                            <td id="grid_dskripsi">@item.Deskripsi</td>                                                        
+                            <td id="grid_role_id">@item.RoleID</td>
+                            <td id="grid_nama">@item.Name</td>                            
                             <td>
-                                <input id="grid_pdam_id" class="hidden" value="@item.PDAMId" />                                                                
+                                <input id="grid_role_id" class="hidden" value="@item.RoleID" />
+                                <input id="grid_nama" class="hidden" value="@item.Name" />                                
                                 <button class="btn btn-xs btn-success" title="Edit" onclick="return FormEdit($(this))"><span class="fa fa-pencil"></span></button>
                                 <button class="btn btn-xs btn-danger" title="Delete" onclick="return DeletePopUp($(this))"><span class="fa fa-trash"></span></button>
                             </td>
