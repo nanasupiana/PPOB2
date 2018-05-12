@@ -215,6 +215,8 @@
     <Compile Include="Models\PDAM\PDAMRepository.cs" />
     <Compile Include="Models\Pulsa\MasterPulsa.cs" />
     <Compile Include="Models\Pulsa\PulsaRepository.cs" />
+    <Compile Include="Models\RoleMenu\RoleMenu.cs" />
+    <Compile Include="Models\RoleMenu\RoleMenuRepository.cs" />
     <Compile Include="Models\RoleMaster\MasterRole.cs" />
     <Compile Include="Models\RoleMaster\RoleRepository.cs" />
     <Compile Include="Models\Slider\MasterSlider.cs" />
@@ -567,11 +569,13 @@
     <Content Include="Views\PDAM\_SimpleGrid.cshtml" />
     <Content Include="Views\Role\_SimpleGrid.cshtml" />
     <Content Include="Views\Role\Index.cshtml" />
+    <Content Include="Views\RoleMenu\_SimpleGrid.cshtml" />
+    <Content Include="Views\RoleMenu\Index.cshtml" />
+    <Content Include="Views\RoleMenu\_SimpleGridDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="obj\Debug\TempPE\" />
-    <Folder Include="Views\RoleMenu\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

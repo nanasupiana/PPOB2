@@ -1,0 +1,40 @@
+﻿@using PPOB.Models.RoleMenu;
+@{
+    List<RoleMenu> List = (List<RoleMenu>)ViewData["ListDetail"];
+    var i = 0;
+}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-warning">
+            <div class="box-body">
+                <h3>Setting Permission</h3>
+                <hr />
+                <table id="table_detail" class="table table-striped table-condensed">
+                    <tbody id="tbody_detail">
+                        @foreach (var item in List)
+                    {
+                            i++;
+                        <tr>
+                            <td id="grid_menu_id-@i">@item.MenuID</td>
+                            <td id="grid_nama"><b>@item.MenuName</b></td>
+                            <td><input id="grid_view-@item.MenuID" name="grid_view" type="checkbox" class="_cb"/> View</td>
+                            <td><input id="grid_create-@item.MenuID" name="grid_create" type="checkbox" class="_cb"/> Create</td>
+                            <td><input id="grid_update-@item.MenuID" name="grid_update" type="checkbox" class="_cb"/> Update</td>
+                            <td><input id="grid_delete-@item.MenuID" name="grid_delete" type="checkbox" class="_cb"/> Delete</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+                <div class="form-group">
+                    <div class="text-center">
+                        <button id="btnSave" type="button" class="btn btn-warning" onclick="return Save()"><span class="bold fa fa-save">&nbsp;&nbsp;Save</span></button>&nbsp;
+                        <button type="button" class="btn btn-default" onclick="return InitialConditions()"><span class="bold fa fa-angle-left">&nbsp;&nbsp;Back To List</span></button>
+                    </div>
+                </div>   
+        </div>
+    </div>
+</div>
+</div>
+
+
+

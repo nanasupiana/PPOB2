@@ -51,6 +51,14 @@ namespace PPOB.Models.MasterMenu
         public async Task<Boolean> CreateMasterMenu(string MenuName, string MenuURL, string MenuIcon, string MenuParentId, string User)
         {
             Boolean Result = false;
+            if (MenuIcon == null)
+            {
+                MenuIcon = "";
+            }
+            if (MenuParentId == null)
+            {
+                MenuParentId = "";
+            }
             try
             {
                 string Query = "CreateMasterMenu";
@@ -90,6 +98,14 @@ namespace PPOB.Models.MasterMenu
          public async Task<Boolean> EditMasterMenu(string MenuID, string MenuName, string MenuURL, string MenuIcon, string MenuParentId, string User)
         {
             Boolean Result = false;
+            if (MenuIcon == null)
+            {
+                MenuIcon = "";
+            }
+            if (MenuParentId == null)
+            {
+                MenuParentId = "";
+            }
             try
             {
                 string Query = "EditMasterMenu";

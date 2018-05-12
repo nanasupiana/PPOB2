@@ -28,7 +28,11 @@
                                 <td>@no</td>
                                 <td id="grid_menu_name">@item.MenuName</td>
                                 <td id="grid_menu_url">@item.MenuURL</td>
-                                <td ><span class="@item.MenuIcon"></span></td>
+                                <td >@if (item.MenuIcon != "")
+                                {
+                                    <img alt="image" style="width:23px;" src="@item.MenuIcon" />
+                                }
+                                </td>
                                 <td id="grid_menu_parent">@item.MenuParent</td>
                                 <td style="text-align:center;">
                                     <input id="grid_menu_id" class="hidden " value="@item.MenuId" />
