@@ -100,6 +100,37 @@
     </div>
 </div>
 
+<div id="DetailFormImport" class="hidden">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-warning">
+                <div class="box-body">
+                    <h3 id="title_form_import"></h3>
+                    <hr />
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label text-muted" style="text-align:left;">File</label>
+                            <label class="col-md-1 control-label text-muted ">:</label>
+                            <div class="col-md-5">
+                                <input id="file_import" type="file" class="form-control" />
+                            </div>
+                        </div>      
+                        <div class="form-group">                            
+                            <input id="form_action_import" class="hidden" />
+                        </div>                  
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-md-5">
+                                <button type="button" class="btn btn-warning" onclick="return Import()"><span class="bold fa fa-save">&nbsp;&nbsp;Import</span></button>&nbsp;
+                                <button type="button" class="btn btn-default" onclick="return BackTolistPulsa()"><span class="bold fa fa-angle-left">&nbsp;&nbsp;Back To List</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="DeletePopUpPulsa" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content  panel panel-warning">
@@ -177,6 +208,8 @@
             $("#DetailFormPulsa").addClass("hidden");
             $("#MainFormOperator").addClass("hidden");
             $("#DetailFormOperator").addClass("hidden");
+            $("#MainFormImport").addClass("hidden");
+            $("#DetailFormImport").addClass("hidden");
         }
 
         function BackTolistOperator() {
@@ -184,6 +217,8 @@
             $("#DetailFormPulsa").addClass("hidden");
             $("#MainFormOperator").removeClass("hidden");
             $("#DetailFormOperator").addClass("hidden");
+            $("#MainFormImport").addClass("hidden");
+            $("#DetailFormImport").addClass("hidden");
         }
 
         function IndexPulsa() {
@@ -230,6 +265,14 @@
             $("#title_form_operator").html("Add Operator");
             $("#MainFormOperator").addClass("hidden");
             $("#DetailFormOperator").removeClass("hidden");
+        }
+        function FormImport() {
+            $("#form_operatorid").val("");
+            $("#form_operatorid").removeAttr("disabled", "disabled");
+            $("#form_action_import").val("Import");
+            $("#title_form_import").html("Import");
+            $("#MainFormOperator").addClass("hidden");
+            $("#DetailFormImport").removeClass("hidden");
         }
 
         function FormEditPulsa(data) {
@@ -380,6 +423,62 @@
                 }
             });
         }
+        function Import() {
+            var Id = $("#form_operatorid").val();
+            if(Id != ""){
+                var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.xlsx|.xls)$/;                
+                    if (!regex.test($("#excelfile").val().toLowerCase())) {
+                        alert("Please upload a valid Excel file!");
+                        return false;
+                    }
+                    else {
+                        UploadSelectedExcelsheet();
+                    }
+            }
+            else
+            {
+                alert("Please upload a Excel file!");
+                return false;
+            }
+        }
+        function UploadSelectedExcelsheet() {
+            var data = new FormData();
+            var i = 0;
+            var fl = $("#excelfile").get(0).files[0];
 
+            if (fl != undefined) {
+
+                data.append("file", fl);
+
+            }
+            var Url = Path("ProductBulk", "UploadExcelsheet");
+
+            $.ajax({
+                type: "POST",
+                url: Url,
+                contentType: false,
+                processData: false,
+                data: data,
+                success: function (result) {
+
+                    $("#Products").html(result);
+
+                    $('.ddlRecipient').multiselect({
+                        includeSelectAllOption: true
+                    });
+                    $('.ddlOccasionmaster').multiselect({
+                        includeSelectAllOption: true
+                    });
+
+                },
+                error: function (xhr, status, p3, p4) {
+                    var err = "Error " + " " + status + " " + p3 + " " + p4;
+                    if (xhr.responseText && xhr.responseText[0] == "{")
+                        err = JSON.parse(xhr.responseText).Message;
+                    alert(err);
+                    return false;
+                }
+            });
+        }
     </script>
 }

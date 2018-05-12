@@ -282,5 +282,39 @@ namespace PPOB.Models.Pulsa
 
         }
 
+        public async Task<Boolean> Import(string PulsaID, string Deskripsi, string User)
+        {
+            Boolean Result = false;
+            try
+            {
+                string Query = "CreatePulsa";
+
+                dbAccess.strConn = conn;
+                SqlParameter[] pParam = new SqlParameter[3];
+                pParam[0] = new SqlParameter("@PulsaID", SqlDbType.VarChar);
+                pParam[0].Value = PulsaID;
+                pParam[1] = new SqlParameter("@Deskripsi", SqlDbType.VarChar);
+                pParam[1].Value = Deskripsi;
+                pParam[2] = new SqlParameter("@User", SqlDbType.VarChar);
+                pParam[2].Value = User;
+                int res = await dbAccess.ExecQueryByCommand(Query, pParam);
+                if (res == 1)
+                {
+                    Result = true;
+                }
+                else
+                {
+                    Result = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Result = false;
+
+                throw;
+            }
+            return Result;
+
+        }
     }
 }

@@ -163,6 +163,27 @@ namespace PPOB.Controllers
                 return View(false);
             }
         }
+        public async Task<ActionResult> Import(MasterPulsa model)
+        {
+            try
+            {
+                ExcelToDt.clsExcel Exl = new ExcelToDt.clsExcel();
 
+                var result = true;
+                if (result == true)
+                {
+                    return await GetListPulsa();
+                }
+                else
+                {
+                    return View(result);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+                return View(false);
+            }
+        }                
     }
 }
