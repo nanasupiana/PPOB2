@@ -1,0 +1,218 @@
+﻿@model IEnumerable<PPOB.Models.RoleMenu.RoleMenuDetail>
+@{
+    ViewBag.Title = "Role Menu Mapping";
+}
+
+@section Menu {
+    @Scripts.Render("~/Scripts/Tables/Data/menu")
+}
+@Styles.Render("~/AdminLTE/plugins/datatables/css")
+@Styles.Render("~/AdminLTE/plugins/select2/css")
+<link href="~/Content/toastr.min.css" rel="stylesheet" />
+
+<div id="MainForm">
+    <div id="tablegrid">
+        @Html.Partial("_SimpleGrid")
+    </div>
+</div>
+
+<div id="DetailForm" class="hidden">
+    <input id="from_role_id" class="hidden" />
+    <div id="tablegriddetail">
+        @Html.Partial("_SimpleGridDetail")
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/AdminLTE/plugins/datatables/js")
+    @Scripts.Render("~/AdminLTE/plugins/select2/js")
+    <script src="~/Scripts/toastr.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            DataTable();
+        })
+
+        toastr.options = {
+            "positionClass": "toast-bottom-right",
+            "timeOut": "3000"
+        }
+
+        function DataTable() {
+            $('#table').DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": false,
+                "info": true,
+                "autoWidth": false
+            });
+        }
+
+        function DataTableDetail() {
+            $('#table_detail').DataTable({
+                "paging": false,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": false,
+                "info": true,
+                "autoWidth": false
+            });
+        }
+
+        function InitialConditions() {
+            $("#MainForm").removeClass("hidden");
+            $("#DetailForm").addClass("hidden");
+            $("#from_role_id").val("");
+            $("._cb").prop("checked", false);
+        }
+
+        function Setting(data) {
+            var Id = data.closest("tr").find("#grid_role_id").val();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetListDetailById", "RoleMenu")',
+                data: {
+                    Id: Id
+                },
+                success: function (result) {
+                    var res = result.length - 1;
+                    if (result.length > 0) {
+                        for (var i = 0; i <= result.length; i++) {
+                            if (res >= i) {
+                                if (result[i].Active == "True") {
+                                    $("#grid_view-" + result[i].MenuID).prop("checked", true);
+                                }
+                                if (result[i].Create == "True") {
+                                    $("#grid_create-" + result[i].MenuID).prop("checked", true);
+                                }
+                                if (result[i].Update == "True") {
+                                    $("#grid_update-" + result[i].MenuID).prop("checked", true);
+                                }
+                                if (result[i].Delete == "True") {
+                                    $("#grid_delete-" + result[i].MenuID).prop("checked", true);
+                                }
+                            }
+                        }
+                    }
+                    $("#from_role_id").val(Id);
+                    $("#MainForm").addClass("hidden");
+                    $("#DetailForm").removeClass("hidden");
+                },
+                error: function () {
+                }
+            });
+        }
+
+        function Save() {
+            var RoleId = $("#from_role_id").val();
+            var MenuIds = "";
+            var Actives = "";
+            var Creates = "";
+            var Updates = "";
+            var Deletes = "";
+            var Separator = ";";
+            var Count = $('#tbody_detail tr').length;
+            for (var i = 0; i < Count; i++) {
+                    var n = i + 1;
+                    if ($("input[name='grid_view']")[i].checked == true ||
+                        $("input[name='grid_create']")[i].checked == true ||
+                        $("input[name='grid_update']")[i].checked == true ||
+                        $("input[name='grid_delete']")[i].checked == true) {
+                        if (i == 0 || MenuIds == "") {
+                            MenuIds = $("#grid_menu_id-" + n).text();
+                        }
+                        else {
+                            MenuIds = MenuIds + Separator + $("#grid_menu_id-" + n).text();
+                        }
+                        if (i == 0 || Actives == "") {
+                            if ($("input[name='grid_view']")[i].checked == true) {
+                                Actives = "1";
+                            }
+                            else {
+                                Actives = "0";
+                            }
+                        }
+                        else {
+                            if ($("input[name='grid_view']")[i].checked == true) {
+                                Actives = Actives + Separator + "1";
+                            }
+                            else {
+                                Actives = Actives + Separator + "0";
+                            }
+                        }
+                        if (i == 0 || Creates == "") {
+                            if ($("input[name='grid_create']")[i].checked == true) {
+                                Creates = "1";
+                            }
+                            else {
+                                Creates = "0";
+                            }
+                        }
+                        else {
+                            if ($("input[name='grid_create']")[i].checked == true) {
+                                Creates = Creates + Separator + "1";
+                            }
+                            else {
+                                Creates = Creates + Separator + "0";
+                            }
+                        }
+                        if (i == 0 || Updates == "") {
+                            if ($("input[name='grid_update']")[i].checked == true) {
+                                Updates = "1";
+                            }
+                            else {
+                                Updates = "0";
+                            }
+                        }
+                        else {
+                            if ($("input[name='grid_update']")[i].checked == true) {
+                                Updates = Updates + Separator + "1";
+                            }
+                            else {
+                                Updates = Updates + Separator + "0";
+                            }
+                        }
+                        if (i == 0 || Deletes == "") {
+                            if ($("input[name='grid_delete']")[i].checked == true) {
+                                Deletes = "1";
+                            }
+                            else {
+                                Deletes = "0";
+                            }
+                        }
+                        else {
+                            if ($("input[name='grid_delete']")[i].checked == true) {
+                                Deletes = Deletes + Separator + "1";
+                            }
+                            else {
+                                Deletes = Deletes + Separator + "0";
+                            }
+                        }
+                    }
+            }
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Setting", "RoleMenu")',
+                data: {
+                    RoleId: RoleId,
+                    MenuIds: MenuIds,
+                    Actives: Actives,
+                    Creates: Creates,
+                    Updates: Updates,
+                    Deletes: Deletes
+                },
+                success: function (result) {
+                    if (result == "" || result == false) {
+                        toastr.warning("Data Error.")
+                    }
+                    else {
+                        $("#tablegrid").html(result);
+                        toastr.success("Save data successfully.")
+                        InitialConditions();
+                        return DataTable();
+                    }
+                }
+            });
+        }
+    </script>
+}

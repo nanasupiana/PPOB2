@@ -25,32 +25,31 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="hold-transition login-page">
+<body  style="background-image: url('../Content/bg_login.png'); background-repeat: no-repeat">
     <div class="login-box">
-        <div class="login-logo">
-            <a href="@Url.Action("DashboardV1", "Home")"><b>ESTA DIGITAL NIAGA</b></a>
-        </div>
-        <div class="login-box-body">
-            <p class="login-box-msg">Sign in to start your session</p>
+        <div class="login-box-body text-center" style="border-radius:3px">
+            <a href="@Url.Action("DashboardV1", "Home")"><img src="~/Content/ic_logo_login.png" /></a>
+            <br />
+            <br />
+            <p class="login-box-msg">Please login to start your session</p>
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
             {
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group has-feedback">
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email", placeholder = "Email" })
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email", style = "border-radius:3px", placeholder = "Email" })
                     @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group has-feedback">
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", type = "password", placeholder = "Password" })
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", type = "password", style = "border-radius:3px", placeholder = "Password" })
                     @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                        <button type="submit" class="btn btn-warning btn-block btn-flat">Sign In</button>
+                        <button type="submit" class="btn btn-warning btn-block btn-flat" style="border-radius:3px">Sign In</button>
                     </div>
-                    <a href="@Url.Action("Register", "Account")" class="text-center">Register as a new user</a>
                 </div>
             }
         </div>

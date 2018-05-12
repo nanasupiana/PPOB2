@@ -1,0 +1,38 @@
+﻿@using PPOB.Models.RoleMenu;
+@{
+    List<RoleMenu> List = (List<RoleMenu>)ViewData["ListRole"];
+    var no = 0;
+}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-warning">
+            <div class="box-body">
+                <table id="table" class="table table-bordered table-striped table-condensed">
+                    <thead style="color:blue">
+                        <tr>
+                            <th style="width:10px; text-align:center;" >No</th>
+                            <th>Nama</th>
+                            <th style="width:60px; text-align:center;" >Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">@foreach (var item in List)
+                    {
+                        no++;
+                        <tr>
+                            <td>@no</td>                            
+                            <td id="grid_nama">@item.RoleName</td>                            
+                            <td>
+                                <input id="grid_role_id" class="hidden" value="@item.RoleID" />                               
+                                <button class="btn btn-xs btn-success" title="Setting" onclick="return Setting($(this))"><span class="fa fa-gear"></span></button>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

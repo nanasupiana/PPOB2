@@ -193,6 +193,7 @@
     <Compile Include="Controllers\PDAMController.cs" />
     <Compile Include="Controllers\PulsaController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\RoleMenuController.cs" />
     <Compile Include="Controllers\SliderController.cs" />
     <Compile Include="Controllers\TypeMemberController.cs" />
     <Compile Include="Extensions\ClaimsExtensions.cs" />
@@ -214,6 +215,8 @@
     <Compile Include="Models\PDAM\PDAMRepository.cs" />
     <Compile Include="Models\Pulsa\MasterPulsa.cs" />
     <Compile Include="Models\Pulsa\PulsaRepository.cs" />
+    <Compile Include="Models\RoleMenu\RoleMenu.cs" />
+    <Compile Include="Models\RoleMenu\RoleMenuRepository.cs" />
     <Compile Include="Models\RoleMaster\MasterRole.cs" />
     <Compile Include="Models\RoleMaster\RoleRepository.cs" />
     <Compile Include="Models\Slider\MasterSlider.cs" />
@@ -478,6 +481,9 @@
     <Content Include="bin\System.Web.WebPages.Razor.xml" />
     <Content Include="bin\System.Web.WebPages.xml" />
     <Content Include="bin\WebGrease.dll" />
+    <Content Include="Content\bg_login.png" />
+    <Content Include="Content\ic_logo_header.png" />
+    <Content Include="Content\ic_logo_login.png" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
@@ -563,6 +569,9 @@
     <Content Include="Views\PDAM\_SimpleGrid.cshtml" />
     <Content Include="Views\Role\_SimpleGrid.cshtml" />
     <Content Include="Views\Role\Index.cshtml" />
+    <Content Include="Views\RoleMenu\_SimpleGrid.cshtml" />
+    <Content Include="Views\RoleMenu\Index.cshtml" />
+    <Content Include="Views\RoleMenu\_SimpleGridDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
