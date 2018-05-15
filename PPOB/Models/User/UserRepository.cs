@@ -11,40 +11,19 @@ using PPOB.Models;
 using System.Web.Mvc;
 
 
-namespace PPOB.Models.RoleMaster
+namespace PPOB.Models.User
 {
-    public class RoleRepository
+    public class UserRepository
     {
         dbAccess dbAccess = new dbAccess();
         string conn = ConfigurationManager.ConnectionStrings["GetConn"].ConnectionString;
 
-        public List<StandartComboBox> GetAllRoles()
+        public async Task<List<User>> GetUser()
         {
-            List<StandartComboBox> Result = new List<StandartComboBox>();
-            string Query = "GetComboRole";
-            DataTable dt = new DataTable();
-            dbAccess.strConn = conn;
-            dt = dbAccess.GetDataTable_not_async(Query);
-
-            foreach (DataRow dr in dt.Rows)
-            {
-                Result.Add(
-                    new StandartComboBox
-                    {
-                        Value = Convert.ToString(dr["Value"]),
-                        Text = Convert.ToString(dr["Text"])
-                    });
-            }
-            return Result;
-
-        }
-
-        public async Task<List<MasterRole>> GetRoleMaster()
-        {
-            List<MasterRole> Result = new List<MasterRole>();
+            List<User> Result = new List<User>();
             try
             {
-                string Query = "GetRoleMaster";
+                string Query = "GetUser";
                 DataTable dt = new DataTable();
                 dbAccess.strConn = conn;
                 dt = await dbAccess.GetDataTable(Query);
@@ -52,9 +31,9 @@ namespace PPOB.Models.RoleMaster
                 foreach (DataRow dr in dt.Rows)
                 {
                     Result.Add(
-                        new MasterRole
+                        new User
                         {
-                            RoleID = Convert.ToString(dr["RoleID"]),
+                            UserID = Convert.ToString(dr["UserID"]),
                             Name = Convert.ToString(dr["Name"]),
                         });
                 }
@@ -66,13 +45,13 @@ namespace PPOB.Models.RoleMaster
             }
         }
 
-        public async Task<Boolean> CreateRoleMaster(string Nama,string User)
+        public async Task<Boolean> CreateUser(string Nama,string User)
         {
             Boolean Result = false;
             try
             {
 
-                string Query = "CreateRole";
+                string Query = "CreateUser";
                 dbAccess.strConn = conn;
                 SqlParameter[] pParam = new SqlParameter[2];
                 pParam[0] = new SqlParameter("@Nama", SqlDbType.VarChar);
@@ -98,16 +77,16 @@ namespace PPOB.Models.RoleMaster
             return Result;
         }
 
-        public async Task<Boolean> EditRoleMaster(string RoleID,string Nama,string user)
+        public async Task<Boolean> EditUser(string UserID,string Nama,string user)
         {
             Boolean Result = false;
             try
             {
-                string Query = "EditRole";
+                string Query = "EditUser";
                 dbAccess.strConn = conn;
                 SqlParameter[] pParam = new SqlParameter[3];
-                pParam[0] = new SqlParameter("@RoleID", SqlDbType.Int);
-                pParam[0].Value = RoleID;
+                pParam[0] = new SqlParameter("@UserID", SqlDbType.Int);
+                pParam[0].Value = UserID;
                 pParam[1] = new SqlParameter("@Nama", SqlDbType.VarChar);
                 pParam[1].Value = Nama;
                 pParam[2] = new SqlParameter("@User", SqlDbType.VarChar);
@@ -130,17 +109,17 @@ namespace PPOB.Models.RoleMaster
             return Result;
         }
 
-        public async Task<Boolean> DeleteRoleMMaster(string RoleID,string user)
+        public async Task<Boolean> DeleteUserMMaster(string UserID,string user)
         {
             Boolean Result = false;
             try
             {
-                string Query = "DeleteRole";
+                string Query = "DeleteUser";
 
                 dbAccess.strConn = conn;
                 SqlParameter[] pParam = new SqlParameter[1];
-                pParam[0] = new SqlParameter("@RoleID", SqlDbType.VarChar);
-                pParam[0].Value = RoleID;                
+                pParam[0] = new SqlParameter("@UserID", SqlDbType.VarChar);
+                pParam[0].Value = UserID;                
                 int res = await dbAccess.ExecQueryByCommand(Query, pParam);
                 if (res == 1)
                 {

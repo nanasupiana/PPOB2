@@ -9,6 +9,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity.EntityFramework;
 using PPOB.Models;
+using PPOB.Models.RoleMaster;
+using mmt_Library;
+using System.Data;
+using System.Configuration;
 using PagedList;
 
 #endregion Includes
@@ -27,75 +31,74 @@ namespace PPOB.Controllers
         #region public ActionResult Index(string searchStringUserNameOrEmail)
         public ActionResult Index(string searchStringUserNameOrEmail, string currentFilter, int? page)
         {
+
+            dbAccess dbAccess = new dbAccess();
+            string conn = ConfigurationManager.ConnectionStrings["GetConn"].ConnectionString;
             try
             {
-                //int intPage = 1;
-                //int intPageSize = 10;
-                //int intTotalPageCount = 0;
+                List<ExpandedUserDTO> Result = new List<ExpandedUserDTO>();
+                string Query = "GetUserAll";
+                DataTable dt = new DataTable();
+                dbAccess.strConn = conn;
+                dt = dbAccess.GetDataTable_not_async(Query);
 
-                //if (searchStringUserNameOrEmail != null)
-                //{
-                //    intPage = 1;
-                //}
-                //else
-                //{
-                //    if (currentFilter != null)
-                //    {
-                //        searchStringUserNameOrEmail = currentFilter;
-                //        intPage = page ?? 1;
-                //    }
-                //    else
-                //    {
-                //        searchStringUserNameOrEmail = "";
-                //        intPage = page ?? 1;
-                //    }
-                //}
-                searchStringUserNameOrEmail = "";
-                ViewBag.CurrentFilter = searchStringUserNameOrEmail;
-
-                List<ExpandedUserDTO> col_UserDTO = new List<ExpandedUserDTO>();
-                //int intSkip = (intPage - 1) * intPageSize;
-
-                //intTotalPageCount = UserManager.Users
-                //    .Where(x => x.UserName.Contains(searchStringUserNameOrEmail))
-                //    .Count();
-
-                var result = UserManager.Users
-                    .Where(x => x.UserName.Contains(searchStringUserNameOrEmail))
-                    .OrderBy(x => x.UserName)
-                    //.Skip(intSkip)
-                    //.Take(intPageSize)
-                    .ToList();
-
-                foreach (var item in result)
+                foreach (DataRow dr in dt.Rows)
                 {
-                    ExpandedUserDTO objUserDTO = new ExpandedUserDTO();
-
-                    objUserDTO.UserName = item.UserName;
-                    objUserDTO.NameIdentifier = item.NameIdentifier;
-                    objUserDTO.Email = item.Email;
-                    objUserDTO.PhoneNumber = item.PhoneNumber;
-                    objUserDTO.LockoutEndDateUtc = item.LockoutEndDateUtc;
-
-                    col_UserDTO.Add(objUserDTO);
+                    Result.Add(
+                        new ExpandedUserDTO
+                        {
+                            Photo = Convert.ToString(dr["Photo"]),
+                            NameIdentifier = Convert.ToString(dr["NameIdentifier"]),
+                            UserName = Convert.ToString(dr["UserName"]),
+                            Email = Convert.ToString(dr["Email"]),
+                            PhoneNumber = Convert.ToString(dr["PhoneNumber"]),
+                            RoleName = Convert.ToString(dr["Name"])
+                        });
                 }
-
-                // Set the number of pages
-                //var _UserDTOAsIPagedList =
-                //    new StaticPagedList<ExpandedUserDTO>
-                //    (
-                //        col_UserDTO , intPage, intPageSize, intTotalPageCount
-                //        );
-
-                return View(col_UserDTO);
+                return View(Result);
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError(string.Empty, "Error: " + ex);
-                List<ExpandedUserDTO> col_UserDTO = new List<ExpandedUserDTO>();
+                List<ExpandedUserDTO> Result = new List<ExpandedUserDTO>();
 
-                return View(col_UserDTO.ToPagedList(1, 25));
+                return View(Result);
             }
+            //try
+            //{
+            //    searchStringUserNameOrEmail = "";
+            //    ViewBag.CurrentFilter = searchStringUserNameOrEmail;
+
+            //    List<ExpandedUserDTO> col_UserDTO = new List<ExpandedUserDTO>();
+            //    var result = UserManager.Users
+            //        .Where(x => x.UserName.Contains(searchStringUserNameOrEmail))
+            //        .OrderBy(x => x.UserName)
+            //        //.Skip(intSkip)
+            //        //.Take(intPageSize)
+            //        .ToList();
+
+            //    foreach (var item in result)
+            //    {
+            //        ExpandedUserDTO objUserDTO = new ExpandedUserDTO();
+
+            //        objUserDTO.UserName = item.UserName;
+            //        objUserDTO.NameIdentifier = item.NameIdentifier;
+            //        objUserDTO.Email = item.Email;
+            //        objUserDTO.PhoneNumber = item.PhoneNumber;
+            //        objUserDTO.LockoutEndDateUtc = item.LockoutEndDateUtc;
+
+            //        col_UserDTO.Add(objUserDTO);
+            //    }       );
+
+            //    return View(col_UserDTO);
+            //}
+            //catch (Exception ex)
+            //{
+            //    ModelState.AddModelError(string.Empty, "Error: " + ex);
+            //    List<ExpandedUserDTO> col_UserDTO = new List<ExpandedUserDTO>();
+
+            //    return View(col_UserDTO.ToPagedList(1, 25));
+            //}
         }
         #endregion
 
@@ -108,7 +111,8 @@ namespace PPOB.Controllers
         {
             ExpandedUserDTO objExpandedUserDTO = new ExpandedUserDTO();
 
-            ViewBag.Roles = GetAllRolesAsSelectList();
+            //ViewBag.Roles = GetAllRolesAsSelectList();
+            ViewBag.RoleId = GetAllRoles();
 
             return View(objExpandedUserDTO);
         }
@@ -119,20 +123,23 @@ namespace PPOB.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         #region public ActionResult Create(ExpandedUserDTO paramExpandedUserDTO)
-        public ActionResult Create(ExpandedUserDTO paramExpandedUserDTO)
+        public ActionResult Create(string Photo, string NameIdentifier, string Email, string PhoneNumber, string Password, int RoleId)
+        //public ActionResult Create(ExpandedUserDTO paramExpandedUserDTO)
         {
             try
             {
-                if (paramExpandedUserDTO == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-
-                var NameIdentifier = paramExpandedUserDTO.NameIdentifier.Trim();
-                var Email = paramExpandedUserDTO.Email.Trim();
-                var PhoneNumber = paramExpandedUserDTO.PhoneNumber.Trim();
-                var UserName = paramExpandedUserDTO.Email.Trim();
-                var Password = paramExpandedUserDTO.Password.Trim();
+                //if (paramExpandedUserDTO == null)
+                //{
+                //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //}
+                var UserName = Email;
+                //var Photo = paramExpandedUserDTO.Photo.Trim();
+                //var NameIdentifier = paramExpandedUserDTO.NameIdentifier.Trim();
+                //var Email = paramExpandedUserDTO.Email.Trim();
+                //var PhoneNumber = paramExpandedUserDTO.PhoneNumber.Trim();
+                //var UserName = paramExpandedUserDTO.Email.Trim();
+                //var Password = paramExpandedUserDTO.Password.Trim();
+                //var RoleId = paramExpandedUserDTO.RoleId;
 
                 if (NameIdentifier == "")
                 {
@@ -153,27 +160,29 @@ namespace PPOB.Controllers
 
                 // Create user
 
-                var objNewAdminUser = new ApplicationUser { NameIdentifier = NameIdentifier , UserName = UserName, Email = Email, PhoneNumber = PhoneNumber };
+                var objNewAdminUser = new ApplicationUser {Photo = Photo, NameIdentifier = NameIdentifier , UserName = UserName, Email = Email, PhoneNumber = PhoneNumber, RoleId = RoleId };
                 var AdminUserCreateResult = UserManager.Create(objNewAdminUser, Password);
 
                 if (AdminUserCreateResult.Succeeded == true)
                 {
-                    string strNewRole = Convert.ToString(Request.Form["Roles"]);
+                    //string strNewRole = Convert.ToString(Request.Form["Roles"]);
 
-                    if (strNewRole != "0")
-                    {
-                        // Put user in role
-                        UserManager.AddToRole(objNewAdminUser.Id, strNewRole);
-                    }
+                    //if (strNewRole != "0")
+                    //{
+                    //    // Put user in role
+                    //    UserManager.AddToRole(objNewAdminUser.Id, strNewRole);
+                    //}
 
                     return Redirect("~/Admin/Index");
                 }
                 else
                 {
-                    ViewBag.Roles = GetAllRolesAsSelectList();
+                    //ViewBag.Roles = GetAllRolesAsSelectList();
+                    ViewBag.RoleId = GetAllRoles();
                     ModelState.AddModelError(string.Empty,
                         "Error: Failed to create the user. Check password requirements.");
-                    return View(paramExpandedUserDTO);
+                    return View();
+                    //return View(paramExpandedUserDTO);
                 }
             }
             catch (Exception ex)
@@ -610,6 +619,37 @@ namespace PPOB.Controllers
                     {
                         Text = item.Name.ToString(),
                         Value = item.Name.ToString()
+                    });
+            }
+
+            return SelectRoleListItems;
+        }
+        public List<SelectListItem> GetAllRoles()
+        {
+            List<SelectListItem> SelectRoleListItems =
+                new List<SelectListItem>();
+
+            var roleManager =
+                new RoleManager<IdentityRole>(
+                    new RoleStore<IdentityRole>(new ApplicationDbContext()));
+
+            RoleRepository RoleRepository = new RoleRepository();
+            var colRoleSelectList = RoleRepository.GetAllRoles(); 
+
+            SelectRoleListItems.Add(
+                new SelectListItem
+                {
+                    Text = "Select",
+                    Value = "0"
+                });
+
+            foreach (var item in colRoleSelectList)
+            {
+                SelectRoleListItems.Add(
+                    new SelectListItem
+                    {
+                        Text = item.Text.ToString(),
+                        Value = item.Value.ToString()
                     });
             }
 
