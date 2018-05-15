@@ -21,6 +21,7 @@ namespace PPOB.Models
         //     ErrorMessage = "Specify a CSV file. (Comma-separated values)")]
         public string Photo { get; set; }
         public int RoleId { get; set; }
+        public string RoleName { get; set; }
         public IEnumerable<UserRolesDTO> Roles { get; set; }
     }
 

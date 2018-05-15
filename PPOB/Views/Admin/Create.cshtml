@@ -10,11 +10,12 @@
 @Styles.Render("~/AdminLTE/plugins/select2/css")
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="box box-warning">
-            @using (Html.BeginForm())
-            {
+@using (Html.BeginForm())
+{
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-warning">
                 @Html.AntiForgeryToken()
                 <div class="box-body">
                     <div class="form-horizontal">
@@ -26,7 +27,8 @@
                             <label class="col-md-2 control-label text-muted" style="text-align:left;">Photo</label>
                             <label class="col-md-1 control-label text-muted ">:</label>
                             <div class="col-md-5">
-                                <input type="file" class="form-control"/>
+                                <img id="form_image" alt="image" class="img-thumbnail hidden" style="width:200px;" />
+                                <input id="form_photo" class="form-control" type="file" onblur="return Preview(this)" />
                             </div>
                         </div>
 
@@ -35,7 +37,7 @@
                             <label class="col-md-1 control-label text-muted ">:</label>
                             <div class="col-md-5">
                                 @Html.EditorFor(model => model.NameIdentifier,
-                                        new { htmlAttributes = new { @class = "form-control" } })
+                                        new { htmlAttributes = new {@id = "form_nama", @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.NameIdentifier, "",
                                         new { @class = "text-danger" })
                             </div>
@@ -46,7 +48,7 @@
                             <label class="col-md-1 control-label text-muted ">:</label>
                             <div class="col-md-5">
                                 @Html.EditorFor(model => model.Email,
-                                        new { htmlAttributes = new { @class = "form-control" } })
+                                        new { htmlAttributes = new { @id = "form_email", @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Email, "",
                                         new { @class = "text-danger" })
                             </div>
@@ -57,7 +59,7 @@
                             <label class="col-md-1 control-label text-muted ">:</label>
                             <div class="col-md-5">
                                 @Html.EditorFor(model => model.PhoneNumber,
-                                        new { htmlAttributes = new { @class = "form-control" } })
+                                        new { htmlAttributes = new { @id = "form_phone_number", @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.PhoneNumber, "",
                                         new { @class = "text-danger" })
                             </div>
@@ -67,7 +69,7 @@
                             <label class="col-md-2 control-label text-muted" style="text-align:left;">Password</label>
                             <label class="col-md-1 control-label text-muted ">:</label>
                             <div class="col-md-5">
-                                @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                                @Html.PasswordFor(model => model.Password, new { @id = "form_password", @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.Password,
                                         "",
                                         new { @class = "text-danger" })
@@ -78,29 +80,61 @@
                             <label class="col-md-2 control-label text-muted" style="text-align:left;">Role</label>
                             <label class="col-md-1 control-label text-muted ">:</label>
                             <div class="col-md-5">
-                                @Html.DropDownList("Roles", null, new { @class = "form-control" })
+                                @Html.DropDownList("RoleId", null, new { @id = "form_role_id", @class = "form-control" })
                             </div>
 
                         </div>
                         <hr />
                         <div class="form-group">
                             <div class="col-md-offset-3 col-md-5">
-                                <input type="submit" value="Save" class="btn btn-warning" />
-                                @Html.ActionLink("Back to List","Index", null, new { @class = "btn btn-default" })
+                                <button class="btn btn-warning fa fa-save" onclick="return Save()"> Save</button>
+                                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
                             </div>
                         </div>
                     </div>
                 </div>
-            }
+            </div>
         </div>
     </div>
-</div>
 
 
-@section Scripts {
-    @Scripts.Render("~/AdminLTE/plugins/datatables/js")
-    @Scripts.Render("~/AdminLTE/plugins/select2/js")
+    @section Scripts {
+        @Scripts.Render("~/AdminLTE/plugins/datatables/js")
+        @Scripts.Render("~/AdminLTE/plugins/select2/js")
+        <script>
+        function Preview(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#form_image').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+                $("#form_image").removeClass("hidden");
+            }
+        }
+
+        function Save() {
+            var Photo = $("#form_image").get(0).src;
+            var NameIdentifier = model => model.NameIdentifier;
+            var Email = model => model.Email;
+            var PhoneNumber = model => model.PhoneNumber;
+            var Password = model => model.Password;
+            var RoleId = model => model.RoleId;
+            var url = "@Url.Action("Create","Admin")";
+            var model = {
+                Photo: Photo,
+                NameIdentifier: NameIdentifier,
+                Email: Email,
+                PhoneNumber: PhoneNumber,
+                Password: Password,
+                RoleId: RoleId
+            };
+            $.post(url, model);
+        }
+        </script>
+    }
 }
+
 
 
 

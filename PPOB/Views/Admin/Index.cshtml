@@ -27,6 +27,7 @@
                             <th>Nama</th>
                             <th>Email</th>
                             <th>No Telpon</th>
+                            <th>Role</th>
                             <th style="width:40px; text-align:center;">Action</th>
                         </tr>
                     </thead>
@@ -36,10 +37,11 @@
                             no++;
                             <tr>
                                 <td class="_i">@no</td>
-                                <td class="_name">@item.NameIdentifier</td>
+                                <td class="_name">@item.Photo</td>
                                 <td class="_name">@item.NameIdentifier</td>
                                 <td class="_name">@item.Email</td>
                                 <td class="_name">@item.PhoneNumber</td>
+                                <td class="_name">@item.RoleName</td>
                                 <td style="text-align:center;">
                                     @Html.ActionLink(" ", "EditUser", new { UserName = item.UserName },new { @class = "btn btn-xs btn-success fa fa-pencil" })
                                     @Html.ActionLink(" ", "DeleteUser", new { UserName = item.UserName }, new { @class = "btn btn-xs btn-danger fa fa-trash", @onclick = "return confirm('Are you sure you wish to delete this user?');" })
