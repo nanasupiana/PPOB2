@@ -55,7 +55,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="mmt_Library, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Dedi\dll\CRUD SP\mmt_Library\mmt_Library\bin\Debug\mmt_Library.dll</HintPath>
+      <HintPath>..\..\..\Dedi\dll\mmt_Library\mmt_Library\bin\Debug\mmt_Library.dll</HintPath>
     </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
@@ -576,7 +576,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="obj\Debug\TempPE\" />
-    <Folder Include="Views\User\" />
+    <Folder Include="Views\Import\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
