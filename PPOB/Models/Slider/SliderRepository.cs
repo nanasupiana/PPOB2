@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using PPOB.Models;
 using System.Web.Mvc;
+using System.Text;
+using System.IO;
+using System.Net;
+using System.Net.Http;
 
 namespace PPOB.Models.Slider
 {
@@ -29,11 +33,13 @@ namespace PPOB.Models.Slider
 
                 foreach (DataRow dr in dt.Rows)
                 {
+                    string path = HttpContext.Current.Server.MapPath(Convert.ToString(dr["Photo"]));                 
+                    var ImageBase64 = GetBase64StringForImage(path);
                     Result.Add(
                         new MasterSlider
                         {
                             ID = Convert.ToString(dr["Id"]),
-                            Photo = Convert.ToString(dr["Photo"]),
+                            Photo = "data:image/png;base64," + ImageBase64,
                             Judul = Convert.ToString(dr["Judul"]),
                             DesSingkat = Convert.ToString(dr["DesSingkat"]),
                             DesPanjang = Convert.ToString(dr["DesPanjang"])
@@ -149,6 +155,12 @@ namespace PPOB.Models.Slider
             }
             return Result;
         }
-        
+      
+        protected static string GetBase64StringForImage(string imgPath)
+        {
+            byte[] imageBytes = System.IO.File.ReadAllBytes(imgPath);
+            string base64String = Convert.ToBase64String(imageBytes);
+            return base64String;
+        }
     }
 }

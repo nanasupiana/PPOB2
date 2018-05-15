@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using System.Web;
+using PPOB.Controllers;
+using System.Collections.Generic;
+using PPOB.Models;
 
 namespace PPOB.Controllers
 {
@@ -163,27 +166,40 @@ namespace PPOB.Controllers
                 return View(false);
             }
         }
-        public async Task<ActionResult> Import(MasterPulsa model)
-        {
-            try
-            {
-                ExcelToDt.clsExcel Exl = new ExcelToDt.clsExcel();
 
-                var result = true;
-                if (result == true)
-                {
-                    return await GetListPulsa();
-                }
-                else
-                {
-                    return View(result);
-                }
-            }
-            catch (Exception e)
+        public JsonResult UploadFile()
+        {
+            string result = "";
+            List<string> ListFilename = new List<string>();
+
+            for (int i = 0; i < Request.Files.Count; i++)
             {
-                Console.WriteLine("{0} Exception caught.", e);
-                return View(false);
+                string SystemPath = FilePath.FilePathExcel + Request.Files.AllKeys[0].Split('#')[0] + "/";
+                var file = Request.Files[i];
+
+                var fileName = file.FileName; //untuk simpan nama file dgn format baru
+                ListFilename.Add(fileName);
+
+                string VirtualPath = SystemPath;
+                string TargetPath = System.Web.Hosting.HostingEnvironment.MapPath(VirtualPath);
+
+                if (!System.IO.Directory.Exists(TargetPath))
+                {
+                    System.IO.Directory.CreateDirectory(TargetPath);
+                }
+
+                var path = Path.Combine(Server.MapPath(VirtualPath), fileName);
+                try
+                {
+                    file.SaveAs(path);
+                }
+                catch (Exception ex)
+                {
+                    result = ex.Message;
+                }
             }
-        }                
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

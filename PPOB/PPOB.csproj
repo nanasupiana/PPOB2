@@ -53,6 +53,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="mmt_Library, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Dedi\dll\mmt_Library\mmt_Library\bin\Debug\mmt_Library.dll</HintPath>
@@ -186,6 +189,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BPJSTypeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MasterMenuController.cs" />
@@ -575,6 +579,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Excel\" />
+    <Folder Include="Content\Slider\" />
     <Folder Include="obj\Debug\TempPE\" />
     <Folder Include="Views\Import\" />
   </ItemGroup>

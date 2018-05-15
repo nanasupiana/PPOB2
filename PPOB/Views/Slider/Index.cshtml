@@ -122,7 +122,7 @@
         }
 
         function getFilePath() {
-            alert('test');            
+            alert('test');
                 console.log(this.form_photo[0].mozFullPath);
         }
 
@@ -164,7 +164,7 @@
             var DesSingkat = data.closest("tr").find("#grid_DesSingkat").text();
             var DesPanjang = data.closest("tr").find("#grid_DesPanjang").text();
             $("#form_id_slider").val(Id);
-            document.getElementById("form_image").src = Photo;            
+            document.getElementById("form_image").src = Photo;
             $("#form_judul").removeAttr("disabled", "disabled");
             $("#form_judul").val(Judul);
             $("#form_des_singkat").removeAttr("disabled", "disabled");
@@ -185,18 +185,21 @@
         }
 
         function Save() {
-            var Id = $("#form_id_slider").val();            
+            var Id = $("#form_id_slider").val();
+            var ImageName = $("#form_photo").val();
             var Photo = $("#form_image").get(0).src;
             var Judul = $("#form_judul").val();
             var DesSingkat = $("#form_des_singkat").val();
             var DesPanjang = $("#form_des_panjang").val();
             if (Id == "") {
                 var url = "@Url.Action("Create","Slider")";
+                Import();
             }
             else {
                 var url = "@Url.Action("Edit","Slider")";
+                Import();
             }
-            var model = { ID: Id, Photo: Photo, Judul: Judul, DesSingkat: DesSingkat, DesPanjang: DesPanjang };
+            var model = { ID: Id, Photo: ImageName, Judul: Judul, DesSingkat: DesSingkat, DesPanjang: DesPanjang };
             $.post(url, model, function (result) {
                 if (result == "" || result == false) {
                     toastr.warning("Data Error.")
@@ -228,6 +231,31 @@
                 }
             });
         }
+        function Import() {                        
+            var attach = $("#form_photo").get(0);
+            var files = attach.files;
+            var fileList = [];
+            var fileData = new FormData();
 
+            for (var i = 0; i < files.length; i++) {
+                fileData.append(files[i].name, files[i]);
+            }
+            $.ajax({
+                type: "POST",
+                url: '@Url.Content("~/Slider/UploadFile")',
+                data: fileData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    if (result != "") {
+                        toastr.warning(result);
+                    }
+                },
+                error: function (response) {
+                    toastr.warning('Data error.');
+                }
+            });            
+        }
     </script>
 }

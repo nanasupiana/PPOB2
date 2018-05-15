@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using System.Web;
+using System.Collections.Generic;
+using PPOB.Models;
 
 namespace PPOB.Controllers
 {
@@ -36,7 +38,10 @@ namespace PPOB.Controllers
                 //byte[] bytes = System.Convert.FromBase64String(model.Photo);                
 
                 SliderRepository Repository = new SliderRepository();
-                var result = await Repository.CreateSlider(model.Photo, model.Judul,model.DesSingkat,model.DesPanjang,User.Identity.Name);
+                string ImageLoc = model.Photo;
+                string ImageNewLoc = ImageLoc.Remove(0, 12);
+                string ImageName = FilePath.FilePathSlider + ImageNewLoc;
+                var result = await Repository.CreateSlider(ImageName, model.Judul,model.DesSingkat,model.DesPanjang,User.Identity.Name);
                 if (result == true)
                 {
                     return await GetList();
@@ -100,6 +105,39 @@ namespace PPOB.Controllers
                 return View(false);
             }
         }
-        
+
+        public JsonResult UploadFile()
+        {
+            string result = "";
+            List<string> ListFilename = new List<string>();
+
+            for (int i = 0; i < Request.Files.Count; i++)
+            {
+                string SystemPath = FilePath.FilePathSlider + "/";
+                var file = Request.Files[i];
+
+                var fileName = file.FileName;
+                ListFilename.Add(fileName);
+
+                string VirtualPath = SystemPath;
+                string TargetPath = System.Web.Hosting.HostingEnvironment.MapPath(VirtualPath);
+
+                if (!System.IO.Directory.Exists(TargetPath))
+                {
+                    System.IO.Directory.CreateDirectory(TargetPath);
+                }
+
+                var path = Path.Combine(Server.MapPath(VirtualPath), fileName);
+                try
+                {
+                    file.SaveAs(path);
+                }
+                catch (Exception ex)
+                {
+                    result = ex.Message;
+                }
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

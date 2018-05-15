@@ -112,7 +112,7 @@
                             <label class="col-md-2 control-label text-muted" style="text-align:left;">File</label>
                             <label class="col-md-1 control-label text-muted ">:</label>
                             <div class="col-md-5">
-                                <input id="file_import" type="file" class="form-control" />
+                                <input id="file_import" name="file_import" type="file" class="form-control" />
                             </div>
                         </div>      
                         <div class="form-group">                            
@@ -120,7 +120,7 @@
                         </div>                  
                         <div class="form-group">
                             <div class="col-md-offset-3 col-md-5">
-                                <button type="button" class="btn btn-warning" onclick="return Import()"><span class="bold fa fa-save">&nbsp;&nbsp;Import</span></button>&nbsp;
+                                <button type="submit" class="btn btn-warning" onclick="return Import()"><span class="bold fa fa-save">&nbsp;&nbsp;Import</span></button>&nbsp;
                                 <button type="button" class="btn btn-default" onclick="return BackTolistPulsa()"><span class="bold fa fa-angle-left">&nbsp;&nbsp;Back To List</span></button>
                             </div>
                         </div>
@@ -423,62 +423,56 @@
                 }
             });
         }
+        
         function Import() {
-            var Id = $("#form_operatorid").val();
-            if(Id != ""){
-                var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.xlsx|.xls)$/;                
-                    if (!regex.test($("#excelfile").val().toLowerCase())) {
-                        alert("Please upload a valid Excel file!");
-                        return false;
-                    }
-                    else {
-                        UploadSelectedExcelsheet();
-                    }
-            }
-            else
-            {
-                alert("Please upload a Excel file!");
-                return false;
-            }
-        }
-        function UploadSelectedExcelsheet() {
-            var data = new FormData();
-            var i = 0;
-            var fl = $("#excelfile").get(0).files[0];
+            var Id = $("#file_import").val().split("\\")[2];
+            //var urlPath = '@Url.Content("/Content/Excel/")' + Id;
+            var attach = $("#file_import").get(0);
+            var files = attach.files;
+            var fileList = [];
+            var fileData = new FormData();
 
-            if (fl != undefined) {
-
-                data.append("file", fl);
-
+            for (var i = 0; i < files.length; i++) {
+                fileData.append(files[i].name, files[i]);
             }
-            var Url = Path("ProductBulk", "UploadExcelsheet");
 
             $.ajax({
                 type: "POST",
-                url: Url,
+                url: '@Url.Content("~/Pulsa/UploadFile")',
+                data: fileData,
+                dataType: 'json',
                 contentType: false,
                 processData: false,
-                data: data,
                 success: function (result) {
-
-                    $("#Products").html(result);
-
-                    $('.ddlRecipient').multiselect({
-                        includeSelectAllOption: true
-                    });
-                    $('.ddlOccasionmaster').multiselect({
-                        includeSelectAllOption: true
-                    });
-
+                    if (result != "") {
+                        toastr.warning(result);
+                    }
                 },
-                error: function (xhr, status, p3, p4) {
-                    var err = "Error " + " " + status + " " + p3 + " " + p4;
-                    if (xhr.responseText && xhr.responseText[0] == "{")
-                        err = JSON.parse(xhr.responseText).Message;
-                    alert(err);
-                    return false;
+                error: function (response) {
+                    toastr.warning('Data error.');
                 }
             });
-        }
+
+            //if ($("input[name=TransactionType]:checked").val() != "Cash Advance") {
+
+            //        $("#hidCount").val(parseInt($("#hidCount").val()) + 1);
+            //        $("#bodyPRFDetail").append("<tr style='width:100%;'><td class='hidden' style='width:2%;text-align: center;'><input id='hdnPRFDetailAmount" + seqNumber + "' class='_amount' hidden='hidden' value='" + HidAmount + "'><input id='flag_detail" + seqNumber + "' class='flag_detail' hidden='hidden' value='0'><input id='temp" + seqNumber + "' class='temp' hidden='hidden' value='0'><input id='hdnIdPrfDetail" + seqNumber + "' hidden='hidden' value='" + Id + "'><input id='parameter_no' hidden='hidden' value='" + seqNumber + "'><input type='checkbox' class='cbPRFDetail'/></td><td style='width:8%;text-align: center;'><button type='button' id='btnUpdatePRFDetail' title='Update' class='btn btn-xs btn-pink' onclick='javascript:jdk.Page.PRF.UpdatePRFDetailPopup($(this))'style='margin-right: 1px;'><i class='ace-icon fa fa-pencil bigger-120'></i></button> <button type='button' id='btnDeletePRFDetail' title='Delete' class='btn btn-xs btn-danger' onclick='javascript:jdk.Page.PRF.DeletePRFDetailConfirm($(this))' style='margin-left: 1px;'><i class='ace-icon fa fa-trash-o bigger-120'></i></button></td><td style='width:25%;text-align: center;' id='txtPRFDetailAttach" + seqNumber + "'><a href='" + urlPath + "' target='_blank'>" + AttachmentName + "</a></td><td style='width:50%;text-align: center;' id='txtPRFDetailDesc" + seqNumber + "'>" + Desc + "</td><td style='width:15%;text-align: center;' class='text-center' id='txtPRFDetailAmount" + seqNumber + "'>" + Amount + "</td></tr>");
+            //        jdk.Page.PRF.TotalAmount();
+            //        jdk.Page.PRF.AddPRFAttachmentTemp();
+            //        jdk.Page.PRF.DisableTransactionType();
+            //        $("#payment_multitransfer").attr("disabled", "disabled");
+            //        $("#AddPrfDetailPopup").modal('hide');
+            //}
+            //else {
+
+            //        $("#hidCount").val(parseInt($("#hidCount").val()) + 1);
+            //        $("#bodyPRFDetail").append("<tr style='width:100%;'><td class='hidden' style='width:2%;text-align: center;'><input id='hdnPRFDetailAmount" + seqNumber + "' class='_amount' hidden='hidden' value='" + HidAmount + "'><input id='flag_detail" + seqNumber + "' class='flag_detail' hidden='hidden' value='0'><input id='temp" + seqNumber + "' class='temp' hidden='hidden' value='0'><input id='hdnIdPrfDetail" + seqNumber + "' hidden='hidden' value='" + Id + "'><input id='parameter_no' hidden='hidden' value='" + seqNumber + "'><input type='checkbox' class='cbPRFDetail'/></td><td style='width:8%;text-align: center;'><button type='button' id='btnUpdatePRFDetail' title='Update' class='btn btn-xs btn-pink' onclick='javascript:jdk.Page.PRF.UpdatePRFDetailPopup($(this))'style='margin-right: 1px;'><i class='ace-icon fa fa-pencil bigger-120'></i></button> <button type='button' id='btnDeletePRFDetail' title='Delete' class='btn btn-xs btn-danger' onclick='javascript:jdk.Page.PRF.DeletePRFDetailConfirm($(this))' style='margin-left: 1px;'><i class='ace-icon fa fa-trash-o bigger-120'></i></button></td><td style='width:25%;text-align: center;' id='txtPRFDetailAttach" + seqNumber + "' class='hidden'></td><td style='width:50%;text-align: center;' id='txtPRFDetailDesc" + seqNumber + "'>" + Desc + "</td><td style='width:15%;text-align: center;' class='text-center' id='txtPRFDetailAmount" + seqNumber + "'>" + Amount + "</td></tr>");
+            //        jdk.Page.PRF.TotalAmount();
+            //        jdk.Page.PRF.DisableTransactionType();
+            //        $("#payment_multitransfer").attr("disabled", "disabled");
+            //        $("#AddPrfDetailPopup").modal('hide');
+
+            //}
+        }       
     </script>
 }

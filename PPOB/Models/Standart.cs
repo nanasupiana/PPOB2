@@ -18,4 +18,9 @@ namespace PPOB.Models
             set { _Cmd = value; }
         }
     }
+    public class FilePath
+    {
+        public const string FilePathExcel = "~/Content/Excel/";
+        public const string FilePathSlider = "~/Content/Slider/";
+    }
 }
